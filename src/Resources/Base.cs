@@ -10,7 +10,7 @@ using AssetLayerSDK;
 using UnityEngine;
 
 
-namespace AssetLayerSDK.Base
+namespace AssetLayerSDK.Core.Base
 {
     public static class BaseUtils {
         public static readonly Dictionary<string, HttpMethod> HttpMethodMap = new Dictionary<string, HttpMethod>
@@ -37,6 +37,8 @@ namespace AssetLayerSDK.Base
             if (config.didToken != null) this.appSecret = config.didToken;
             Debug.Log("Based!");
         }
+
+        public void setDidToken(string didToken) { this.didToken = didToken; }
         
         public async Task<T> GetContentAsObjectAsync<T>(HttpResponseMessage response)
         {
@@ -49,7 +51,7 @@ namespace AssetLayerSDK.Base
             }
         }
 
-        protected async Task<T> GetRequest<T>(string endpoint, string method = null, Dictionary<string, string> headers = null)
+        protected async Task<T> Request<T>(string endpoint, string method = null, Dictionary<string, string> headers = null)
         {
             string url = $"{this.baseUrl}{endpoint}";
             Debug.Log("GetRequest: " + url);
@@ -57,6 +59,8 @@ namespace AssetLayerSDK.Base
             using (HttpClient client = new HttpClient())
             {
                 if (headers != null) foreach (var header in headers) client.DefaultRequestHeaders.Add(header.Key, header.Value);
+                // if (!client.DefaultRequestHeaders.Contains("Content-Type")) 
+                //     client.DefaultRequestHeaders.Add("Content-Type", "application/json");
                 if (this.appSecret != null && !client.DefaultRequestHeaders.Contains("appsecret")) 
                     client.DefaultRequestHeaders.Add("appsecret", this.appSecret);
                 if (this.didToken != null && !client.DefaultRequestHeaders.Contains("didtoken")) 
