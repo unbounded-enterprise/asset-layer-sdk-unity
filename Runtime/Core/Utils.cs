@@ -5,7 +5,7 @@ using System.Text;
 using System.Web;
 using UnityEngine;
 
-namespace AssetLayerSDK.Utils
+namespace AssetLayer.SDK.Utils
 {
     public static class AssetLayerUtils
     {
@@ -16,8 +16,11 @@ namespace AssetLayerSDK.Utils
             var properties = props.GetType().GetProperties();
             foreach (PropertyInfo info in properties)
             {
+
+                Debug.Log("info");
                 var key = info.Name;
                 var value = info.GetValue(props, null);
+                Debug.Log("key: " + key + ", value: " + value);
                 if (value == null) continue;
                 parameters.Add($"{key}={HttpUtility.UrlEncode(value.ToString())}");
             }

@@ -6,11 +6,11 @@ using System.Net.Http;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
-using AssetLayerSDK;
+using AssetLayer.SDK;
 using UnityEngine;
 
 
-namespace AssetLayerSDK.Core.Base
+namespace AssetLayer.SDK.Core.Base
 {
     public static class BaseUtils {
         public static readonly Dictionary<string, HttpMethod> HttpMethodMap = new Dictionary<string, HttpMethod>
@@ -24,21 +24,18 @@ namespace AssetLayerSDK.Core.Base
 
     public abstract class BaseHandler
     {
-        // private AssetLayer parent;
-        private string baseUrl;
         private string appSecret;
-        private string didToken;
+        private string baseUrl { get; set; }
+        private string didToken { get; set; }
 
         public BaseHandler(AssetLayerConfig config)
         {
-            // this.parent = parent;
             if (config.baseUrl != null) this.baseUrl = config.baseUrl;
             if (config.appSecret != null) this.appSecret = config.appSecret;
             if (config.didToken != null) this.appSecret = config.didToken;
-            Debug.Log("Based!");
         }
 
-        public void setDidToken(string didToken) { this.didToken = didToken; }
+        public void SetDidToken(string didToken) { this.didToken = didToken; }
         
         public async Task<T> GetContentAsObjectAsync<T>(HttpResponseMessage response)
         {

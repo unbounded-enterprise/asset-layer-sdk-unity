@@ -1,0 +1,8 @@
+{
+    "name": "com.assetlayer.sdk.unity",
+    "version": "0.01",
+    "displayName": "Asset Layer SDK",
+    "description": "Manage your assets client-side with the Asset Layer SDK / API",
+    "author": "Asset Layer",
+    "documentationUrl": "https://github.com/unbounded-enterprise/asset-layer-sdk-unity/blob/main/README.md"
+}
