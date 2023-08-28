@@ -38,6 +38,7 @@ using AssetLayer.SDK;
 All the types you need for params and return values can be found in the relevant namespace:
 
 ```c#
+using AssetLayer.SDK.Basic;
 using AssetLayer.SDK.Apps;
 using AssetLayer.SDK.Assets;
 using AssetLayer.SDK.Collections;
