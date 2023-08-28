@@ -56,7 +56,7 @@ The Class must be initialized once by one of the following methods:
 AssetLayerSDK.Initialize(config);
 ```
 
-Or via an instance, which can doesn't need to be directly used after construction:
+Or via an instance, which doesn't need to be directly used after construction:
 
 ```c#
 AssetLayerSDK assetlayer = new AssetLayerSDK(config);
