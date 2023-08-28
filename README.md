@@ -1,4 +1,4 @@
-# Asset Layer SDK (C#)
+# Asset Layer SDK Unity
 
 > Manage digital assets for your application with [Asset Layer](https://www.assetlayer.com). This Client SDK provides a turn-key solution for integrating your application with Asset Layer and a proxy server.
 
@@ -8,7 +8,7 @@ Logging in a user requires use of the Magic SDK. see more*
 
 ## Table of contents
 
-- [Asset Layer SDK (C#)](#asset-layer-sdk-(c#))
+- [Asset Layer SDK Unity](#asset-layer-sdk-unity)
   - [Getting Started](#getting-started)
   - [Installation](#installation)
   - [Usage](#usage)
