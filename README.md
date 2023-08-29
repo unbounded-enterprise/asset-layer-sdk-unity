@@ -23,7 +23,10 @@ These instructions will help getting started managing your digital assets with [
 
 ## Installation
 
-To install the package for Unity, use this GitHub link to add the package via UPM.
+This repo can be installed via the Unity Package Manager.
+Installing with UPM requires adding an assembly reference from this package to your project.
+
+You can also install this package by copying the repo and adding it to your Assets folder.
 
 ## Usage
 
