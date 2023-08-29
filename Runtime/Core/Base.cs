@@ -32,7 +32,7 @@ namespace AssetLayer.SDK.Core.Base
         {
             if (config.baseUrl != null) this.baseUrl = config.baseUrl;
             if (config.appSecret != null) this.appSecret = config.appSecret;
-            if (config.didToken != null) this.appSecret = config.didToken;
+            if (config.didToken != null) this.didToken = config.didToken;
         }
 
         public void SetDidToken(string didToken) { this.didToken = didToken; }

@@ -16,13 +16,15 @@ namespace AssetLayer.SDK.Utils
             var properties = props.GetType().GetProperties();
             foreach (PropertyInfo info in properties)
             {
-
-                Debug.Log("info");
                 var key = info.Name;
                 var value = info.GetValue(props, null);
-                Debug.Log("key: " + key + ", value: " + value);
                 if (value == null) continue;
-                parameters.Add($"{key}={HttpUtility.UrlEncode(value.ToString())}");
+                else if (value is string[]) {
+                    foreach (var v in (string[])value) {
+                        if (!string.IsNullOrEmpty(v)) parameters.Add($"{key}[]={HttpUtility.UrlEncode(v)}");
+                    }
+                }
+                else parameters.Add($"{key}={HttpUtility.UrlEncode(value.ToString())}");
             }
             return "?" + string.Join("&", parameters);
         }

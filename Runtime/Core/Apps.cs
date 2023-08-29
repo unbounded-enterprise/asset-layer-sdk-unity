@@ -16,13 +16,14 @@ namespace AssetLayer.SDK.Core.Apps
         private static AppsHandler _this;
         public AppsHandler(AssetLayerConfig config = null) : base(config) { _this = this; }
 
-        public async Task<AppInfoResponse> Info(AppInfoProps props, Dictionary<string, string> headers = null) { 
-            return await this.Raw.Info(props, headers); }
-        /*
+        public async Task<(App, App[])> Info(AppInfoProps props, Dictionary<string, string> headers = null) { 
+            if (props.appIds != null) return (null, (await this.Raw.Info(props, headers)).Item2.body.app);
+            else return ((await this.Raw.Info(props, headers)).Item1.body.app, null); }
         public async Task<GetAppResponse> GetApp(AppInfoProps props, Dictionary<string, string> headers = null) {
             return await this.Raw.GetApp(props, headers); }
         public async Task<GetAppsResponse> GetApps(AppInfoProps props, Dictionary<string, string> headers = null) {
             return await this.Raw.GetApps(props, headers); }
+        /*
         public async Task<AppSlotsResponse> Slots(AppSlotsProps props, Dictionary<string, string> headers = null) {
             return await this.Raw.Slots(props, headers); }
         public async Task<GetAppSlotsResponse> GetAppSlots(AppSlotsProps props, Dictionary<string, string> headers = null) {
@@ -39,13 +40,11 @@ namespace AssetLayer.SDK.Core.Apps
 
         public AppsRawHandlers Raw = new AppsRawHandlers {
             Info = async (props, headers) => {
-                Debug.Log("aid: " + props.appId);
-                var p = AssetLayerUtils.PropsToQueryString(props);
-                Debug.Log("p: " + p);
-                return await _this.Request<AppInfoResponse>("/app/info" + p);
-            }
-            // GetApp = async (props, headers) => await _this.Request<GetAppResponse>("/app/info" + AssetLayerUtils.PropsToQueryString(props)),
-            // GetApps = async (props, headers) => await _this.Request<GetAppsResponse>("/app/info" + AssetLayerUtils.PropsToQueryString(props)),
+                if (props.appIds != null) return (null, await _this.Request<GetAppsResponse>("/app/info" + AssetLayerUtils.PropsToQueryString(props)));
+                else return (await _this.Request<GetAppResponse>("/app/info" + AssetLayerUtils.PropsToQueryString(props)), null);
+            },
+            GetApp = async (props, headers) => await _this.Request<GetAppResponse>("/app/info" + AssetLayerUtils.PropsToQueryString(props)),
+            GetApps = async (props, headers) => await _this.Request<GetAppsResponse>("/app/info" + AssetLayerUtils.PropsToQueryString(props)),
             // Slots = async (props, headers) => await _this.Request<AppSlotsResponse>("/app/slots" + AssetLayerUtils.PropsToQueryString(props)),
             // GetAppSlots = async (props, headers) => await _this.Request<GetAppSlotsResponse>("/app/slots" + AssetLayerUtils.PropsToQueryString(props)),
             // GetAppSlotIds = async (props, headers) => await _this.Request<GetAppSlotIdsResponse>("/app/slots" + AssetLayerUtils.PropsToQueryString(props)),

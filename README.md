@@ -84,21 +84,21 @@ Note: The appSecret should not be set client-side in a live application.
 Once the AssetLayerSDK class has been initialized, you can load an app:
 
 ```c#
-App app = await AssetLayerSDK.Apps.Info(new AppInfoProps { appId = 'YOUR_APP_ID' });
+App app = await AssetLayerSDK.Apps.GetApp(new GetAppProps { appId = 'YOUR_APP_ID' });
 ```
 
 By default, handlers return the payload and will throw Errors.
 You can get the raw response by calling the raw handler as shown below:
 
 ```c#
-AppInfoResponse response = await AssetLayerSDK.Apps.Raw.Info(props);
+GetAppResponse response = await AssetLayerSDK.Apps.Raw.GetApp(props);
 ```
 
 The raw handlers can be useful in situations where more data from the response is required.
 However, it can still throw an error, to fix that we can call the safe handler:
 
 ```c#
-BasicResult data = await AssetLayerSDK.Apps.Safe.Info(props);
+BasicResult data = await AssetLayerSDK.Apps.Safe.GetApp(props);
 if (data.error) Debug.Log("Error! " + data.error.message);
 else return data.result;
 ```
@@ -107,9 +107,11 @@ Some endpoints may have different return types depending on the provided propert
 For this reason, there are more specific handlers available:
 
 ```c#
-// App|App[] appOrApps = await AssetLayerSDK.Apps.Info(new AppInfoProps { appId = 'YOUR_APP_ID', appIds = ['APP_ID_1', 'APP_ID_2'] });
 App app = await AssetLayerSDK.Apps.GetApp(new GetAppProps { appId = 'YOUR_APP_ID' });
-App[] apps = await AssetLayerSDK.Apps.GetApps(new GetAppsProps { appIds = ['APP_ID_1', 'APP_ID_2'] });
+App[] apps = await AssetLayerSDK.Apps.GetApps(new GetAppsProps { appIds = new string[] {'APP_ID_1', 'APP_ID_2'} });
+App app = (await AssetLayerSDK.Apps.Info(new AppInfoProps { appId = 'YOUR_APP_ID' })).Item1;
+App[] apps = (await AssetLayerSDK.Apps.Info(new AppInfoProps { appIds = new string[] {'APP_ID_1', 'APP_ID_2'} })).Item2;
+(App app, App[] apps) = await AssetLayerSDK.Apps.Info(new AppInfoProps { appId = 'YOUR_APP_ID', appIds = new string[] {'APP_ID_1', 'APP_ID_2'} });
 ```
 
 These all call the same core endpoint (https://api-v2.assetlayer.com/api/v1/app/info),
