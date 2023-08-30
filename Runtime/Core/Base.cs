@@ -28,14 +28,14 @@ namespace AssetLayer.SDK.Core.Base
 
         public void SetDidToken(string didToken) { this.didToken = didToken; }
 
-        protected async Task<T> Request<T>(string endpoint, string method = null, Dictionary<string, string> headers = null)
+        protected async Task<T> Request<T>(string endpoint, string method = "GET", Dictionary<string, string> headers = null)
         {
             string url = $"{this.baseUrl}{endpoint}";
             Debug.Log("GetRequest: " + url);
             Dictionary<string, string> head = new Dictionary<string, string>();
             if (headers != null) foreach (var header in headers) head.Add(header.Key, header.Value);
-            if (this.appSecret && !head.ContainsKey("appsecret")) head.Add("appsecret", this.appSecret);
-            if (this.didToken && !head.ContainsKey("didtoken")) head.Add("didtoken", this.didToken);
+            if (this.appSecret != null && !head.ContainsKey("appsecret")) head.Add("appsecret", this.appSecret);
+            if (this.didToken != null && !head.ContainsKey("didtoken")) head.Add("didtoken", this.didToken);
             
             #if UNITY_WEBGL
                 return await UnityNetworking.Request<T>(url, method, head);
