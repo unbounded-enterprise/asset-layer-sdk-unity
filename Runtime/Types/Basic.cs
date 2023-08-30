@@ -2,6 +2,7 @@ using System;
 
 namespace AssetLayer.SDK.Basic 
 {
+    public class BasicEmptyObject { }
     public class BasicError : Exception {
         public int status;
 

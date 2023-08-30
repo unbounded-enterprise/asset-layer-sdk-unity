@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AssetLayer.SDK.Basic;
+using AssetLayer.SDK.Expressions;
 
 namespace AssetLayer.SDK.Slots 
 {
@@ -31,4 +32,6 @@ namespace AssetLayer.SDK.Slots
         // [JsonPropertyName("expressions")]
         public List<string> expressions { get; set; }
     }
+
+    public class SlotWithExpressions : Slot { public new Expression[] expressions { get; set; } }
 }

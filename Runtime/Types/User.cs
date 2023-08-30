@@ -5,12 +5,11 @@ using AssetLayer.SDK.Basic;
 
 namespace AssetLayer.SDK.Users 
 {
-    public enum UserTeamRole { Admin, Developer }
     public class UserRole {   
         // [JsonPropertyName("teamId")]
         public string teamId { get; set; }
         // [JsonPropertyName("role")]
-        public UserTeamRole role { get; set; }
+        public string role { get; set; }
     }
 
     public class UserAlias {   
