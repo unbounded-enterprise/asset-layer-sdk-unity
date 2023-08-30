@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using AssetLayer.SDK.Basic;
 using AssetLayer.SDK.Currencies;
@@ -9,47 +10,75 @@ using AssetLayer.SDK.Users;
 namespace AssetLayer.SDK.Apps 
 {
     public class AppBase {
-        public AppBase() { }
+        [DataMember]
         public string appId { get; set; }
+        [DataMember]
         public string appName { get; set; }
+        [DataMember]
         public string appImage { get; set; }
+        [DataMember]
         public string appBanner { get; set; }
+        [DataMember]
         public string teamId { get; set; }
+        [DataMember]
         public string status { get; set; }
+        [DataMember]
         public long createdAt { get; set; }
+        [DataMember]
         public long updatedAt { get; set; }
+        [DataMember]
         public List<string> slots { get; set; }
+        [DataMember]
         public string handcashAppId { get; set; }
     }
+    [DataContract]
     public class App { 
-        public App() { }
+        [DataMember]
         public string appId { get; set; }
+        [DataMember]
         public string appName { get; set; }
+        [DataMember]
         public string appImage { get; set; }
+        [DataMember]
         public string appBanner { get; set; }
+        [DataMember]
         public string teamId { get; set; }
+        [DataMember]
         public string status { get; set; }
+        [DataMember]
         public long createdAt { get; set; }
+        [DataMember]
         public long updatedAt { get; set; }
+        [DataMember]
         public List<string> slots { get; set; }
+        [DataMember]
         public List<UserAlias> appWallets { get; set; }
+        [DataMember]
         public List<Currency> appCurrencies { get; set; }
+        [DataMember]
         public bool? autoGrantRead { get; set; }
+        [DataMember]
         public string description { get; set; }
+        [DataMember]
         public string url { get; set; }
+        [DataMember]
         public string handcashAppId { get; set; }
+        [DataMember]
         public List<string> marketCurrencies { get; set; }
     }
+    [DataContract]
     public class AppIdOnly { 
-        public AppIdOnly() { }
+        [DataMember]
         public string appId { get; set; } 
     }
+    [DataContract]
     public class AppWithSlotsWithExpressions : App { 
-        public AppWithSlotsWithExpressions() : base() {}
+        [DataMember]
         public new List<SlotWithExpressions> slots { get; set; } 
     }
+    [DataContract]
     public class AppWithListingsCount : AppBase { 
-        public AppWithListingsCount() : base() {}
+        [DataMember]
         public int count { get; set; } 
     }
 
@@ -68,34 +97,46 @@ namespace AssetLayer.SDK.Apps
     public class AppsWithListingsProps { public bool? idOnly { get; set; } }
 
 
-    public class GetAppResponse : BasicResponse<GetAppResponseBody> { public GetAppResponse() : base() { } }
+    [DataContract]
+    public class GetAppResponse : BasicResponse<GetAppResponseBody> { }
+    [DataContract]
     public class GetAppResponseBody { 
-        public GetAppResponseBody() { } 
+        [DataMember]
         public App app { get; set; } 
     }
-    public class GetAppsResponse : BasicResponse<GetAppsResponseBody> { public GetAppsResponse() : base() { } }
+    [DataContract]
+    public class GetAppsResponse : BasicResponse<GetAppsResponseBody> { }
+    [DataContract]
     public class GetAppsResponseBody { 
-        public GetAppsResponseBody() { }
+        [DataMember]
         public List<App> app { get; set; } 
     }
-    public class GetAppSlotsResponse : BasicResponse<GetAppSlotsResponseBody> { public GetAppSlotsResponse() : base() { } }
+    [DataContract]
+    public class GetAppSlotsResponse : BasicResponse<GetAppSlotsResponseBody> { }
+    [DataContract]
     public class GetAppSlotsResponseBody { 
-        public GetAppSlotsResponseBody() { }
+        [DataMember]
         public AppWithSlotsWithExpressions app { get; set; } 
     }
-    public class GetAppSlotIdsResponse : BasicResponse<GetAppSlotIdsResponseBody> { public GetAppSlotIdsResponse() : base() { } }
+    [DataContract]
+    public class GetAppSlotIdsResponse : BasicResponse<GetAppSlotIdsResponseBody> { }
+    [DataContract]
     public class GetAppSlotIdsResponseBody { 
-        public GetAppSlotIdsResponseBody() { }
+        [DataMember]
         public App app { get; set; } 
     }
-    public class GetAppsWithListingsResponse : BasicResponse<GetAppsWithListingsResponseBody> { public GetAppsWithListingsResponse() : base() { } }
+    [DataContract]
+    public class GetAppsWithListingsResponse : BasicResponse<GetAppsWithListingsResponseBody> { }
+    [DataContract]
     public class GetAppsWithListingsResponseBody { 
-        public GetAppsWithListingsResponseBody() { }
+        [DataMember]
         public List<AppWithListingsCount> apps { get; set; } 
     }
-    public class GetAppIdsWithListingsResponse : BasicResponse<GetAppIdsWithListingsResponseBody> { public GetAppIdsWithListingsResponse() : base() { } }
+    [DataContract]
+    public class GetAppIdsWithListingsResponse : BasicResponse<GetAppIdsWithListingsResponseBody> { }
+    [DataContract]
     public class GetAppIdsWithListingsResponseBody { 
-        public GetAppIdsWithListingsResponseBody() { }
+        [DataMember]
         public List<AppIdOnly> apps { get; set; } 
     }
 

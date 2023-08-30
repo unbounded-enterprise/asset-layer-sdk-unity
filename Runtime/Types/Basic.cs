@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.Serialization;
 
 namespace AssetLayer.SDK.Basic 
 {
@@ -16,21 +17,27 @@ namespace AssetLayer.SDK.Basic
         public BasicError error { get; set; }
     }
 
+    [DataContract]
     public class BasicResponse<T> {
-        public BasicResponse() { }
+        [DataMember]
         public int statusCode { get; set; }
+        [DataMember]
         public bool success { get; set; }
+        [DataMember]
         public T body { get; set; }
     }
 
+    [DataContract]
     public class BasicSuccessResponse {
-        public BasicSuccessResponse() { }
+        [DataMember]
         public int statusCode { get; set; }
+        [DataMember]
         public bool success { get; set; }
     }
 
+    [DataContract]
     public class BasicUpdatedResponse : BasicSuccessResponse {
-        public BasicUpdatedResponse() : base() { }
+        [DataMember]
         public bool updated { get; set; }
     }
 }
