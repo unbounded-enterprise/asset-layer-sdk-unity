@@ -7,6 +7,7 @@ using AssetLayer.SDK.Expressions;
 namespace AssetLayer.SDK.Slots 
 {
     public class Slot { 
+        public Slot() { }
         // [JsonPropertyName("slotId")]
         public string slotId { get; set; }
         // [JsonPropertyName("slotName")]
@@ -33,5 +34,8 @@ namespace AssetLayer.SDK.Slots
         public List<string> expressions { get; set; }
     }
 
-    public class SlotWithExpressions : Slot { public new Expression[] expressions { get; set; } }
+    public class SlotWithExpressions : Slot { 
+        public SlotWithExpressions() : base() { }
+        public new Expression[] expressions { get; set; } 
+    }
 }

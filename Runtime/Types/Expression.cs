@@ -6,6 +6,7 @@ using AssetLayer.SDK.Basic;
 namespace AssetLayer.SDK.Expressions 
 {
     public class Expression {
+        public Expression() { }
         public string slotId { get; set; }
         public string expressionId { get; set; }
         public string expressionName { get; set; }
@@ -14,6 +15,7 @@ namespace AssetLayer.SDK.Expressions
     }
 
     public class ExpressionValue {
+        public ExpressionValue() { }
         public string value { get; set; }  // URL to content
         public string expressionValueId { get; set; }
         public ExpressionAttribute expressionAttribute { get; set; }
@@ -21,17 +23,20 @@ namespace AssetLayer.SDK.Expressions
     }
 
     public class ExpressionInfo {
+        public ExpressionInfo() { }
         public string expressionId { get; set; }
         public string expressionName { get; set; }
     }
 
     public class ExpressionType {
+        public ExpressionType() { }
         public string expressionTypeId { get; set; }
         public string expressionTypeName { get; set; }
         public ExpressionAttribute[] expressionAttributes { get; set; }
     }
 
     public class ExpressionAttribute {
+        public ExpressionAttribute() { }
         public string expressionAttributeId { get; set; }
         public string expressionAttributeName { get; set; }
     }

@@ -17,17 +17,20 @@ namespace AssetLayer.SDK.Basic
     }
 
     public class BasicResponse<T> {
+        public BasicResponse() { }
         public int statusCode { get; set; }
         public bool success { get; set; }
         public T body { get; set; }
     }
 
     public class BasicSuccessResponse {
+        public BasicSuccessResponse() { }
         public int statusCode { get; set; }
         public bool success { get; set; }
     }
 
     public class BasicUpdatedResponse : BasicSuccessResponse {
+        public BasicUpdatedResponse() : base() { }
         public bool updated { get; set; }
     }
 }

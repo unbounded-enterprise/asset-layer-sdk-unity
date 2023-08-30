@@ -5,6 +5,7 @@ using AssetLayer.SDK.Basic;
 namespace AssetLayer.SDK.Currencies 
 {
     public class Currency { 
+        public Currency() { }
         // [JsonPropertyName("currencyId")]
         public string currencyId { get; set; }
 

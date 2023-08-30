@@ -9,6 +9,7 @@ using AssetLayer.SDK.Users;
 namespace AssetLayer.SDK.Apps 
 {
     public class AppBase {
+        public AppBase() { }
         public string appId { get; set; }
         public string appName { get; set; }
         public string appImage { get; set; }
@@ -21,6 +22,7 @@ namespace AssetLayer.SDK.Apps
         public string handcashAppId { get; set; }
     }
     public class App { 
+        public App() { }
         public string appId { get; set; }
         public string appName { get; set; }
         public string appImage { get; set; }
@@ -38,36 +40,64 @@ namespace AssetLayer.SDK.Apps
         public string handcashAppId { get; set; }
         public List<string> marketCurrencies { get; set; }
     }
-    public class AppIdOnly { public string appId { get; set; } }
-    public class AppWithSlotsWithExpressions : App { public new List<SlotWithExpressions> slots { get; set; } }
-    public class AppWithListingsCount : AppBase { public int count { get; set; } }
+    public class AppIdOnly { 
+        public AppIdOnly() { }
+        public string appId { get; set; } 
+    }
+    public class AppWithSlotsWithExpressions : App { 
+        public AppWithSlotsWithExpressions() : base() {}
+        public new List<SlotWithExpressions> slots { get; set; } 
+    }
+    public class AppWithListingsCount : AppBase { 
+        public AppWithListingsCount() : base() {}
+        public int count { get; set; } 
+    }
+
+
     public class AppInfoProps { 
         public string appId { get; set; } 
         public string[] appIds { get; set; }
     }
     public class GetAppProps { public string appId { get; set; } }
     public class GetAppsProps { public string[] appIds { get; set; } }
-    public class GetAppResponse : BasicResponse<GetAppResponseBody> { }
-    public class GetAppResponseBody { public App app { get; set; } }
-
-    public class GetAppsResponse : BasicResponse<GetAppsResponseBody> { }
-
-
-    public class GetAppsResponseBody { public List<App> app { get; set; } }
     public class AppSlotsProps { 
         public string appId { get; set; } 
         public bool? idOnly { get; set; }
     }
     public class GetAppSlotsProps { public string appId { get; set; } }
-    public class GetAppSlotsResponse : BasicResponse<GetAppSlotsResponseBody> { }
-    public class GetAppSlotsResponseBody { public AppWithSlotsWithExpressions app { get; set; } }
-    public class GetAppSlotIdsResponse : BasicResponse<GetAppSlotIdsResponseBody> { }
-    public class GetAppSlotIdsResponseBody { public App app { get; set; } }
     public class AppsWithListingsProps { public bool? idOnly { get; set; } }
-    public class GetAppsWithListingsResponse : BasicResponse<GetAppsWithListingsResponseBody> { }
-    public class GetAppsWithListingsResponseBody { public List<AppWithListingsCount> apps { get; set; } }
-    public class GetAppIdsWithListingsResponse : BasicResponse<GetAppIdsWithListingsResponseBody> { }
-    public class GetAppIdsWithListingsResponseBody { public List<AppIdOnly> apps { get; set; } }
+
+
+    public class GetAppResponse : BasicResponse<GetAppResponseBody> { public GetAppResponse() : base() { } }
+    public class GetAppResponseBody { 
+        public GetAppResponseBody() { } 
+        public App app { get; set; } 
+    }
+    public class GetAppsResponse : BasicResponse<GetAppsResponseBody> { public GetAppsResponse() : base() { } }
+    public class GetAppsResponseBody { 
+        public GetAppsResponseBody() { }
+        public List<App> app { get; set; } 
+    }
+    public class GetAppSlotsResponse : BasicResponse<GetAppSlotsResponseBody> { public GetAppSlotsResponse() : base() { } }
+    public class GetAppSlotsResponseBody { 
+        public GetAppSlotsResponseBody() { }
+        public AppWithSlotsWithExpressions app { get; set; } 
+    }
+    public class GetAppSlotIdsResponse : BasicResponse<GetAppSlotIdsResponseBody> { public GetAppSlotIdsResponse() : base() { } }
+    public class GetAppSlotIdsResponseBody { 
+        public GetAppSlotIdsResponseBody() { }
+        public App app { get; set; } 
+    }
+    public class GetAppsWithListingsResponse : BasicResponse<GetAppsWithListingsResponseBody> { public GetAppsWithListingsResponse() : base() { } }
+    public class GetAppsWithListingsResponseBody { 
+        public GetAppsWithListingsResponseBody() { }
+        public List<AppWithListingsCount> apps { get; set; } 
+    }
+    public class GetAppIdsWithListingsResponse : BasicResponse<GetAppIdsWithListingsResponseBody> { public GetAppIdsWithListingsResponse() : base() { } }
+    public class GetAppIdsWithListingsResponseBody { 
+        public GetAppIdsWithListingsResponseBody() { }
+        public List<AppIdOnly> apps { get; set; } 
+    }
 
 
     public class AppsRawHandlers
