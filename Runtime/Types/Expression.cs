@@ -8,6 +8,7 @@ namespace AssetLayer.SDK.Expressions
 {
     [DataContract]
     public class Expression {
+        public Expression() { }
         [DataMember]
         public string slotId { get; set; }
         [DataMember]
@@ -22,6 +23,7 @@ namespace AssetLayer.SDK.Expressions
 
     [DataContract]
     public class ExpressionValue {
+        public ExpressionValue() { }
         [DataMember]
         public string value { get; set; }
         [DataMember]
@@ -34,6 +36,7 @@ namespace AssetLayer.SDK.Expressions
 
     [DataContract]
     public class ExpressionInfo {
+        public ExpressionInfo() { }
         [DataMember]
         public string expressionId { get; set; }
         [DataMember]
@@ -42,6 +45,7 @@ namespace AssetLayer.SDK.Expressions
 
     [DataContract]
     public class ExpressionType {
+        public ExpressionType() { }
         [DataMember]
         public string expressionTypeId { get; set; }
         [DataMember]
@@ -52,6 +56,7 @@ namespace AssetLayer.SDK.Expressions
 
     [DataContract]
     public class ExpressionAttribute {
+        public ExpressionAttribute() { }
         [DataMember]
         public string expressionAttributeId { get; set; }
         [DataMember]

@@ -9,6 +9,7 @@ namespace AssetLayer.SDK.Slots
 {
     [DataContract]
     public class Slot { 
+        public Slot() { }
         // [JsonPropertyName("slotId")]
         [DataMember]
         public string slotId { get; set; }
@@ -49,6 +50,7 @@ namespace AssetLayer.SDK.Slots
 
     [DataContract]
     public class SlotWithExpressions : Slot { 
+        public SlotWithExpressions() : base() { }
         [DataMember]
         public new Expression[] expressions { get; set; } 
     }

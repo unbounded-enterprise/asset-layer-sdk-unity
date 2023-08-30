@@ -7,6 +7,7 @@ namespace AssetLayer.SDK.Currencies
 {
     [DataContract]
     public class Currency { 
+        public Currency() { }
         // [JsonPropertyName("currencyId")]
         [DataMember]
         public string currencyId { get; set; }

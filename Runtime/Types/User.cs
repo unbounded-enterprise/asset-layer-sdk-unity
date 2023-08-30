@@ -8,6 +8,7 @@ namespace AssetLayer.SDK.Users
 {
     [DataContract]
     public class UserRole {   
+        public UserRole() { }
         // [JsonPropertyName("teamId")]
         [DataMember]
         public string teamId { get; set; }
@@ -18,6 +19,7 @@ namespace AssetLayer.SDK.Users
 
     [DataContract]
     public class UserAlias { 
+        public UserAlias() { }
         // [JsonPropertyName("userId")]
         [DataMember]
         public string UserId { get; set; }
@@ -27,6 +29,7 @@ namespace AssetLayer.SDK.Users
     }
     [DataContract]
     public class User {
+        public User() { }
         // [JsonPropertyName("userId")]
         [DataMember]
         public string userId { get; set; }

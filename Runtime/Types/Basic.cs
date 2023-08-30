@@ -19,6 +19,7 @@ namespace AssetLayer.SDK.Basic
 
     [DataContract]
     public class BasicResponse<T> {
+        public BasicResponse() { }
         [DataMember]
         public int statusCode { get; set; }
         [DataMember]
@@ -29,6 +30,7 @@ namespace AssetLayer.SDK.Basic
 
     [DataContract]
     public class BasicSuccessResponse {
+        public BasicSuccessResponse() { }
         [DataMember]
         public int statusCode { get; set; }
         [DataMember]
@@ -37,6 +39,7 @@ namespace AssetLayer.SDK.Basic
 
     [DataContract]
     public class BasicUpdatedResponse : BasicSuccessResponse {
+        public BasicUpdatedResponse() : base() { }
         [DataMember]
         public bool updated { get; set; }
     }

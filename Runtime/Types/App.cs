@@ -10,6 +10,7 @@ using AssetLayer.SDK.Users;
 namespace AssetLayer.SDK.Apps 
 {
     public class AppBase {
+        public AppBase() { }
         [DataMember]
         public string appId { get; set; }
         [DataMember]
@@ -33,6 +34,7 @@ namespace AssetLayer.SDK.Apps
     }
     [DataContract]
     public class App { 
+        public App() { }
         [DataMember]
         public string appId { get; set; }
         [DataMember]
@@ -68,16 +70,19 @@ namespace AssetLayer.SDK.Apps
     }
     [DataContract]
     public class AppIdOnly { 
+        public AppIdOnly() { }
         [DataMember]
         public string appId { get; set; } 
     }
     [DataContract]
     public class AppWithSlotsWithExpressions : App { 
+        public AppWithSlotsWithExpressions() : base() { }
         [DataMember]
         public new List<SlotWithExpressions> slots { get; set; } 
     }
     [DataContract]
     public class AppWithListingsCount : AppBase { 
+        public AppWithListingsCount() : base() { }
         [DataMember]
         public int count { get; set; } 
     }
@@ -97,45 +102,45 @@ namespace AssetLayer.SDK.Apps
     public class AppsWithListingsProps { public bool? idOnly { get; set; } }
 
 
-    [DataContract]
-    public class GetAppResponse : BasicResponse<GetAppResponseBody> { }
+    public class GetAppResponse : BasicResponse<GetAppResponseBody> { public GetAppResponse() : base() { } }
     [DataContract]
     public class GetAppResponseBody { 
+        public GetAppResponseBody() { }
         [DataMember]
         public App app { get; set; } 
     }
-    [DataContract]
-    public class GetAppsResponse : BasicResponse<GetAppsResponseBody> { }
+    public class GetAppsResponse : BasicResponse<GetAppsResponseBody> { public GetAppsResponse() : base() { } }
     [DataContract]
     public class GetAppsResponseBody { 
+        public GetAppsResponseBody() { }
         [DataMember]
         public List<App> app { get; set; } 
     }
-    [DataContract]
-    public class GetAppSlotsResponse : BasicResponse<GetAppSlotsResponseBody> { }
+    public class GetAppSlotsResponse : BasicResponse<GetAppSlotsResponseBody> { public GetAppSlotsResponse() : base() { } }
     [DataContract]
     public class GetAppSlotsResponseBody { 
+        public GetAppSlotsResponseBody() { }
         [DataMember]
         public AppWithSlotsWithExpressions app { get; set; } 
     }
-    [DataContract]
-    public class GetAppSlotIdsResponse : BasicResponse<GetAppSlotIdsResponseBody> { }
+    public class GetAppSlotIdsResponse : BasicResponse<GetAppSlotIdsResponseBody> { public GetAppSlotIdsResponse() : base() { } }
     [DataContract]
     public class GetAppSlotIdsResponseBody { 
+        public GetAppSlotIdsResponseBody() { }
         [DataMember]
         public App app { get; set; } 
     }
-    [DataContract]
-    public class GetAppsWithListingsResponse : BasicResponse<GetAppsWithListingsResponseBody> { }
+    public class GetAppsWithListingsResponse : BasicResponse<GetAppsWithListingsResponseBody> { public GetAppsWithListingsResponse() : base() { } }
     [DataContract]
     public class GetAppsWithListingsResponseBody { 
+        public GetAppsWithListingsResponseBody() { }
         [DataMember]
         public List<AppWithListingsCount> apps { get; set; } 
     }
-    [DataContract]
-    public class GetAppIdsWithListingsResponse : BasicResponse<GetAppIdsWithListingsResponseBody> { }
+    public class GetAppIdsWithListingsResponse : BasicResponse<GetAppIdsWithListingsResponseBody> { public GetAppIdsWithListingsResponse() : base() { } }
     [DataContract]
     public class GetAppIdsWithListingsResponseBody { 
+        public GetAppIdsWithListingsResponseBody() { }
         [DataMember]
         public List<AppIdOnly> apps { get; set; } 
     }
