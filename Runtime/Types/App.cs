@@ -105,6 +105,7 @@ namespace AssetLayer.SDK.Apps
     [DataContract]
     public class GetAppResponse : BasicResponse2 { 
         public GetAppResponse() : base() { } 
+        [DataMember]
         public GetAppResponseBody body { get; set; } 
     }
     [DataContract]

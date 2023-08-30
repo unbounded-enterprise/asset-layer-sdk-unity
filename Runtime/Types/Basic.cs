@@ -29,7 +29,7 @@ namespace AssetLayer.SDK.Basic
     }
 
     [DataContract]
-    public class BasicResponse2<T> {
+    public class BasicResponse2 {
         public BasicResponse2() { }
         [DataMember]
         public int statusCode { get; set; }
