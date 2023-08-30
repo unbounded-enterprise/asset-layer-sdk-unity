@@ -7,21 +7,12 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 using AssetLayer.SDK;
+using AssetLayer.SDK.Core.Networking;
 using UnityEngine;
 
 
 namespace AssetLayer.SDK.Core.Base
 {
-    public static class BaseUtils {
-        public static readonly Dictionary<string, HttpMethod> HttpMethodMap = new Dictionary<string, HttpMethod>
-        {
-            { "GET", HttpMethod.Get },
-            { "POST", HttpMethod.Post },
-            { "PUT", HttpMethod.Put },
-            { "DELETE", HttpMethod.Delete },
-        };
-    }
-
     public abstract class BaseHandler
     {
         private string appSecret;
@@ -36,46 +27,21 @@ namespace AssetLayer.SDK.Core.Base
         }
 
         public void SetDidToken(string didToken) { this.didToken = didToken; }
-        
-        public async Task<T> GetContentAsObjectAsync<T>(HttpResponseMessage response)
-        {
-            var contentString = await response.Content.ReadAsStringAsync();
-            using (var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(contentString)))
-            {
-                var serializer = new DataContractJsonSerializer(typeof(T));
-                var obj = (T)serializer.ReadObject(memoryStream);
-                return obj;
-            }
-        }
 
         protected async Task<T> Request<T>(string endpoint, string method = null, Dictionary<string, string> headers = null)
         {
             string url = $"{this.baseUrl}{endpoint}";
             Debug.Log("GetRequest: " + url);
+            Dictionary<string, string> head = new Dictionary<string, string>();
+            if (headers != null) foreach (var header in headers) head.Add(header.Key, header.Value);
+            if (this.appSecret && !head.ContainsKey("appsecret")) head.Add("appsecret", this.appSecret);
+            if (this.didToken && !head.ContainsKey("didtoken")) head.Add("didtoken", this.didToken);
             
-            using (HttpClient client = new HttpClient())
-            {
-                if (headers != null) foreach (var header in headers) client.DefaultRequestHeaders.Add(header.Key, header.Value);
-                // if (!client.DefaultRequestHeaders.Contains("Content-Type")) 
-                //     client.DefaultRequestHeaders.Add("Content-Type", "application/json");
-                if (this.appSecret != null && !client.DefaultRequestHeaders.Contains("appsecret")) 
-                    client.DefaultRequestHeaders.Add("appsecret", this.appSecret);
-                if (this.didToken != null && !client.DefaultRequestHeaders.Contains("didtoken")) 
-                    client.DefaultRequestHeaders.Add("didtoken", this.didToken);
-
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
-                if (method != null && BaseUtils.HttpMethodMap.TryGetValue(method, out HttpMethod httpMethod)) request.Method = httpMethod;
-
-                HttpResponseMessage response = await client.SendAsync(request);
-                var str = await response.Content.ReadAsStringAsync();
-                Debug.Log("GetResponse: " + str);
-                T data = await GetContentAsObjectAsync<T>(response);
-                if (response.IsSuccessStatusCode) return data;
-                // var error = parseBasicError(body);
-                // Console.WriteLine($"[AssetLayer@{endpoint.Split('?')[0]}]: {response.ReasonPhrase} ({response.StatusCode}) // {error.message}");
-                // throw new BasicError((error.message), response.StatusCode);
-                throw new Exception("A general exception has occurred.");
-            }
+            #if UNITY_WEBGL
+                return await UnityNetworking.Request<T>(url, method, head);
+            #else
+                return await BasicNetworking.Request<T>(url, method, head);
+            #endif
         }
     }
 }
