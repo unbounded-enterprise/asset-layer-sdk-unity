@@ -102,6 +102,7 @@ namespace AssetLayer.SDK.Apps
     public class AppsWithListingsProps { public bool? idOnly { get; set; } }
 
 
+    [DataContract]
     public class GetAppResponse : BasicResponse<GetAppResponseBody> { public GetAppResponse() : base() { } }
     [DataContract]
     public class GetAppResponseBody { 
@@ -109,6 +110,7 @@ namespace AssetLayer.SDK.Apps
         [DataMember]
         public App app { get; set; } 
     }
+    [DataContract]
     public class GetAppsResponse : BasicResponse<GetAppsResponseBody> { public GetAppsResponse() : base() { } }
     [DataContract]
     public class GetAppsResponseBody { 
@@ -116,6 +118,7 @@ namespace AssetLayer.SDK.Apps
         [DataMember]
         public List<App> app { get; set; } 
     }
+    [DataContract]
     public class GetAppSlotsResponse : BasicResponse<GetAppSlotsResponseBody> { public GetAppSlotsResponse() : base() { } }
     [DataContract]
     public class GetAppSlotsResponseBody { 
@@ -123,6 +126,7 @@ namespace AssetLayer.SDK.Apps
         [DataMember]
         public AppWithSlotsWithExpressions app { get; set; } 
     }
+    [DataContract]
     public class GetAppSlotIdsResponse : BasicResponse<GetAppSlotIdsResponseBody> { public GetAppSlotIdsResponse() : base() { } }
     [DataContract]
     public class GetAppSlotIdsResponseBody { 
@@ -130,6 +134,7 @@ namespace AssetLayer.SDK.Apps
         [DataMember]
         public App app { get; set; } 
     }
+    [DataContract]
     public class GetAppsWithListingsResponse : BasicResponse<GetAppsWithListingsResponseBody> { public GetAppsWithListingsResponse() : base() { } }
     [DataContract]
     public class GetAppsWithListingsResponseBody { 
@@ -137,6 +142,7 @@ namespace AssetLayer.SDK.Apps
         [DataMember]
         public List<AppWithListingsCount> apps { get; set; } 
     }
+    [DataContract]
     public class GetAppIdsWithListingsResponse : BasicResponse<GetAppIdsWithListingsResponseBody> { public GetAppIdsWithListingsResponse() : base() { } }
     [DataContract]
     public class GetAppIdsWithListingsResponseBody { 
