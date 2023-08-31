@@ -76,7 +76,7 @@ namespace AssetLayer.SDK.Listings
             [Preserve]
         #endif
         [DataMember]
-        public double price { get; set; }
+        public decimal price { get; set; }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -137,12 +137,12 @@ namespace AssetLayer.SDK.Listings
             [Preserve]
         #endif
         [DataMember]
-        public double lowest { get; set; }
+        public decimal lowest { get; set; }
         #if UNITY_WEBGL
             [Preserve]
         #endif
         [DataMember]
-        public double highest { get; set; }
+        public decimal highest { get; set; }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -337,7 +337,7 @@ namespace AssetLayer.SDK.Listings
             [Preserve]
         #endif
         [DataMember]
-        public double price { get; set; }
+        public decimal price { get; set; }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -413,7 +413,7 @@ namespace AssetLayer.SDK.Listings
             [Preserve]
         #endif
         [DataMember]
-        public double price { get; set; }
+        public decimal price { get; set; }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -443,7 +443,7 @@ namespace AssetLayer.SDK.Listings
             [Preserve]
         #endif
         [DataMember]
-        public double price { get; set; }
+        public decimal price { get; set; }
     }
 
     [DataContract]
@@ -480,7 +480,7 @@ namespace AssetLayer.SDK.Listings
             [Preserve]
         #endif
         [DataMember]
-        public double price { get; set; }
+        public decimal price { get; set; }
         #if UNITY_WEBGL
             [Preserve]
         #endif

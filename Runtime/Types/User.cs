@@ -12,6 +12,7 @@ namespace AssetLayer.SDK.Users
     [DataContract]
     public class UserRole {   
         public UserRole() { }
+
         // [JsonPropertyName("teamId")]
         #if UNITY_WEBGL
             [Preserve]
@@ -29,6 +30,7 @@ namespace AssetLayer.SDK.Users
     [DataContract]
     public class UserAlias { 
         public UserAlias() { }
+
         // [JsonPropertyName("userId")]
         #if UNITY_WEBGL
             [Preserve]
@@ -45,6 +47,7 @@ namespace AssetLayer.SDK.Users
     [DataContract]
     public class User {
         public User() { }
+
         // [JsonPropertyName("userId")]
         #if UNITY_WEBGL
             [Preserve]
@@ -93,5 +96,82 @@ namespace AssetLayer.SDK.Users
         #endif
         [DataMember]
         public string status { get; set; }
+    }
+
+    [DataContract]
+    public class UserLoginProps { 
+        public UserLoginProps() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string didToken { get; set; } 
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string registeredDidToken { get; set; } 
+    }
+    [DataContract]
+    public class RegisterUserProps { 
+        public RegisterUserProps() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string otp { get; set; }
+    }
+    [DataContract]
+    public class RegisterDidProps { 
+        public RegisterDidProps() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string otp { get; set; }
+    }
+
+    [DataContract]
+    public class GetOTPResponseBody { 
+        public GetOTPResponseBody() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string otp { get; set; } 
+    }
+    [DataContract]
+    public class RegisterUserResponseBody {
+        public RegisterUserResponseBody() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string _id { get; set; }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string email { get; set; }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string handle { get; set; }
+    }
+
+    public class UsersRawHandlers
+    {
+        
+    }
+
+    public class UsersSafeHandlers
+    {
+        
     }
 }
