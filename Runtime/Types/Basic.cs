@@ -1,5 +1,8 @@
 using System;
 using System.Runtime.Serialization;
+#if UNITY_WEBGL
+    using UnityEngine.Scripting;
+#endif
 
 namespace AssetLayer.SDK.Basic 
 {
@@ -20,36 +23,27 @@ namespace AssetLayer.SDK.Basic
     [DataContract]
     public class BasicResponse<T> {
         public BasicResponse() { }
-        [DataMember]
+        [Preserve][DataMember]
         public int statusCode { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public bool success { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public T body { get; set; }
-    }
-
-    [DataContract]
-    public class BasicResponse2 {
-        public BasicResponse2() { }
-        [DataMember]
-        public int statusCode { get; set; }
-        [DataMember]
-        public bool success { get; set; }
     }
 
     [DataContract]
     public class BasicSuccessResponse {
         public BasicSuccessResponse() { }
-        [DataMember]
+        [Preserve][DataMember]
         public int statusCode { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public bool success { get; set; }
     }
 
     [DataContract]
     public class BasicUpdatedResponse : BasicSuccessResponse {
         public BasicUpdatedResponse() : base() { }
-        [DataMember]
+        [Preserve][DataMember]
         public bool updated { get; set; }
     }
 }

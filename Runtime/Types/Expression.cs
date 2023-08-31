@@ -3,63 +3,66 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using AssetLayer.SDK.Basic;
+#if UNITY_WEBGL
+    using UnityEngine.Scripting;
+#endif
 
 namespace AssetLayer.SDK.Expressions 
 {
     [DataContract]
     public class Expression {
         public Expression() { }
-        [DataMember]
+        [Preserve][DataMember]
         public string slotId { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string expressionId { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string expressionName { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public ExpressionType expressionType { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string description { get; set; }
     }
 
     [DataContract]
     public class ExpressionValue {
         public ExpressionValue() { }
-        [DataMember]
+        [Preserve][DataMember]
         public string value { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string expressionValueId { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public ExpressionAttribute expressionAttribute { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public ExpressionInfo expression { get; set; }
     }
 
     [DataContract]
     public class ExpressionInfo {
         public ExpressionInfo() { }
-        [DataMember]
+        [Preserve][DataMember]
         public string expressionId { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string expressionName { get; set; }
     }
 
     [DataContract]
     public class ExpressionType {
         public ExpressionType() { }
-        [DataMember]
+        [Preserve][DataMember]
         public string expressionTypeId { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string expressionTypeName { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public ExpressionAttribute[] expressionAttributes { get; set; }
     }
 
     [DataContract]
     public class ExpressionAttribute {
         public ExpressionAttribute() { }
-        [DataMember]
+        [Preserve][DataMember]
         public string expressionAttributeId { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string expressionAttributeName { get; set; }
     }
 }

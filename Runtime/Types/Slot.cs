@@ -4,6 +4,9 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using AssetLayer.SDK.Basic;
 using AssetLayer.SDK.Expressions;
+#if UNITY_WEBGL
+    using UnityEngine.Scripting;
+#endif
 
 namespace AssetLayer.SDK.Slots 
 {
@@ -11,47 +14,47 @@ namespace AssetLayer.SDK.Slots
     public class Slot { 
         public Slot() { }
         // [JsonPropertyName("slotId")]
-        [DataMember]
+        [Preserve][DataMember]
         public string slotId { get; set; }
         // [JsonPropertyName("slotName")]
-        [DataMember]
+        [Preserve][DataMember]
         public string slotName { get; set; }
         // [JsonPropertyName("slotImage")]
-        [DataMember]
+        [Preserve][DataMember]
         public string slotImage { get; set; }
         // [JsonPropertyName("description")]
-        [DataMember]
+        [Preserve][DataMember]
         public string description { get; set; }
         // [JsonPropertyName("appId")]
-        [DataMember]
+        [Preserve][DataMember]
         public string appId { get; set; }
         // [JsonPropertyName("acceptingCollections")]
-        [DataMember]
+        [Preserve][DataMember]
         public bool acceptingCollections { get; set; }
         // [JsonPropertyName("isPublic")]
-        [DataMember]
+        [Preserve][DataMember]
         public bool isPublic { get; set; }
         // [JsonPropertyName("collectionTypes")]
-        [DataMember]
+        [Preserve][DataMember]
         public string collectionTypes { get; set; }
         // [JsonPropertyName("createdAt")]
-        [DataMember]
+        [Preserve][DataMember]
         public long createdAt { get; set; }
         // [JsonPropertyName("updatedAt")]
-        [DataMember]
+        [Preserve][DataMember]
         public long updatedAt { get; set; }
         // [JsonPropertyName("collections")]
-        [DataMember]
+        [Preserve][DataMember]
         public List<string> collections { get; set; }
         // [JsonPropertyName("expressions")]
-        [DataMember]
+        [Preserve][DataMember]
         public List<string> expressions { get; set; }
     }
 
     [DataContract]
     public class SlotWithExpressions : Slot { 
         public SlotWithExpressions() : base() { }
-        [DataMember]
+        [Preserve][DataMember]
         public new Expression[] expressions { get; set; } 
     }
 }

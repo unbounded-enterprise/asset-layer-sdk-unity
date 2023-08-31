@@ -6,112 +6,111 @@ using AssetLayer.SDK.Basic;
 using AssetLayer.SDK.Currencies;
 using AssetLayer.SDK.Slots;
 using AssetLayer.SDK.Users;
+#if UNITY_WEBGL
+    using UnityEngine.Scripting;
+#endif
 
 namespace AssetLayer.SDK.Apps 
 {
     public class AppBase {
         public AppBase() { }
-        [DataMember]
+        [Preserve][DataMember]
         public string appId { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string appName { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string appImage { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string appBanner { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string teamId { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string status { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public long createdAt { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public long updatedAt { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public List<string> slots { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string handcashAppId { get; set; }
     }
     [DataContract]
     public class App { 
         public App() { }
-        [DataMember]
+        [Preserve][DataMember]
         public string appId { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string appName { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string appImage { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string appBanner { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string teamId { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string status { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public long createdAt { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public long updatedAt { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public List<string> slots { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public List<UserAlias> appWallets { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public List<Currency> appCurrencies { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public bool? autoGrantRead { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string description { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string url { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public string handcashAppId { get; set; }
-        [DataMember]
+        [Preserve][DataMember]
         public List<string> marketCurrencies { get; set; }
     }
     [DataContract]
     public class AppIdOnly { 
         public AppIdOnly() { }
-        [DataMember]
+        [Preserve][DataMember]
         public string appId { get; set; } 
     }
     [DataContract]
     public class AppWithSlotsWithExpressions : App { 
         public AppWithSlotsWithExpressions() : base() { }
-        [DataMember]
+        [Preserve][DataMember]
         public new List<SlotWithExpressions> slots { get; set; } 
     }
     [DataContract]
     public class AppWithListingsCount : AppBase { 
         public AppWithListingsCount() : base() { }
-        [DataMember]
+        [Preserve][DataMember]
         public int count { get; set; } 
     }
 
 
     public class AppInfoProps { 
-        public string appId { get; set; } 
-        public string[] appIds { get; set; }
+        [Preserve] public string appId { get; set; } 
+        [Preserve] public string[] appIds { get; set; }
     }
-    public class GetAppProps { public string appId { get; set; } }
-    public class GetAppsProps { public string[] appIds { get; set; } }
+    public class GetAppProps { [Preserve] public string appId { get; set; } }
+    public class GetAppsProps { [Preserve] public string[] appIds { get; set; } }
     public class AppSlotsProps { 
-        public string appId { get; set; } 
-        public bool? idOnly { get; set; }
+        [Preserve] public string appId { get; set; } 
+        [Preserve] public bool? idOnly { get; set; }
     }
-    public class GetAppSlotsProps { public string appId { get; set; } }
-    public class AppsWithListingsProps { public bool? idOnly { get; set; } }
+    public class GetAppSlotsProps { [Preserve] public string appId { get; set; } }
+    public class AppsWithListingsProps { [Preserve] public bool? idOnly { get; set; } }
 
 
     [DataContract]
-    public class GetAppResponse : BasicResponse2 { 
-        public GetAppResponse() : base() { } 
-        [DataMember]
-        public GetAppResponseBody body { get; set; } 
-    }
+    public class GetAppResponse : BasicResponse<GetAppResponseBody> { public GetAppResponse() : base() { } }
     [DataContract]
     public class GetAppResponseBody { 
         public GetAppResponseBody() { }
-        [DataMember]
+        [Preserve][DataMember]
         public App app { get; set; } 
     }
     [DataContract]
@@ -119,7 +118,7 @@ namespace AssetLayer.SDK.Apps
     [DataContract]
     public class GetAppsResponseBody { 
         public GetAppsResponseBody() { }
-        [DataMember]
+        [Preserve][DataMember]
         public List<App> app { get; set; } 
     }
     [DataContract]
@@ -127,7 +126,7 @@ namespace AssetLayer.SDK.Apps
     [DataContract]
     public class GetAppSlotsResponseBody { 
         public GetAppSlotsResponseBody() { }
-        [DataMember]
+        [Preserve][DataMember]
         public AppWithSlotsWithExpressions app { get; set; } 
     }
     [DataContract]
@@ -135,7 +134,7 @@ namespace AssetLayer.SDK.Apps
     [DataContract]
     public class GetAppSlotIdsResponseBody { 
         public GetAppSlotIdsResponseBody() { }
-        [DataMember]
+        [Preserve][DataMember]
         public App app { get; set; } 
     }
     [DataContract]
@@ -143,7 +142,7 @@ namespace AssetLayer.SDK.Apps
     [DataContract]
     public class GetAppsWithListingsResponseBody { 
         public GetAppsWithListingsResponseBody() { }
-        [DataMember]
+        [Preserve][DataMember]
         public List<AppWithListingsCount> apps { get; set; } 
     }
     [DataContract]
@@ -151,7 +150,7 @@ namespace AssetLayer.SDK.Apps
     [DataContract]
     public class GetAppIdsWithListingsResponseBody { 
         public GetAppIdsWithListingsResponseBody() { }
-        [DataMember]
+        [Preserve][DataMember]
         public List<AppIdOnly> apps { get; set; } 
     }
 

@@ -2,6 +2,9 @@ using System;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using AssetLayer.SDK.Basic;
+#if UNITY_WEBGL
+    using UnityEngine.Scripting;
+#endif
 
 namespace AssetLayer.SDK.Currencies 
 {
@@ -9,19 +12,19 @@ namespace AssetLayer.SDK.Currencies
     public class Currency { 
         public Currency() { }
         // [JsonPropertyName("currencyId")]
-        [DataMember]
+        [Preserve][DataMember]
         public string currencyId { get; set; }
 
         // [JsonPropertyName("currencyCode")]
-        [DataMember]
+        [Preserve][DataMember]
         public string currencyCode { get; set; }
 
         // [JsonPropertyName("name")]
-        [DataMember]
+        [Preserve][DataMember]
         public string name { get; set; }
 
         // [JsonPropertyName("currencyIcon")]
-        [DataMember]
+        [Preserve][DataMember]
         public string currencyIcon { get; set; }
     }
 }
