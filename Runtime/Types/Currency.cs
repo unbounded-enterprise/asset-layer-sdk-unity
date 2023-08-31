@@ -12,19 +12,31 @@ namespace AssetLayer.SDK.Currencies
     public class Currency { 
         public Currency() { }
         // [JsonPropertyName("currencyId")]
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public string currencyId { get; set; }
 
         // [JsonPropertyName("currencyCode")]
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public string currencyCode { get; set; }
 
         // [JsonPropertyName("name")]
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public string name { get; set; }
 
         // [JsonPropertyName("currencyIcon")]
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public string currencyIcon { get; set; }
     }
 }

@@ -23,27 +23,45 @@ namespace AssetLayer.SDK.Basic
     [DataContract]
     public class BasicResponse<T> {
         public BasicResponse() { }
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public int statusCode { get; set; }
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public bool success { get; set; }
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public T body { get; set; }
     }
 
     [DataContract]
     public class BasicSuccessResponse {
         public BasicSuccessResponse() { }
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public int statusCode { get; set; }
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public bool success { get; set; }
     }
 
     [DataContract]
     public class BasicUpdatedResponse : BasicSuccessResponse {
         public BasicUpdatedResponse() : base() { }
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public bool updated { get; set; }
     }
 }

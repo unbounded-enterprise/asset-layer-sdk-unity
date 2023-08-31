@@ -14,47 +14,86 @@ namespace AssetLayer.SDK.Slots
     public class Slot { 
         public Slot() { }
         // [JsonPropertyName("slotId")]
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public string slotId { get; set; }
         // [JsonPropertyName("slotName")]
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public string slotName { get; set; }
         // [JsonPropertyName("slotImage")]
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public string slotImage { get; set; }
         // [JsonPropertyName("description")]
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public string description { get; set; }
         // [JsonPropertyName("appId")]
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public string appId { get; set; }
         // [JsonPropertyName("acceptingCollections")]
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public bool acceptingCollections { get; set; }
         // [JsonPropertyName("isPublic")]
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public bool isPublic { get; set; }
         // [JsonPropertyName("collectionTypes")]
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public string collectionTypes { get; set; }
         // [JsonPropertyName("createdAt")]
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public long createdAt { get; set; }
         // [JsonPropertyName("updatedAt")]
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public long updatedAt { get; set; }
         // [JsonPropertyName("collections")]
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public List<string> collections { get; set; }
         // [JsonPropertyName("expressions")]
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public List<string> expressions { get; set; }
     }
 
     [DataContract]
     public class SlotWithExpressions : Slot { 
         public SlotWithExpressions() : base() { }
-        [Preserve][DataMember]
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
         public new Expression[] expressions { get; set; } 
     }
 }
