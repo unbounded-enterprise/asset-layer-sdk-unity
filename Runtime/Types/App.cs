@@ -294,15 +294,15 @@ namespace AssetLayer.SDK.Apps
 
     public class AppsRawHandlers
     {
-        public Func<AppInfoProps, object, Task<(GetAppResponse, GetAppsResponse)>> Info;
-        public Func<GetAppProps, object, Task<GetAppResponse>> GetApp;
-        public Func<GetAppsProps, object, Task<GetAppsResponse>> GetApps;
-        public Func<AppSlotsProps, object, Task<(GetAppSlotsResponse, GetAppSlotIdsResponse)>> Slots;
-        public Func<GetAppSlotsProps, object, Task<GetAppSlotsResponse>> GetAppSlots;
-        public Func<GetAppSlotsProps, object, Task<GetAppSlotIdsResponse>> GetAppSlotIds;
-        public Func<AppsWithListingsProps, object, Task<(GetAppsWithListingsResponse, GetAppIdsWithListingsResponse)>> Listings;
-        public Func<object, Task<GetAppsWithListingsResponse>> GetAppsWithListings;
-        public Func<object, Task<GetAppIdsWithListingsResponse>> GetAppIdsWithListings;
+        public Func<AppInfoProps, Dictionary<string, string>, Task<(GetAppResponse, GetAppsResponse)>> Info;
+        public Func<GetAppProps, Dictionary<string, string>, Task<GetAppResponse>> GetApp;
+        public Func<GetAppsProps, Dictionary<string, string>, Task<GetAppsResponse>> GetApps;
+        public Func<AppSlotsProps, Dictionary<string, string>, Task<(GetAppSlotsResponse, GetAppSlotIdsResponse)>> Slots;
+        public Func<GetAppSlotsProps, Dictionary<string, string>, Task<GetAppSlotsResponse>> GetAppSlots;
+        public Func<GetAppSlotsProps, Dictionary<string, string>, Task<GetAppSlotIdsResponse>> GetAppSlotIds;
+        public Func<AppsWithListingsProps, Dictionary<string, string>, Task<(GetAppsWithListingsResponse, GetAppIdsWithListingsResponse)>> Listings;
+        public Func<Dictionary<string, string>, Task<GetAppsWithListingsResponse>> GetAppsWithListings;
+        public Func<Dictionary<string, string>, Task<GetAppIdsWithListingsResponse>> GetAppIdsWithListings;
     }
 
     public class AppsSafeHandlers
