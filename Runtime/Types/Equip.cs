@@ -87,15 +87,32 @@ namespace AssetLayer.SDK.Equips
         #endif
         [DataMember]
         public string equipId { get; set; } 
-    };
+    }
+
+    [DataContract]
+    public class GetEquipsResponse : BasicResponse<GetEquipsResponseBody> { public GetEquipsResponse() { } }
+    [DataContract]
+    public class GetEquipsResponseBody { 
+        public GetEquipsResponseBody() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<Equip> equip { get; set; } 
+    }
 
     public class EquipsRawHandlers
     {
-        
+        public Func<GetEquipsProps, Dictionary<string, string>, Task<GetEquipsResponse>> GetEquips;
+        public Func<SetEquipProps, Dictionary<string, string>, Task<SetEquipResponse>> SetEquip;
+        public Func<RemoveEquipProps, Dictionary<string, string>, Task<BasicSuccessResponse>> RemoveEquip;
     }
 
     public class EquipsSafeHandlers
     {
-        
+        public Func<GetEquipsProps, object, Task<BasicResult<List<Equip>>>> GetEquips;
+        public Func<SetEquipProps, object, Task<BasicResult<string>>> SetEquip;
+        public Func<RemoveEquipProps, object, Task<BasicResult<bool>>> RemoveEquip;
     }
 }

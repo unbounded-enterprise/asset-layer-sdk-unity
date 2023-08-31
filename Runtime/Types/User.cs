@@ -134,6 +134,19 @@ namespace AssetLayer.SDK.Users
         public string otp { get; set; }
     }
 
+
+    [DataContract]
+    public class GetUserResponse : BasicResponse<GetUserResponseBody> { public GetUserResponse() : base() { } }
+    [DataContract]
+    public class GetUserResponseBody { 
+        public GetUserResponseBody() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public User user { get; set; } 
+    }
     [DataContract]
     public class GetOTPResponseBody { 
         public GetOTPResponseBody() { }
@@ -167,11 +180,17 @@ namespace AssetLayer.SDK.Users
 
     public class UsersRawHandlers
     {
-        
+        public Func<Dictionary<string, string>, Task<GetUserResponse>> GetUser;
+        public Func<RegisterUserProps, Dictionary<string, string>, Task<(GetOTPResponseBody, RegisterUserResponseBody)>> Register;
+        public Func<Dictionary<string, string>, Task<GetOTPResponseBody>> GetOTP;
+        public Func<RegisterDidProps, Dictionary<string, string>, Task<RegisterUserResponseBody>> RegisterDid;
     }
 
     public class UsersSafeHandlers
     {
-        
+        public Func<Dictionary<string, string>, Task<BasicResult<User>>> GetUser;
+        public Func<RegisterUserProps, Dictionary<string, string>, Task<BasicResult<(string, RegisterUserResponseBody)>>> Register;
+        public Func<Dictionary<string, string>, Task<BasicResult<string>>> GetOTP;
+        public Func<RegisterDidProps, Dictionary<string, string>, Task<BasicResult<RegisterUserResponseBody>>> RegisterDid;
     }
 }

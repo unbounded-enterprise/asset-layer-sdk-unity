@@ -64,4 +64,14 @@ namespace AssetLayer.SDK.Basic
         [DataMember]
         public bool updated { get; set; }
     }
+
+    [DataContract]
+    public class BasicUploadedResponse : BasicSuccessResponse {
+        public BasicUploadedResponse() : base() { }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public bool uploaded { get; set; }
+    }
 }

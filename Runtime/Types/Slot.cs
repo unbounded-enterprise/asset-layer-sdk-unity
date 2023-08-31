@@ -165,6 +165,66 @@ namespace AssetLayer.SDK.Slots
         [DataMember]
         public bool? idOnly { get; set; } 
     }
+    [DataContract]
+    public class GetSlotExpressionsProps { 
+        public GetSlotExpressionsProps() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string slotId { get; set; } 
+    }
+    [DataContract]
+    public class CreateExpressionProps { 
+        public CreateExpressionProps() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string slotId { get; set; } 
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string expressionTypeId { get; set; } 
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string expressionName { get; set; } 
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string description { get; set; } 
+    }
+    [DataContract]
+    public class UpdateExpressionProps { 
+        public UpdateExpressionProps() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string expressionId { get; set; } 
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string expressionTypeId { get; set; } 
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string expressionName { get; set; } 
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string description { get; set; } 
+    }
 
 
     [DataContract]
@@ -208,14 +268,65 @@ namespace AssetLayer.SDK.Slots
         [DataMember]
         public Slot slot { get; set; } 
     }
+    [DataContract]
+    public class GetExpressionTypesResponse : BasicResponse<GetExpressionTypesResponseBody> { public GetExpressionTypesResponse() : base() { } }
+    [DataContract]
+    public class GetExpressionTypesResponseBody { 
+        public GetExpressionTypesResponseBody() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<ExpressionType> expressionTypes { get; set; } 
+    }
+    [DataContract]
+    public class GetSlotExpressionsResponse : BasicResponse<GetSlotExpressionsResponseBody> { public GetSlotExpressionsResponse() : base() { } }
+    [DataContract]
+    public class GetSlotExpressionsResponseBody { 
+        public GetSlotExpressionsResponseBody() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<Expression> expressions { get; set; } 
+    }
+    [DataContract]
+    public class CreateExpressionResponse : BasicResponse<CreateExpressionResponseBody> { public CreateExpressionResponse() : base() { } }
+    [DataContract]
+    public class CreateExpressionResponseBody { 
+        public CreateExpressionResponseBody() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string expressionId { get; set; } 
+    }
+
 
     public class SlotsRawHandlers
     {
-        
+        public Func<GetSlotProps, Dictionary<string, string>, Task<GetSlotResponse>> GetSlot;
+        public Func<GetSlotCollectionsAllProps, Dictionary<string, string>, Task<(GetSlotCollectionsResponse, GetSlotCollectionsIdsResponse)>> Collections;
+        public Func<GetSlotCollectionsProps, Dictionary<string, string>, Task<GetSlotCollectionsResponse>> GetSlotCollections;
+        public Func<GetSlotCollectionsProps, Dictionary<string, string>, Task<GetSlotCollectionsIdsResponse>> GetSlotCollectionIds;
+        public Func<Dictionary<string, string>, Task<GetExpressionTypesResponse>> GetExpressionTypes;
+        public Func<GetSlotExpressionsProps, Dictionary<string, string>, Task<GetSlotExpressionsResponse>> GetSlotExpressions;
+        public Func<CreateExpressionProps, Dictionary<string, string>, Task<CreateExpressionResponse>> CreateExpression;
+        public Func<UpdateExpressionProps, Dictionary<string, string>, Task<BasicSuccessResponse>> UpdateExpression;
     }
 
     public class SlotsSafeHandlers
     {
-        
+        public Func<GetSlotProps, Dictionary<string, string>, Task<BasicResult<Slot>>> GetSlot;
+        public Func<GetSlotCollectionsAllProps, Dictionary<string, string>, Task<BasicResult<(List<Collection>, List<string>)>>> Collections;
+        public Func<GetSlotCollectionsProps, Dictionary<string, string>, Task<BasicResult<List<Collection>>>> GetSlotCollections;
+        public Func<GetSlotCollectionsProps, Dictionary<string, string>, Task<BasicResult<List<string>>>> GetSlotCollectionIds;
+        public Func<Dictionary<string, string>, Task<BasicResult<List<ExpressionType>>>> GetExpressionTypes;
+        public Func<GetSlotExpressionsProps, Dictionary<string, string>, Task<BasicResult<List<Expression>>>> GetSlotExpressions;
+        public Func<CreateExpressionProps, Dictionary<string, string>, Task<BasicResult<string>>> CreateExpression;
+        public Func<UpdateExpressionProps, Dictionary<string, string>, Task<BasicResult<bool>>> UpdateExpression;
     }
 }

@@ -216,8 +216,8 @@ namespace AssetLayer.SDK.Listings
         public string collectionId { get; set; } 
     }
     [DataContract]
-    public class GetUserListingsAllProps : GetUserListingsProps { 
-        public GetUserListingsAllProps() : base() { }
+    public class ListingUserProps : GetUserListingsProps { 
+        public ListingUserProps() : base() { }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -277,8 +277,8 @@ namespace AssetLayer.SDK.Listings
         public List<string> collectionIds { get; set; }
     }
     [DataContract]
-    public class GetCollectionsListingsAllProps : GetCollectionListingsBaseProps { 
-        public GetCollectionsListingsAllProps() : base() { }
+    public class ListingCollectionProps : GetCollectionListingsBaseProps { 
+        public ListingCollectionProps() : base() { }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -316,8 +316,8 @@ namespace AssetLayer.SDK.Listings
         public long lastUpdatedAt { get; set; }
     }
     [DataContract]
-    public class GetAppListingsAllProps : GetAppListingsProps { 
-        public GetAppListingsAllProps() : base() { }
+    public class ListingAppProps : GetAppListingsProps { 
+        public ListingAppProps() : base() { }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -331,8 +331,8 @@ namespace AssetLayer.SDK.Listings
     }
 
     [DataContract]
-    public class CreateListingBase {
-        public CreateListingBase() { }
+    public class ListAssetBase {
+        public ListAssetBase() { }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -355,7 +355,7 @@ namespace AssetLayer.SDK.Listings
         public string walletUserId { get; set; }
     }
     [DataContract]
-    public class ListAssetProps : CreateListingBase { 
+    public class ListAssetProps : ListAssetBase { 
         public ListAssetProps() : base() { }
         #if UNITY_WEBGL
             [Preserve]
@@ -364,7 +364,7 @@ namespace AssetLayer.SDK.Listings
         public string assetId { get; set; } 
     }
     [DataContract]
-    public class ListAssetsProps : CreateListingBase { 
+    public class ListAssetsProps : ListAssetBase { 
         public ListAssetsProps() : base() { }
         #if UNITY_WEBGL
             [Preserve]
@@ -373,7 +373,7 @@ namespace AssetLayer.SDK.Listings
         public List<string> assetIds { get; set; }
     }
     [DataContract]
-    public class ListCollectionAssetsProps : CreateListingBase { 
+    public class ListCollectionAssetsProps : ListAssetBase { 
         public ListCollectionAssetsProps() : base() { }
         #if UNITY_WEBGL
             [Preserve]
@@ -382,8 +382,8 @@ namespace AssetLayer.SDK.Listings
         public string collectionId { get; set; } 
     }
     [DataContract]
-    public class CreateListingAllProps : CreateListingBase { 
-        public CreateListingAllProps() : base() { }
+    public class ListingNewProps : ListAssetBase { 
+        public ListingNewProps() : base() { }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -461,11 +461,75 @@ namespace AssetLayer.SDK.Listings
         public string walletUserId { get; set; }
     }
 
-
-
     [DataContract]
-    public class CreateListingResponseBodyListing {
-        public CreateListingResponseBodyListing() { }
+    public class GetListingResponse : BasicResponse<GetListingResponseBody> { public GetListingResponse() : base() { } }
+    [DataContract]
+    public class GetListingResponseBody { 
+        public GetListingResponseBody() { }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public Listing listing { get; set; }
+    }
+    [DataContract]
+    public class GetListingsResponse : BasicResponse<GetListingsResponseBody> { public GetListingsResponse() : base() { } }
+    [DataContract]
+    public class GetListingsResponseBody { 
+        public GetListingsResponseBody() { }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<Listing> listing { get; set; }
+    }
+    [DataContract]
+    public class GetListingCountsResponse : BasicResponse<GetListingCountsResponseBody> { public GetListingCountsResponse() : base() { } }
+    [DataContract]
+    public class GetListingCountsResponseBody { 
+        public GetListingCountsResponseBody() { }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public Dictionary<string, long> listing { get; set; }
+    }
+    [DataContract]
+    public class GetUserListingsResponse : BasicResponse<GetUserListingsResponseBody> { public GetUserListingsResponse() : base() { } }
+    [DataContract]
+    public class GetUserListingsResponseBody { 
+        public GetUserListingsResponseBody() { }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<Listing> listings { get; set; }
+    }
+    [DataContract]
+    public class GetUserListingCountsResponse : BasicResponse<GetUserListingCountsResponseBody> { public GetUserListingCountsResponse() : base() { } }
+    [DataContract]
+    public class GetUserListingCountsResponseBody { 
+        public GetUserListingCountsResponseBody() { }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public Dictionary<string, long> listings { get; set; }
+    }
+    [DataContract]
+    public class GetAppListingsStatsResponse : BasicResponse<GetAppListingsStatsResponseBody> { public GetAppListingsStatsResponse() : base() { } }
+    [DataContract]
+    public class GetAppListingsStatsResponseBody { 
+        public GetAppListingsStatsResponseBody() { }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public Dictionary<string, CollectionListingsStats> listing { get; set; }
+    }
+    [DataContract]
+    public class ListAssetResponseBodyListing {
+        public ListAssetResponseBodyListing() { }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -499,35 +563,96 @@ namespace AssetLayer.SDK.Listings
     }
 
     [DataContract]
-    public class CreateListingResponse : BasicResponse<CreateListingResponseBody> { public CreateListingResponse() : base() { } }
+    public class ListAssetResponse : BasicResponse<ListAssetResponseBody> { public ListAssetResponse() : base() { } }
     [DataContract]
-    public class CreateListingResponseBody { 
-        public CreateListingResponseBody() { }
+    public class ListAssetResponseBody { 
+        public ListAssetResponseBody() { }
         #if UNITY_WEBGL
             [Preserve]
         #endif
         [DataMember]
-        public CreateListingResponseBodyListing listing { get; set; }
+        public ListAssetResponseBodyListing listing { get; set; }
     }
     [DataContract]
-    public class CreateListingsResponse : BasicResponse<CreateListingsResponseBody> { public CreateListingsResponse() : base() { } }
+    public class ListAssetsResponse : BasicResponse<ListAssetsResponseBody> { public ListAssetsResponse() : base() { } }
     [DataContract]
-    public class CreateListingsResponseBody { 
-        public CreateListingsResponseBody() { }
+    public class ListAssetsResponseBody { 
+        public ListAssetsResponseBody() { }
         #if UNITY_WEBGL
             [Preserve]
         #endif
         [DataMember]
         public List<string> assetIds { get; set; }
     }
+    [DataContract]
+    public class BuyListingResponse : BasicResponse<BuyListingResponseBody> { public BuyListingResponse() : base() { } }
+    [DataContract]
+    public class BuyListingResponseBody { 
+        public BuyListingResponseBody() { }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public bool buy { get; set; }
+    }
 
     public class ListingsRawHandlers
     {
-        
+        public Func<GetListingProps, Dictionary<string, string>, Task<GetListingResponse>> GetListing;
+        public Func<ListingUserProps, Dictionary<string, string>, Task<(GetListingsResponse, GetListingCountsResponse)>> User;
+        public Func<GetUserListingsMinProps, Dictionary<string, string>, Task<GetUserListingsResponse>> GetUserListings;
+        public Func<GetUserListingsMinProps, Dictionary<string, string>, Task<GetUserListingCountsResponse>> GetUserListingsCounts;
+        public Func<GetUserCollectionListingsProps, Dictionary<string, string>, Task<GetUserListingsResponse>> GetUserCollectionListings;
+        public Func<GetUserCollectionListingsProps, Dictionary<string, string>, Task<GetUserListingCountsResponse>> GetUserCollectionListingsCounts;
+        public Func<GetUserHistoryProps, Dictionary<string, string>, Task<GetListingsResponse>> GetUserSales;
+        public Func<GetUserHistoryProps, Dictionary<string, string>, Task<GetListingCountsResponse>> GetUserSalesCounts;
+        public Func<GetUserHistoryProps, Dictionary<string, string>, Task<GetListingsResponse>> GetUserPurchases;
+        public Func<GetUserHistoryProps, Dictionary<string, string>, Task<GetListingCountsResponse>> GetUserPurchasesCounts;
+        public Func<ListingCollectionProps, Dictionary<string, string>, Task<(GetListingsResponse, GetListingCountsResponse)>> Collection;
+        public Func<GetCollectionListingsProps, Dictionary<string, string>, Task<GetListingsResponse>> GetCollectionListings;
+        public Func<GetCollectionsListingsProps, Dictionary<string, string>, Task<GetListingsResponse>> GetCollectionsListings;
+        public Func<GetCollectionListingsProps, Dictionary<string, string>, Task<GetListingCountsResponse>> GetCollectionListingsCounts;
+        public Func<GetCollectionsListingsProps, Dictionary<string, string>, Task<GetListingCountsResponse>> GetCollectionsListingsCounts;
+        public Func<ListingAppProps, Dictionary<string, string>, Task<(GetListingsResponse, GetListingCountsResponse)>> App;
+        public Func<GetAppListingsProps, Dictionary<string, string>, Task<GetListingsResponse>> GetAppListings;
+        public Func<GetAppListingsProps, Dictionary<string, string>, Task<GetListingCountsResponse>> GetAppListingsCounts;
+        public Func<GetAppListingsProps, Dictionary<string, string>, Task<GetAppListingsStatsResponse>> GetAppListingsStats;
+        public Func<ListingNewProps, Dictionary<string, string>, Task<(ListAssetResponse, ListAssetsResponse)>> New;
+        public Func<ListAssetProps, Dictionary<string, string>, Task<ListAssetResponse>> ListAsset;
+        public Func<ListAssetsProps, Dictionary<string, string>, Task<ListAssetsResponse>> ListAssets;
+        public Func<ListCollectionAssetsProps, Dictionary<string, string>, Task<ListAssetsResponse>> ListCollectionAssets;
+        public Func<UpdateListingProps, Dictionary<string, string>, Task<BasicSuccessResponse>> UpdateListing;
+        public Func<BuyListingProps, Dictionary<string, string>, Task<BuyListingResponse>> BuyListing;
+        public Func<RemoveListingProps, Dictionary<string, string>, Task<BasicSuccessResponse>> RemoveListing;
     }
 
     public class ListingsSafeHandlers
     {
-        
+        public Func<GetListingProps, object, Task<BasicResult<Listing>>> GetListing;
+        public Func<ListingUserProps, object, Task<BasicResult<(List<Listing>, Dictionary<string, long>)>>> User;
+        public Func<GetUserListingsMinProps, object, Task<BasicResult<List<Listing>>>> GetUserListings;
+        public Func<GetUserListingsMinProps, object, Task<BasicResult<Dictionary<string, long>>>> GetUserListingsCounts;
+        public Func<GetUserCollectionListingsProps, object, Task<BasicResult<List<Listing>>>> GetUserCollectionListings;
+        public Func<GetUserCollectionListingsProps, object, Task<BasicResult<Dictionary<string, long>>>> GetUserCollectionListingsCounts;
+        public Func<GetUserHistoryProps, object, Task<BasicResult<List<Listing>>>> GetUserSales;
+        public Func<GetUserHistoryProps, object, Task<BasicResult<Dictionary<string, long>>>> GetUserSalesCounts;
+        public Func<GetUserHistoryProps, object, Task<BasicResult<List<Listing>>>> GetUserPurchases;
+        public Func<GetUserHistoryProps, object, Task<BasicResult<Dictionary<string, long>>>> GetUserPurchasesCounts;
+        public Func<ListingCollectionProps, object, Task<BasicResult<(List<Listing>, Dictionary<string, long>)>>> Collection;
+        public Func<GetCollectionListingsProps, object, Task<BasicResult<List<Listing>>>> GetCollectionListings;
+        public Func<GetCollectionsListingsProps, object, Task<BasicResult<List<Listing>>>> GetCollectionsListings;
+        public Func<GetCollectionListingsProps, object, Task<BasicResult<Dictionary<string, long>>>> GetCollectionListingsCounts;
+        public Func<GetCollectionsListingsProps, object, Task<BasicResult<Dictionary<string, long>>>> GetCollectionsListingsCounts;
+        public Func<ListingAppProps, object, Task<BasicResult<(List<Listing>, Dictionary<string, long>)>>> App;
+        public Func<GetAppListingsProps, object, Task<BasicResult<List<Listing>>>> GetAppListings;
+        public Func<GetAppListingsProps, object, Task<BasicResult<Dictionary<string, long>>>> GetAppListingsCounts;
+        public Func<GetAppListingsProps, object, Task<BasicResult<Dictionary<string, CollectionListingsStats>>>> GetAppListingsStats;
+        public Func<ListingNewProps, object, Task<BasicResult<(ListAssetResponseBody,  List<string>)>>> New;
+        public Func<ListAssetProps, object, Task<BasicResult<ListAssetResponseBody>>> ListAsset;
+        public Func<ListAssetsProps, object, Task<BasicResult<List<string>>>> ListAssets;
+        public Func<ListCollectionAssetsProps, object, Task<BasicResult<List<string>>>> ListCollectionAssets;
+        public Func<UpdateListingProps, object, Task<BasicResult<bool>>> UpdateListing;
+        public Func<BuyListingProps, object, Task<BasicResult<bool>>> BuyListing;
+        public Func<RemoveListingProps, object, Task<BasicResult<bool>>> RemoveListing;
     }
 }

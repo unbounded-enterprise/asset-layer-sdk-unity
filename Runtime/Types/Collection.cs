@@ -374,11 +374,31 @@ namespace AssetLayer.SDK.Collections
 
     public class CollectionsRawHandlers
     {
-        
+        public Func<CollectionInfoProps, Dictionary<string, string>, Task<GetCollectionsResponse>> Info;
+        public Func<GetCollectionProps, Dictionary<string, string>, Task<GetCollectionsResponse>> GetCollection;
+        public Func<GetCollectionsProps, Dictionary<string, string>, Task<GetCollectionsResponse>> GetCollections;
+        public Func<CollectionAssetsProps, Dictionary<string, string>, Task<(GetCollectionAssetsResponse, GetCollectionAssetIdsResponse)>> Assets;
+        public Func<GetCollectionAssetsProps, Dictionary<string, string>, Task<GetCollectionAssetsResponse>> GetCollectionAssets;
+        public Func<GetCollectionAssetsProps, Dictionary<string, string>, Task<GetCollectionAssetIdsResponse>> GetCollectionAssetIds;
+        public Func<CreateCollectionProps, Dictionary<string, string>, Task<CreateCollectionResponse>> CreateCollection;
+        public Func<UpdateCollectionImageProps, Dictionary<string, string>, Task<BasicUploadedResponse>> UpdateCollectionImage;
+        public Func<UpdateCollectionProps, Dictionary<string, string>, Task<BasicUpdatedResponse>> UpdateCollection;
+        public Func<ActivateCollectionProps, Dictionary<string, string>, Task<BasicUpdatedResponse>> ActivateCollection;
+        public Func<ActivateCollectionProps, Dictionary<string, string>, Task<BasicUpdatedResponse>> DeactivateCollection;
     }
 
     public class CollectionsSafeHandlers
     {
-        
+        public Func<CollectionInfoProps, object, Task<BasicResult<(Collection, List<Collection>)>>> Info;
+        public Func<GetCollectionProps, object, Task<BasicResult<Collection>>> GetCollection;
+        public Func<GetCollectionsProps, object, Task<BasicResult<List<Collection>>>> GetCollections;
+        public Func<CollectionAssetsProps, object, Task<BasicResult<(List<Asset>, List<string>)>>> Assets;
+        public Func<GetCollectionAssetsProps, object, Task<BasicResult<List<Asset>>>> GetCollectionAssets;
+        public Func<GetCollectionAssetsProps, object, Task<BasicResult<List<AssetIdOnly>>>> GetCollectionAssetIds;
+        public Func<CreateCollectionProps, object, Task<BasicResult<string>>> CreateCollection;
+        public Func<UpdateCollectionImageProps, object, Task<BasicResult<bool>>> UpdateCollectionImage;
+        public Func<UpdateCollectionProps, object, Task<BasicResult<bool>>> UpdateCollection;
+        public Func<ActivateCollectionProps, object, Task<BasicResult<bool>>> ActivateCollection;
+        public Func<ActivateCollectionProps, object, Task<BasicResult<bool>>> DeactivateCollection;
     }
 }
