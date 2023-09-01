@@ -99,8 +99,8 @@ However, it can still throw an error, to fix that we can call the safe handler:
 
 ```c#
 BasicResult data = await AssetLayerSDK.Apps.Safe.GetApp(props);
-if (data.error) Debug.Log("Error! " + data.error.message);
-else return data.result;
+if (data.Error) Debug.Log("Error! " + data.Error.Message);
+else return data.Result;
 ```
 
 Some endpoints may have different return types depending on the provided properties.

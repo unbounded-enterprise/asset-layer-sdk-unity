@@ -102,17 +102,28 @@ namespace AssetLayer.SDK.Equips
         public List<Equip> equip { get; set; } 
     }
 
-    public class EquipsRawHandlers
-    {
-        public Func<GetEquipsProps, Dictionary<string, string>, Task<GetEquipsResponse>> GetEquips;
-        public Func<SetEquipProps, Dictionary<string, string>, Task<SetEquipResponse>> SetEquip;
-        public Func<RemoveEquipProps, Dictionary<string, string>, Task<BasicSuccessResponse>> RemoveEquip;
+
+    public class EquipsRawDelegates {
+        public delegate Task<GetEquipsResponse> GetEquips(GetEquipsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<SetEquipResponse> SetEquip(SetEquipProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicSuccessResponse> RemoveEquip(RemoveEquipProps props, Dictionary<string, string> headers = null);
     }
 
-    public class EquipsSafeHandlers
-    {
-        public Func<GetEquipsProps, object, Task<BasicResult<List<Equip>>>> GetEquips;
-        public Func<SetEquipProps, object, Task<BasicResult<string>>> SetEquip;
-        public Func<RemoveEquipProps, object, Task<BasicResult<bool>>> RemoveEquip;
+    public class EquipsRawHandlers {
+        public EquipsRawDelegates.GetEquips GetEquips;
+        public EquipsRawDelegates.SetEquip SetEquip;
+        public EquipsRawDelegates.RemoveEquip RemoveEquip;
+    }
+
+    public class EquipsSafeDelegates {
+        public delegate Task<BasicResult<List<Equip>>> GetEquips(GetEquipsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<string>> SetEquip(SetEquipProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> RemoveEquip(RemoveEquipProps props, Dictionary<string, string> headers = null);
+    }
+    
+    public class EquipsSafeHandlers {
+        public EquipsSafeDelegates.GetEquips GetEquips;
+        public EquipsSafeDelegates.SetEquip SetEquip;
+        public EquipsSafeDelegates.RemoveEquip RemoveEquip;
     }
 }

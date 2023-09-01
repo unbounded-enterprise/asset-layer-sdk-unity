@@ -306,27 +306,47 @@ namespace AssetLayer.SDK.Slots
     }
 
 
-    public class SlotsRawHandlers
-    {
-        public Func<GetSlotProps, Dictionary<string, string>, Task<GetSlotResponse>> GetSlot;
-        public Func<GetSlotCollectionsAllProps, Dictionary<string, string>, Task<(GetSlotCollectionsResponse, GetSlotCollectionsIdsResponse)>> Collections;
-        public Func<GetSlotCollectionsProps, Dictionary<string, string>, Task<GetSlotCollectionsResponse>> GetSlotCollections;
-        public Func<GetSlotCollectionsProps, Dictionary<string, string>, Task<GetSlotCollectionsIdsResponse>> GetSlotCollectionIds;
-        public Func<Dictionary<string, string>, Task<GetExpressionTypesResponse>> GetExpressionTypes;
-        public Func<GetSlotExpressionsProps, Dictionary<string, string>, Task<GetSlotExpressionsResponse>> GetSlotExpressions;
-        public Func<CreateExpressionProps, Dictionary<string, string>, Task<CreateExpressionResponse>> CreateExpression;
-        public Func<UpdateExpressionProps, Dictionary<string, string>, Task<BasicSuccessResponse>> UpdateExpression;
+    public class SlotsRawDelegates {
+        public delegate Task<GetSlotResponse> GetSlot(GetSlotProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetSlotCollectionsResponse, GetSlotCollectionsIdsResponse)> Collections(GetSlotCollectionsAllProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetSlotCollectionsResponse> GetSlotCollections(GetSlotCollectionsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetSlotCollectionsIdsResponse> GetSlotCollectionIds(GetSlotCollectionsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetExpressionTypesResponse> GetExpressionTypes(Dictionary<string, string> headers = null);
+        public delegate Task<GetSlotExpressionsResponse> GetSlotExpressions(GetSlotExpressionsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<CreateExpressionResponse> CreateExpression(CreateExpressionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicSuccessResponse> UpdateExpression(UpdateExpressionProps props, Dictionary<string, string> headers = null);
     }
 
-    public class SlotsSafeHandlers
-    {
-        public Func<GetSlotProps, Dictionary<string, string>, Task<BasicResult<Slot>>> GetSlot;
-        public Func<GetSlotCollectionsAllProps, Dictionary<string, string>, Task<BasicResult<(List<Collection>, List<string>)>>> Collections;
-        public Func<GetSlotCollectionsProps, Dictionary<string, string>, Task<BasicResult<List<Collection>>>> GetSlotCollections;
-        public Func<GetSlotCollectionsProps, Dictionary<string, string>, Task<BasicResult<List<string>>>> GetSlotCollectionIds;
-        public Func<Dictionary<string, string>, Task<BasicResult<List<ExpressionType>>>> GetExpressionTypes;
-        public Func<GetSlotExpressionsProps, Dictionary<string, string>, Task<BasicResult<List<Expression>>>> GetSlotExpressions;
-        public Func<CreateExpressionProps, Dictionary<string, string>, Task<BasicResult<string>>> CreateExpression;
-        public Func<UpdateExpressionProps, Dictionary<string, string>, Task<BasicResult<bool>>> UpdateExpression;
+    public class SlotsRawHandlers {
+        public SlotsRawDelegates.GetSlot GetSlot;
+        public SlotsRawDelegates.Collections Collections;
+        public SlotsRawDelegates.GetSlotCollections GetSlotCollections;
+        public SlotsRawDelegates.GetSlotCollectionIds GetSlotCollectionIds;
+        public SlotsRawDelegates.GetExpressionTypes GetExpressionTypes;
+        public SlotsRawDelegates.GetSlotExpressions GetSlotExpressions;
+        public SlotsRawDelegates.CreateExpression CreateExpression;
+        public SlotsRawDelegates.UpdateExpression UpdateExpression;
+    }
+
+    public class SlotsSafeDelegates {
+        public delegate Task<BasicResult<Slot>> GetSlot(GetSlotProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Collection>, List<string>)>> Collections(GetSlotCollectionsAllProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Collection>>> GetSlotCollections(GetSlotCollectionsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<string>>> GetSlotCollectionIds(GetSlotCollectionsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<ExpressionType>>> GetExpressionTypes(Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Expression>>> GetSlotExpressions(GetSlotExpressionsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<string>> CreateExpression(CreateExpressionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> UpdateExpression(UpdateExpressionProps props, Dictionary<string, string> headers = null);
+    }
+
+    public class SlotsSafeHandlers {
+        public SlotsSafeDelegates.GetSlot GetSlot;
+        public SlotsSafeDelegates.Collections Collections;
+        public SlotsSafeDelegates.GetSlotCollections GetSlotCollections;
+        public SlotsSafeDelegates.GetSlotCollectionIds GetSlotCollectionIds;
+        public SlotsSafeDelegates.GetExpressionTypes GetExpressionTypes;
+        public SlotsSafeDelegates.GetSlotExpressions GetSlotExpressions;
+        public SlotsSafeDelegates.CreateExpression CreateExpression;
+        public SlotsSafeDelegates.UpdateExpression UpdateExpression;
     }
 }

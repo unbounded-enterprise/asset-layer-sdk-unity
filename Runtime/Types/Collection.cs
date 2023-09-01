@@ -372,33 +372,59 @@ namespace AssetLayer.SDK.Collections
         public string collectionId { get; set; }
     }
 
-    public class CollectionsRawHandlers
-    {
-        public Func<CollectionInfoProps, Dictionary<string, string>, Task<GetCollectionsResponse>> Info;
-        public Func<GetCollectionProps, Dictionary<string, string>, Task<GetCollectionsResponse>> GetCollection;
-        public Func<GetCollectionsProps, Dictionary<string, string>, Task<GetCollectionsResponse>> GetCollections;
-        public Func<CollectionAssetsProps, Dictionary<string, string>, Task<(GetCollectionAssetsResponse, GetCollectionAssetIdsResponse)>> Assets;
-        public Func<GetCollectionAssetsProps, Dictionary<string, string>, Task<GetCollectionAssetsResponse>> GetCollectionAssets;
-        public Func<GetCollectionAssetsProps, Dictionary<string, string>, Task<GetCollectionAssetIdsResponse>> GetCollectionAssetIds;
-        public Func<CreateCollectionProps, Dictionary<string, string>, Task<CreateCollectionResponse>> CreateCollection;
-        public Func<UpdateCollectionImageProps, Dictionary<string, string>, Task<BasicUploadedResponse>> UpdateCollectionImage;
-        public Func<UpdateCollectionProps, Dictionary<string, string>, Task<BasicUpdatedResponse>> UpdateCollection;
-        public Func<ActivateCollectionProps, Dictionary<string, string>, Task<BasicUpdatedResponse>> ActivateCollection;
-        public Func<ActivateCollectionProps, Dictionary<string, string>, Task<BasicUpdatedResponse>> DeactivateCollection;
+    public class CollectionsRawDelegates {
+        public delegate Task<GetCollectionsResponse> Info(CollectionInfoProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetCollectionsResponse> GetCollection(GetCollectionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetCollectionsResponse> GetCollections(GetCollectionsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetCollectionAssetsResponse, GetCollectionAssetIdsResponse)> Assets(CollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetCollectionAssetsResponse> GetCollectionAssets(GetCollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetCollectionAssetIdsResponse> GetCollectionAssetIds(GetCollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<CreateCollectionResponse> CreateCollection(CreateCollectionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicUploadedResponse> UpdateCollectionImage(UpdateCollectionImageProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicUpdatedResponse> UpdateCollection(UpdateCollectionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicUpdatedResponse> ActivateCollection(ActivateCollectionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicUpdatedResponse> DeactivateCollection(ActivateCollectionProps props, Dictionary<string, string> headers = null);
     }
 
-    public class CollectionsSafeHandlers
-    {
-        public Func<CollectionInfoProps, object, Task<BasicResult<(Collection, List<Collection>)>>> Info;
-        public Func<GetCollectionProps, object, Task<BasicResult<Collection>>> GetCollection;
-        public Func<GetCollectionsProps, object, Task<BasicResult<List<Collection>>>> GetCollections;
-        public Func<CollectionAssetsProps, object, Task<BasicResult<(List<Asset>, List<string>)>>> Assets;
-        public Func<GetCollectionAssetsProps, object, Task<BasicResult<List<Asset>>>> GetCollectionAssets;
-        public Func<GetCollectionAssetsProps, object, Task<BasicResult<List<AssetIdOnly>>>> GetCollectionAssetIds;
-        public Func<CreateCollectionProps, object, Task<BasicResult<string>>> CreateCollection;
-        public Func<UpdateCollectionImageProps, object, Task<BasicResult<bool>>> UpdateCollectionImage;
-        public Func<UpdateCollectionProps, object, Task<BasicResult<bool>>> UpdateCollection;
-        public Func<ActivateCollectionProps, object, Task<BasicResult<bool>>> ActivateCollection;
-        public Func<ActivateCollectionProps, object, Task<BasicResult<bool>>> DeactivateCollection;
+    public class CollectionsRawHandlers {
+        public CollectionsRawDelegates.Info Info;
+        public CollectionsRawDelegates.GetCollection GetCollection;
+        public CollectionsRawDelegates.GetCollections GetCollections;
+        public CollectionsRawDelegates.Assets Assets;
+        public CollectionsRawDelegates.GetCollectionAssets GetCollectionAssets;
+        public CollectionsRawDelegates.GetCollectionAssetIds GetCollectionAssetIds;
+        public CollectionsRawDelegates.CreateCollection CreateCollection;
+        public CollectionsRawDelegates.UpdateCollectionImage UpdateCollectionImage;
+        public CollectionsRawDelegates.UpdateCollection UpdateCollection;
+        public CollectionsRawDelegates.ActivateCollection ActivateCollection;
+        public CollectionsRawDelegates.DeactivateCollection DeactivateCollection;
+    }
+
+    public class CollectionsSafeDelegates {
+        public delegate Task<BasicResult<(Collection, List<Collection>)>> Info(CollectionInfoProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Collection>> GetCollection(GetCollectionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Collection>>> GetCollections(GetCollectionsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Asset>, List<string>)>> Assets(CollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Asset>>> GetCollectionAssets(GetCollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<AssetIdOnly>>> GetCollectionAssetIds(GetCollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<string>> CreateCollection(CreateCollectionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> UpdateCollectionImage(UpdateCollectionImageProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> UpdateCollection(UpdateCollectionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> ActivateCollection(ActivateCollectionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> DeactivateCollection(ActivateCollectionProps props, Dictionary<string, string> headers = null);
+    }
+
+    public class CollectionsSafeHandlers {
+        public CollectionsSafeDelegates.Info Info;
+        public CollectionsSafeDelegates.GetCollection GetCollection;
+        public CollectionsSafeDelegates.GetCollections GetCollections;
+        public CollectionsSafeDelegates.Assets Assets;
+        public CollectionsSafeDelegates.GetCollectionAssets GetCollectionAssets;
+        public CollectionsSafeDelegates.GetCollectionAssetIds GetCollectionAssetIds;
+        public CollectionsSafeDelegates.CreateCollection CreateCollection;
+        public CollectionsSafeDelegates.UpdateCollectionImage UpdateCollectionImage;
+        public CollectionsSafeDelegates.UpdateCollection UpdateCollection;
+        public CollectionsSafeDelegates.ActivateCollection ActivateCollection;
+        public CollectionsSafeDelegates.DeactivateCollection DeactivateCollection;
     }
 }

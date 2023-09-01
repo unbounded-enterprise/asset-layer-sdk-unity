@@ -225,26 +225,47 @@ namespace AssetLayer.SDK.Currencies
     }
     
 
-    public class CurrenciesRawHandlers {
-        public Func<GetCurrencyProps, Dictionary<string, string>, Task<GetCurrencyResponse>> Info;
-        public Func<GetCurrencyProps, Dictionary<string, string>, Task<GetCurrencyResponse>> GetCurrency;
-        public Func<GetCurrencyBalanceProps, Dictionary<string, string>, Task<GetCurrencyBalanceResponse>> Balance;
-        public Func<GetCurrencyBalanceProps, Dictionary<string, string>, Task<GetCurrencyBalanceResponse>> GetCurrencyBalance;
-        public Func<GetCurrencySummaryProps, Dictionary<string, string>, Task<GetCurrencySummaryResponse>> GetCurrencySummary;
-        public Func<IncreaseCurrencyBalanceProps, Dictionary<string, string>, Task<IncreaseCurrencyBalanceResponse>> IncreaseCurrencyBalance;
-        public Func<DecreaseCurrencyBalanceProps, Dictionary<string, string>, Task<DecreaseCurrencyBalanceResponse>> DecreaseCurrencyBalance;
-        public Func<TransferCurrencyProps, Dictionary<string, string>, Task<TransferCurrencyResponse>> TransferCurrency;
+    public class CurrenciesRawDelegates {
+        public delegate Task<BasicResult<GetCurrencyResponse>> Info(GetCurrencyProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<GetCurrencyResponse>> GetCurrency(GetCurrencyProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<GetCurrencyBalanceResponse>> Balance(GetCurrencyBalanceProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<GetCurrencyBalanceResponse>> GetCurrencyBalance(GetCurrencyBalanceProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<GetCurrencySummaryResponse>> GetCurrencySummary(GetCurrencySummaryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<IncreaseCurrencyBalanceResponse>> IncreaseCurrencyBalance(IncreaseCurrencyBalanceProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<DecreaseCurrencyBalanceResponse>> DecreaseCurrencyBalance(DecreaseCurrencyBalanceProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<TransferCurrencyResponse>> TransferCurrency(TransferCurrencyProps props, Dictionary<string, string> headers = null);
     }
 
-    public class CurrenciesSafeHandlers
-    {
-        public Func<GetCurrencyProps, object, Task<BasicResult<Currency>>> Info;
-        public Func<GetCurrencyProps, object, Task<BasicResult<Currency>>> GetCurrency;
-        public Func<GetCurrencyBalanceProps, object, Task<BasicResult<CurrencyWithBalance>>> Balance;
-        public Func<GetCurrencyBalanceProps, object, Task<BasicResult<CurrencyWithBalance>>> GetCurrencyBalance;
-        public Func<GetCurrencySummaryProps, object, Task<BasicResult<List<CurrencySummary>>>> GetCurrencySummary;
-        public Func<IncreaseCurrencyBalanceProps, object, Task<BasicResult<decimal>>> IncreaseCurrencyBalance;
-        public Func<DecreaseCurrencyBalanceProps, object, Task<BasicResult<decimal>>> DecreaseCurrencyBalance;
-        public Func<TransferCurrencyProps, object, Task<BasicResult<decimal>>> TransferCurrency;
+    public class CurrenciesRawHandlers {
+        public CurrenciesRawDelegates.Info Info;
+        public CurrenciesRawDelegates.GetCurrency GetCurrency;
+        public CurrenciesRawDelegates.Balance Balance;
+        public CurrenciesRawDelegates.GetCurrencyBalance GetCurrencyBalance;
+        public CurrenciesRawDelegates.GetCurrencySummary GetCurrencySummary;
+        public CurrenciesRawDelegates.IncreaseCurrencyBalance IncreaseCurrencyBalance;
+        public CurrenciesRawDelegates.DecreaseCurrencyBalance DecreaseCurrencyBalance;
+        public CurrenciesRawDelegates.TransferCurrency TransferCurrency;
+    }
+
+    public class CurrenciesSafeDelegates {
+        public delegate Task<BasicResult<Currency>> Info(GetCurrencyProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Currency>> GetCurrency(GetCurrencyProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<CurrencyWithBalance>> Balance(GetCurrencyBalanceProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<CurrencyWithBalance>> GetCurrencyBalance(GetCurrencyBalanceProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<CurrencySummary>>> GetCurrencySummary(GetCurrencySummaryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<decimal>> IncreaseCurrencyBalance(IncreaseCurrencyBalanceProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<decimal>> DecreaseCurrencyBalance(DecreaseCurrencyBalanceProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<decimal>> TransferCurrency(TransferCurrencyProps props, Dictionary<string, string> headers = null);
+    }
+
+    public class CurrenciesSafeHandlers {
+        public CurrenciesSafeDelegates.Info Info;
+        public CurrenciesSafeDelegates.GetCurrency GetCurrency;
+        public CurrenciesSafeDelegates.Balance Balance;
+        public CurrenciesSafeDelegates.GetCurrencyBalance GetCurrencyBalance;
+        public CurrenciesSafeDelegates.GetCurrencySummary GetCurrencySummary;
+        public CurrenciesSafeDelegates.IncreaseCurrencyBalance IncreaseCurrencyBalance;
+        public CurrenciesSafeDelegates.DecreaseCurrencyBalance DecreaseCurrencyBalance;
+        public CurrenciesSafeDelegates.TransferCurrency TransferCurrency;
     }
 }
