@@ -5,6 +5,8 @@ using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
 using AssetLayer.SDK;
+using AssetLayer.SDK.Basic;
+using AssetLayer.SDK.Utils;
 using UnityEngine;
 
 #if UNITY_WEBGL
@@ -16,6 +18,19 @@ using UnityEngine;
 
 namespace AssetLayer.SDK.Core.Networking
 {
+    public class ErrorResponse {
+        public string error { get; set; }
+        public string message { get; set; }
+        public string errorMessage { get; set; }
+        public int? status { get; set; }
+        public int? statusCode { get; set; }
+        public string Error { get; set; }
+        public string Message { get; set; }
+        public string ReasonPhrase { get; set; }
+        public string ErrorMessage { get; set; }
+        public int? Status { get; set; }
+        public int? StatusCode { get; set; }
+    }
     public static class NetworkingUtils {
         public static T GetContentAsObject<T>(string jsonContent) {
             using (var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(jsonContent))) {
@@ -44,8 +59,10 @@ namespace AssetLayer.SDK.Core.Networking
                     Debug.Log("GetResponseUnity: " + www.downloadHandler.text);
                     return NetworkingUtils.GetContentAsObject<T>(www.downloadHandler.text);
                 } else {
-                    Debug.Log("GetResponse Error: " + www.error);
-                    // Handle error
+                    Debug.Log("GetResponseUnity Error: " + www.error + " " + www.downloadHandler.text);
+                    ErrorResponse err = NetworkingUtils.GetContentAsObject<ErrorResponse>(www.downloadHandler.text); 
+                    BasicError error = AssetLayerUtils.ParseBasicError(err);
+                    throw error;
                 }
 
                 throw new Exception("A general exception has occurred.");
@@ -78,12 +95,17 @@ namespace AssetLayer.SDK.Core.Networking
                     HttpResponseMessage response = await client.SendAsync(request);
                     var str = await response.Content.ReadAsStringAsync();
                     Debug.Log("GetResponse: " + str);
-                    T data = await GetContentAsObjectAsync<T>(response);
-                    if (response.IsSuccessStatusCode) return data;
-                    // var error = parseBasicError(body);
-                    // Console.WriteLine($"[AssetLayer@{endpoint.Split('?')[0]}]: {response.ReasonPhrase} ({response.StatusCode}) // {error.message}");
-                    // throw new BasicError((error.message), response.StatusCode);
-                    throw new Exception("A general exception has occurred.");
+
+                    if (response.IsSuccessStatusCode) {
+                        T data = await GetContentAsObjectAsync<T>(response);
+                        return data;
+                    } else {
+                        ErrorResponse err = await GetContentAsObjectAsync<ErrorResponse>(response); 
+                        BasicError error = AssetLayerUtils.ParseBasicError(err);
+                        // Console.WriteLine($"[AssetLayer@{endpoint.Split('?')[0]}]: {response.ReasonPhrase} ({response.StatusCode}) // {error.message}");
+                        // throw new BasicError((error.message), response.StatusCode);
+                        throw error;
+                    }
                 }
             }
         }

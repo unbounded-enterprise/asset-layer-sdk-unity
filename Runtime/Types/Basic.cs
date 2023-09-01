@@ -8,16 +8,16 @@ namespace AssetLayer.SDK.Basic
 {
     public class BasicEmptyObject { }
     public class BasicError : Exception {
-        public int status;
+        public int Status { get; set; }
 
         public BasicError(string message, int status) : base(message) { 
-            this.status = status; 
+            Status = status; 
         }
     }
 
     public class BasicResult<T> {
-        public T result { get; set; }
-        public BasicError error { get; set; }
+        public T Result { get; set; }
+        public BasicError Error { get; set; }
     }
 
     [DataContract]

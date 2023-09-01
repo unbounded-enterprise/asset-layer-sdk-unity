@@ -61,11 +61,34 @@ namespace AssetLayer.SDK.Core.Apps
             GetAppIdsWithListings = async (headers) => await _this.Request<GetAppIdsWithListingsResponse>("/app/listings?idOnly=true"),
         };
 
-        public AppsSafeHandlers Safe = new AppsSafeHandlers
-        {
+        public AppsSafeHandlers Safe = new AppsSafeHandlers {
             Info = async (props, headers) => {
-                try { return new BasicResult<(App, List<App>)> { result = await _this.Info(props, headers) }; }
-                catch (Exception e) { return new BasicResult<(App, List<App>)> { error = new BasicError("", 400)/*parseBasicError(e)*/ }; } }
+                try { return new BasicResult<(App, List<App>)> { Result = await _this.Info(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<(App, List<App>)> { Error = e }; } },
+            GetApp = async (props, headers) => {
+                try { return new BasicResult<App> { Result = await _this.GetApp(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<App> { Error = e }; } },
+            GetApps = async (props, headers) => {
+                try { return new BasicResult<List<App>> { Result = await _this.GetApps(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<List<App>> { Error = e }; } },
+            Slots = async (props, headers) => {
+                try { return new BasicResult<(List<SlotWithExpressions>, List<string>)> { Result = await _this.Slots(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<(List<SlotWithExpressions>, List<string>)> { Error = e }; } },
+            GetAppSlots = async (props, headers) => {
+                try { return new BasicResult<List<SlotWithExpressions>> { Result = await _this.GetAppSlots(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<List<SlotWithExpressions>> { Error = e }; } },
+            GetAppSlotIds = async (props, headers) => {
+                try { return new BasicResult<List<string>> { Result = await _this.GetAppSlotIds(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<List<string>> { Error = e }; } },
+            Listings = async (props, headers) => {
+                try { return new BasicResult<(List<AppWithListingsCount>, List<AppIdOnly>)> { Result = await _this.Listings(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<(List<AppWithListingsCount>, List<AppIdOnly>)> { Error = e }; } },
+            GetAppsWithListings = async (headers) => {
+                try { return new BasicResult<List<AppWithListingsCount>> { Result = await _this.GetAppsWithListings(headers) }; }
+                catch (BasicError e) { return new BasicResult<List<AppWithListingsCount>> { Error = e }; } },
+            GetAppIdsWithListings = async (headers) => {
+                try { return new BasicResult<List<AppIdOnly>> { Result = await _this.GetAppIdsWithListings(headers) }; }
+                catch (BasicError e) { return new BasicResult<List<AppIdOnly>> { Error = e }; } }
         };
     }
 }
