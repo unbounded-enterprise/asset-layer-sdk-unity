@@ -39,13 +39,25 @@ namespace AssetLayer.SDK.Core.Networking
                 return obj;
             }
         }
+        public static string GetObjectAsJSON(object obj) {
+            using (MemoryStream memoryStream = new MemoryStream()) {
+                DataContractJsonSerializer serializer = new DataContractJsonSerializer(obj.GetType());
+                serializer.WriteObject(memoryStream, obj);
+                byte[] jsonBytes = memoryStream.ToArray();
+                return Encoding.UTF8.GetString(jsonBytes, 0, jsonBytes.Length);
+            }
+        }
     }
     #if UNITY_WEBGL
         public static class UnityNetworking {
-            public static async Task<T> Request<T>(string url, string method = "GET", Dictionary<string, string> headers = null) {
+            public static async Task<T> Request<T>(string url, string method = "GET", object body = null, Dictionary<string, string> headers = null) {
                 UnityWebRequest www = new UnityWebRequest(url, method);
 
                 if (headers != null) foreach (var header in headers) www.SetRequestHeader(header.Key, header.Value);
+                if (body != null) {
+                    www.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(NetworkingUtils.GetObjectAsJSON(body)));
+                    www.SetRequestHeader("Content-Type", "application/json");
+                }
                 
                 www.downloadHandler = new DownloadHandlerBuffer();
                 TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
@@ -64,8 +76,6 @@ namespace AssetLayer.SDK.Core.Networking
                     BasicError error = AssetLayerUtils.ParseBasicError(err);
                     throw error;
                 }
-
-                throw new Exception("A general exception has occurred.");
             }
         }
     #else
@@ -83,14 +93,17 @@ namespace AssetLayer.SDK.Core.Networking
                 return NetworkingUtils.GetContentAsObject<T>(contentString);
             }
 
-            public static async Task<T> Request<T>(string url, string method = "GET", Dictionary<string, string> headers = null) {
+            public static async Task<T> Request<T>(string url, string method = "GET", object body = null, Dictionary<string, string> headers = null) {
                 using (HttpClient client = new HttpClient()) {
                     if (headers != null) foreach (var header in headers) client.DefaultRequestHeaders.Add(header.Key, header.Value);
-                    // if (!client.DefaultRequestHeaders.Contains("Content-Type")) 
-                    //     client.DefaultRequestHeaders.Add("Content-Type", "application/json");
 
                     HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
-                    if (method != "GET" && BasicNetworkingUtils.HttpMethodMap.TryGetValue(method, out HttpMethod httpMethod)) request.Method = httpMethod;
+                    if (method != "GET" && BasicNetworkingUtils.HttpMethodMap.TryGetValue(method, out HttpMethod httpMethod)) { request.Method = httpMethod; }
+                    if (body != null) {
+                        request.Content = new StringContent(GetObjectAsJSON(body), Encoding.UTF8, "application/json");
+                        if (!client.DefaultRequestHeaders.Contains("Content-Type")) 
+                            client.DefaultRequestHeaders.Add("Content-Type", "application/json");
+                    }
 
                     HttpResponseMessage response = await client.SendAsync(request);
                     var str = await response.Content.ReadAsStringAsync();

@@ -404,7 +404,7 @@ namespace AssetLayer.SDK.Collections
         public delegate Task<BasicResult<(Collection, List<Collection>)>> Info(CollectionInfoProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<Collection>> GetCollection(GetCollectionProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<Collection>>> GetCollections(GetCollectionsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicResult<(List<Asset>, List<string>)>> Assets(CollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Asset>, List<AssetIdOnly>)>> Assets(CollectionAssetsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<Asset>>> GetCollectionAssets(GetCollectionAssetsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<AssetIdOnly>>> GetCollectionAssetIds(GetCollectionAssetsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<string>> CreateCollection(CreateCollectionProps props, Dictionary<string, string> headers = null);
