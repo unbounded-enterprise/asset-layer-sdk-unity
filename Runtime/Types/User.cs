@@ -148,6 +148,8 @@ namespace AssetLayer.SDK.Users
         public User user { get; set; } 
     }
     [DataContract]
+    public class GetOTPResponse : BasicResponse<GetOTPResponseBody> { public GetOTPResponse() : base() { } }
+    [DataContract]
     public class GetOTPResponseBody { 
         public GetOTPResponseBody() { }
 
@@ -157,6 +159,8 @@ namespace AssetLayer.SDK.Users
         [DataMember]
         public string otp { get; set; } 
     }
+    [DataContract]
+    public class RegisterUserResponse : BasicResponse<RegisterUserResponseBody> { public RegisterUserResponse() : base() { } }
     [DataContract]
     public class RegisterUserResponseBody {
         public RegisterUserResponseBody() { }
@@ -178,19 +182,31 @@ namespace AssetLayer.SDK.Users
         public string handle { get; set; }
     }
 
-    public class UsersRawHandlers
-    {
-        public Func<Dictionary<string, string>, Task<GetUserResponse>> GetUser;
-        public Func<RegisterUserProps, Dictionary<string, string>, Task<(GetOTPResponseBody, RegisterUserResponseBody)>> Register;
-        public Func<Dictionary<string, string>, Task<GetOTPResponseBody>> GetOTP;
-        public Func<RegisterDidProps, Dictionary<string, string>, Task<RegisterUserResponseBody>> RegisterDid;
+    public class UsersRawDelegates {
+        public delegate Task<GetUserResponse> GetUser(Dictionary<string, string> queryParams = null);
+        public delegate Task<(GetOTPResponse, RegisterUserResponse)> Register(RegisterUserProps body, Dictionary<string, string> queryParams = null);
+        public delegate Task<GetOTPResponse> GetOTP(Dictionary<string, string> queryParams = null);
+        public delegate Task<RegisterUserResponse> RegisterDid(RegisterDidProps body, Dictionary<string, string> queryParams = null);
     }
 
-    public class UsersSafeHandlers
-    {
-        public Func<Dictionary<string, string>, Task<BasicResult<User>>> GetUser;
-        public Func<RegisterUserProps, Dictionary<string, string>, Task<BasicResult<(string, RegisterUserResponseBody)>>> Register;
-        public Func<Dictionary<string, string>, Task<BasicResult<string>>> GetOTP;
-        public Func<RegisterDidProps, Dictionary<string, string>, Task<BasicResult<RegisterUserResponseBody>>> RegisterDid;
+    public class UsersRawHandlers {
+        public UsersRawDelegates.GetUser GetUser;
+        public UsersRawDelegates.Register Register;
+        public UsersRawDelegates.GetOTP GetOTP;
+        public UsersRawDelegates.RegisterDid RegisterDid;
+    }
+
+    public class UsersSafeDelegates {
+        public delegate Task<BasicResult<User>> GetUser(Dictionary<string, string> queryParams = null);
+        public delegate Task<BasicResult<(string, RegisterUserResponseBody)>> Register(RegisterUserProps body, Dictionary<string, string> queryParams = null);
+        public delegate Task<BasicResult<string>> GetOTP(Dictionary<string, string> queryParams = null);
+        public delegate Task<BasicResult<RegisterUserResponseBody>> RegisterDid(RegisterDidProps body, Dictionary<string, string> queryParams = null);
+    }
+
+    public class UsersSafeHandlers {
+        public UsersSafeDelegates.GetUser GetUser;
+        public UsersSafeDelegates.Register Register;
+        public UsersSafeDelegates.GetOTP GetOTP;
+        public UsersSafeDelegates.RegisterDid RegisterDid;
     }
 }

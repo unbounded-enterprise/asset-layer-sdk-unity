@@ -599,21 +599,21 @@ namespace AssetLayer.SDK.Listings
 
     public class ListingsRawDelegates {
         public delegate Task<GetListingResponse> GetListing(GetListingProps props, Dictionary<string, string> headers = null);
-        public delegate Task<(GetListingsResponse, GetListingCountsResponse)> User(ListingUserProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetUserListingsResponse, GetUserListingCountsResponse)> User(ListingUserProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetUserListingsResponse> GetUserListings(GetUserListingsMinProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetUserListingCountsResponse> GetUserListingsCounts(GetUserListingsMinProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetUserListingsResponse> GetUserCollectionListings(GetUserCollectionListingsProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetUserListingCountsResponse> GetUserCollectionListingsCounts(GetUserCollectionListingsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<GetListingsResponse> GetUserSales(GetUserHistoryProps props, Dictionary<string, string> headers = null);
-        public delegate Task<GetListingCountsResponse> GetUserSalesCounts(GetUserHistoryProps props, Dictionary<string, string> headers = null);
-        public delegate Task<GetListingsResponse> GetUserPurchases(GetUserHistoryProps props, Dictionary<string, string> headers = null);
-        public delegate Task<GetListingCountsResponse> GetUserPurchasesCounts(GetUserHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetUserListingsResponse> GetUserSales(GetUserHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetUserListingCountsResponse> GetUserSalesCounts(GetUserHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetUserListingsResponse> GetUserPurchases(GetUserHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetUserListingCountsResponse> GetUserPurchasesCounts(GetUserHistoryProps props, Dictionary<string, string> headers = null);
         public delegate Task<(GetListingsResponse, GetListingCountsResponse)> Collection(ListingCollectionProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetListingsResponse> GetCollectionListings(GetCollectionListingsProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetListingsResponse> GetCollectionsListings(GetCollectionsListingsProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetListingCountsResponse> GetCollectionListingsCounts(GetCollectionListingsProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetListingCountsResponse> GetCollectionsListingsCounts(GetCollectionsListingsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<(GetListingsResponse, GetListingCountsResponse)> App(ListingAppProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetListingsResponse, GetListingCountsResponse, GetAppListingsStatsResponse)> App(ListingAppProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetListingsResponse> GetAppListings(GetAppListingsProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetListingCountsResponse> GetAppListingsCounts(GetAppListingsProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetAppListingsStatsResponse> GetAppListingsStats(GetAppListingsProps props, Dictionary<string, string> headers = null);
@@ -656,32 +656,32 @@ namespace AssetLayer.SDK.Listings
     }
 
     public class ListingsSafeDelegates {
-        public delegate Task<Listing> GetListing(GetListingProps props, Dictionary<string, string> headers = null);
-        public delegate Task<(List<Listing>, Dictionary<string, long>)> User(ListingUserProps props, Dictionary<string, string> headers = null);
-        public delegate Task<List<Listing>> GetUserListings(GetUserListingsMinProps props, Dictionary<string, string> headers = null);
-        public delegate Task<Dictionary<string, long>> GetUserListingsCounts(GetUserListingsMinProps props, Dictionary<string, string> headers = null);
-        public delegate Task<List<Listing>> GetUserCollectionListings(GetUserCollectionListingsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<Dictionary<string, long>> GetUserCollectionListingsCounts(GetUserCollectionListingsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<List<Listing>> GetUserSales(GetUserHistoryProps props, Dictionary<string, string> headers = null);
-        public delegate Task<Dictionary<string, long>> GetUserSalesCounts(GetUserHistoryProps props, Dictionary<string, string> headers = null);
-        public delegate Task<List<Listing>> GetUserPurchases(GetUserHistoryProps props, Dictionary<string, string> headers = null);
-        public delegate Task<Dictionary<string, long>> GetUserPurchasesCounts(GetUserHistoryProps props, Dictionary<string, string> headers = null);
-        public delegate Task<(List<Listing>, Dictionary<string, long>)> Collection(ListingCollectionProps props, Dictionary<string, string> headers = null);
-        public delegate Task<List<Listing>> GetCollectionListings(GetCollectionListingsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<List<Listing>> GetCollectionsListings(GetCollectionsListingsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<Dictionary<string, long>> GetCollectionListingsCounts(GetCollectionListingsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<Dictionary<string, long>> GetCollectionsListingsCounts(GetCollectionsListingsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<(List<Listing>, Dictionary<string, long>)> App(ListingAppProps props, Dictionary<string, string> headers = null);
-        public delegate Task<List<Listing>> GetAppListings(GetAppListingsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<Dictionary<string, long>> GetAppListingsCounts(GetAppListingsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<Dictionary<string, CollectionListingsStats>> GetAppListingsStats(GetAppListingsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<(ListAssetResponseBody,  List<string>)> New(ListingNewProps props, Dictionary<string, string> headers = null);
-        public delegate Task<ListAssetResponseBody> ListAsset(ListAssetProps props, Dictionary<string, string> headers = null);
-        public delegate Task<List<string>> ListAssets(ListAssetsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<List<string>> ListCollectionAssets(ListCollectionAssetsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<bool> UpdateListing(UpdateListingProps props, Dictionary<string, string> headers = null);
-        public delegate Task<bool> BuyListing(BuyListingProps props, Dictionary<string, string> headers = null);
-        public delegate Task<bool> RemoveListing(RemoveListingProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Listing>> GetListing(GetListingProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Listing>, Dictionary<string, long>)>> User(ListingUserProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Listing>>> GetUserListings(GetUserListingsMinProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, long>>> GetUserListingsCounts(GetUserListingsMinProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Listing>>> GetUserCollectionListings(GetUserCollectionListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, long>>> GetUserCollectionListingsCounts(GetUserCollectionListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Listing>>> GetUserSales(GetUserHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, long>>> GetUserSalesCounts(GetUserHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Listing>>> GetUserPurchases(GetUserHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, long>>> GetUserPurchasesCounts(GetUserHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Listing>, Dictionary<string, long>)>> Collection(ListingCollectionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Listing>>> GetCollectionListings(GetCollectionListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Listing>>> GetCollectionsListings(GetCollectionsListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, long>>> GetCollectionListingsCounts(GetCollectionListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, long>>> GetCollectionsListingsCounts(GetCollectionsListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Listing>, Dictionary<string, long>, Dictionary<string, CollectionListingsStats>)>> App(ListingAppProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Listing>>> GetAppListings(GetAppListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, long>>> GetAppListingsCounts(GetAppListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, CollectionListingsStats>>> GetAppListingsStats(GetAppListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(ListAssetResponseBodyListing,  List<string>)>> New(ListingNewProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<ListAssetResponseBodyListing>> ListAsset(ListAssetProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<string>>> ListAssets(ListAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<string>>> ListCollectionAssets(ListCollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> UpdateListing(UpdateListingProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> BuyListing(BuyListingProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> RemoveListing(RemoveListingProps props, Dictionary<string, string> headers = null);
     }
 
     public class ListingsSafeHandlers {
