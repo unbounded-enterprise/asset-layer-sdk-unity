@@ -205,7 +205,7 @@ namespace AssetLayer.SDK.Assets
     // For GetUserAssetsAllProps
     [DataContract]
     public class AssetUserProps : GetUserAssetsBaseProps {
-        public AssetUserProps() { }
+        public AssetUserProps() : base() { }
 
         #if UNITY_WEBGL
             [Preserve]
@@ -385,7 +385,7 @@ namespace AssetLayer.SDK.Assets
     // For GetAssetOwnershipHistoryProps
     [DataContract]
     public class GetAssetOwnershipHistoryProps : GetAssetHistoryProps {
-        public GetAssetOwnershipHistoryProps() { }
+        public GetAssetOwnershipHistoryProps() : base() { }
 
         #if UNITY_WEBGL
             [Preserve]
@@ -427,7 +427,7 @@ namespace AssetLayer.SDK.Assets
     // For SendAssetBase
     [DataContract]
     public class SendAssetBase {
-        public SendAssetBase() { }
+        public SendAssetBase() : base() { }
 
         #if UNITY_WEBGL
             [Preserve]
@@ -445,7 +445,7 @@ namespace AssetLayer.SDK.Assets
     // For SendAssetProps
     [DataContract]
     public class SendAssetProps : SendAssetBase {
-        public SendAssetProps() { }
+        public SendAssetProps() : base() { }
 
         #if UNITY_WEBGL
             [Preserve]
@@ -457,7 +457,7 @@ namespace AssetLayer.SDK.Assets
     // For SendAssetsProps
     [DataContract]
     public class SendAssetsProps : SendAssetBase {
-        public SendAssetsProps() { }
+        public SendAssetsProps() : base() { }
 
         #if UNITY_WEBGL
             [Preserve]
@@ -469,7 +469,7 @@ namespace AssetLayer.SDK.Assets
     // For SendCollectionAssetsProps
     [DataContract]
     public class SendCollectionAssetsProps : SendAssetBase {
-        public SendCollectionAssetsProps() { }
+        public SendCollectionAssetsProps() : base() { }
 
         #if UNITY_WEBGL
             [Preserve]
@@ -481,7 +481,7 @@ namespace AssetLayer.SDK.Assets
     // For SendAssetAllProps
     [DataContract]
     public class AssetSendProps : SendAssetBase {
-        public AssetSendProps() { }
+        public AssetSendProps() : base() { }
 
         #if UNITY_WEBGL
             [Preserve]
@@ -633,6 +633,104 @@ namespace AssetLayer.SDK.Assets
         [DataMember]
         public string collectionId { get; set; }
     }
+    [DataContract]
+    public class UpdateExpressionValueBase {
+        public UpdateExpressionValueBase() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string expressionAttributeName { get; set; }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string value { get; set; }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string expressionId { get; set; }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string expressionName { get; set; }
+    }
+    [DataContract]
+    public class UpdateExpressionValuesProps : UpdateExpressionValueBase {
+        public UpdateExpressionValuesProps() : base() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string assetId { get; set; }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<string> assetIds { get; set; }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string collectionId { get; set; }
+    }
+    [DataContract]
+    public class UpdateAssetExpressionValueProps : UpdateExpressionValueBase {
+        public UpdateAssetExpressionValueProps() : base() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string assetId { get; set; }
+    }
+    [DataContract]
+    public class UpdateAssetsExpressionValueProps : UpdateExpressionValueBase {
+        public UpdateAssetsExpressionValueProps() : base() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<string> assetIds { get; set; }
+    }
+    [DataContract]
+    public class UpdateCollectionAssetsExpressionValueProps : UpdateExpressionValueBase {
+        public UpdateCollectionAssetsExpressionValueProps() : base() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string collectionId { get; set; }
+    }
+    [DataContract]
+    public class UpdateBulkExpressionValuesProps {
+        public UpdateBulkExpressionValuesProps() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string collectionId { get; set; }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string value { get; set; }
+    }
+
+
 
     [DataContract]
     public class GetAssetsResponse : BasicResponse<GetAssetsResponseBody> { 
@@ -894,47 +992,195 @@ namespace AssetLayer.SDK.Assets
         [DataMember]
         public string collectionId { get; set; }
     }
+    [DataContract]
+    public class UpdateAssetExpressionValueResponse : BasicResponse<UpdateAssetExpressionValueResponseBody> {
+        public UpdateAssetExpressionValueResponse() : base() { }
+    }
+    [DataContract]
+    public class UpdateAssetExpressionValueResponseBody {
+        public UpdateAssetExpressionValueResponseBody() { }
 
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string expressionValueId { get; set; }
+    }
+    [DataContract]
+    public class UpdateAssetsExpressionValueResponse : BasicResponse<UpdateAssetsExpressionValueResponseBody> {
+        public UpdateAssetsExpressionValueResponse() : base() { }
+    }
+    [DataContract]
+    public class UpdateAssetsExpressionValueResponseBody {
+        public UpdateAssetsExpressionValueResponseBody() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<string> assetIds { get; set; }
+    }
+    [DataContract]
+    public class UpdateBulkExpressionValuesResponse : BasicResponse<UpdateBulkExpressionValuesResponseBody> {
+        public UpdateBulkExpressionValuesResponse() : base() { }
+    }
+    [DataContract]
+    public class UpdateBulkExpressionValuesResponseBody {
+        public UpdateBulkExpressionValuesResponseBody() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<BulkExpressionValueLog> log { get; set; } // WARN! CAN ALSO BE FALSE
+    }
+    [DataContract]
+    public class BulkExpressionValueLog {
+        public BulkExpressionValueLog() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string filename { get; set; }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public bool success { get; set; }
+    }
+
+    public class AssetsRawDelegates {
+        public delegate Task<GetAssetsResponse> Info(AssetInfoProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetAssetsResponse> GetAsset(GetAssetProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetAssetsResponse> GetAssets(GetAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetAssetsResponse, GetAssetIdsResponse, GetAssetCountsResponse)> User(AssetUserProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetAssetsResponse> GetUserAssets(GetUserAssetsBaseProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetAssetIdsResponse> GetUserAssetIds(GetUserAssetsBaseProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetAssetCountsResponse> GetUserAssetCounts(GetUserAssetsBaseProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetAssetsResponse, GetAssetIdsResponse, GetAssetCountsResponse)> GetUserCollectionAssets(GetUserCollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetCollectionsAssetsResponse, GetCollectionsAssetIdsResponse, GetCollectionsAssetCountsResponse)> GetUserCollectionsAssets(GetUserCollectionsAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetAssetsResponse, GetAssetIdsResponse, GetAssetCountsResponse)> GetUserSlotAssets(GetUserSlotAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetAssetsResponse, GetAssetIdsResponse, GetAssetCountsResponse)> GetUserSlotsAssets(GetUserSlotsAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetAssetHistoryResponse> GetAssetHistory(GetAssetHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetAssetMarketHistoryResponse> GetAssetMarketHistory(GetAssetHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetAssetMarketHistoryResponse, GetAssetOwnershipHistoryResponse)> GetAssetOwnershipHistory(GetAssetOwnershipHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicSuccessResponse> MintAssets(MintAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(SendAssetResponse, SendAssetsResponse)> Send(AssetSendProps props, Dictionary<string, string> headers = null);
+        public delegate Task<SendAssetResponse> SendAsset(SendAssetProps props, Dictionary<string, string> headers = null);
+        public delegate Task<SendAssetsResponse> SendAssets(SendAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<SendAssetsResponse> SendCollectionAssets(SendCollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<SendAssetResponse> SendLowestAsset(SendLowestAssetProps props, Dictionary<string, string> headers = null);
+        public delegate Task<SendAssetResponse> SendRandomAsset(SendRandomAssetProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(UpdateAssetResponse, UpdateAssetsResponse, UpdateCollectionAssetsResponse)> Update(AssetUpdateProps props, Dictionary<string, string> headers = null);
+        public delegate Task<UpdateAssetResponse> UpdateAsset(UpdateAssetProps props, Dictionary<string, string> headers = null);
+        public delegate Task<UpdateAssetsResponse> UpdateAssets(UpdateAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<UpdateCollectionAssetsResponse> UpdateCollectionAssets(UpdateCollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(UpdateAssetExpressionValueResponse, UpdateAssetsExpressionValueResponse, BasicSuccessResponse)> ExpressionValues (UpdateExpressionValuesProps props, Dictionary<string, string> headers = null);
+        public delegate Task<UpdateAssetExpressionValueResponse> UpdateAssetExpressionValue (UpdateAssetExpressionValueProps props, Dictionary<string, string> headers = null);
+        public delegate Task<UpdateAssetsExpressionValueResponse> UpdateAssetsExpressionValue (UpdateAssetsExpressionValueProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicSuccessResponse> UpdateCollectionAssetsExpressionValue (UpdateCollectionAssetsExpressionValueProps props, Dictionary<string, string> headers = null);
+        public delegate Task<UpdateBulkExpressionValuesResponse> UpdateBulkExpressionValues (UpdateBulkExpressionValuesProps props, Dictionary<string, string> headers = null);
+    }
 
     public class AssetsRawHandlers {
-        public Func<AssetInfoProps, Dictionary<string, string>, Task<GetAssetsResponse>> Info;
-        public Func<GetAssetProps, Dictionary<string, string>, Task<GetAssetsResponse>> GetAsset;
-        public Func<GetAssetsProps, Dictionary<string, string>, Task<GetAssetsResponse>> GetAssets;
-        public Func<AssetUserProps, Dictionary<string, string>, Task<(GetAssetsResponse, GetAssetIdsResponse, GetAssetCountsResponse)>> User;
-        public Func<GetUserAssetsBaseProps, Dictionary<string, string>, Task<GetAssetsResponse>> GetUserAssets;
-        public Func<GetUserAssetsBaseProps, Dictionary<string, string>, Task<GetAssetIdsResponse>> GetUserAssetIds;
-        public Func<GetUserAssetsBaseProps, Dictionary<string, string>, Task<GetAssetCountsResponse>> GetUserAssetCounts;
-        public Func<GetUserCollectionAssetsProps, Dictionary<string, string>, Task<(GetAssetsResponse, GetAssetIdsResponse, GetAssetCountsResponse)>> GetUserCollectionAssets;
-        public Func<GetUserCollectionsAssetsProps, Dictionary<string, string>, Task<(GetCollectionsAssetsResponse, GetCollectionsAssetIdsResponse, GetCollectionsAssetCountsResponse)>> GetUserCollectionsAssets;
-        public Func<GetUserSlotAssetsProps, Dictionary<string, string>, Task<(GetAssetsResponse, GetAssetIdsResponse, GetAssetCountsResponse)>> GetUserSlotAssets;
-        public Func<GetUserSlotsAssetsProps, Dictionary<string, string>, Task<(GetAssetsResponse, GetAssetIdsResponse, GetAssetCountsResponse)>> GetUserSlotsAssets;
-        public Func<GetAssetHistoryProps, Dictionary<string, string>, Task<GetAssetHistoryResponse>> GetAssetHistory;
-        public Func<GetAssetHistoryProps, Dictionary<string, string>, Task<GetAssetMarketHistoryResponse>> GetAssetMarketHistory;
-        public Func<GetAssetOwnershipHistoryProps, Dictionary<string, string>, Task<(GetAssetMarketHistoryResponse, GetAssetOwnershipHistoryResponse)>> GetAssetOwnershipHistory;
-        public Func<MintAssetsProps, Dictionary<string, string>, Task<GetAssetsResponse>> MintAssets;
-        public Func<AssetSendProps, Dictionary<string, string>, Task<(SendAssetResponse, SendAssetsResponse)>> Send;
-        public Func<SendAssetProps, Dictionary<string, string>, Task<SendAssetResponse>> SendAsset;
-        public Func<SendAssetsProps, Dictionary<string, string>, Task<SendAssetsResponse>> SendAssets;
-        public Func<SendCollectionAssetsProps, Dictionary<string, string>, Task<SendAssetsResponse>> SendCollectionAssets;
-        public Func<SendLowestAssetProps, Dictionary<string, string>, Task<SendAssetResponse>> SendLowestAsset;
-        public Func<SendRandomAssetProps, Dictionary<string, string>, Task<SendAssetResponse>> SendRandomAsset;
-        public Func<AssetUpdateProps, Dictionary<string, string>, Task<(UpdateAssetResponse, UpdateAssetsResponse, UpdateCollectionAssetsResponse)>> Update;
-        public Func<UpdateAssetProps, Dictionary<string, string>, Task<UpdateAssetResponse>> UpdateAsset;
-        public Func<UpdateAssetsProps, Dictionary<string, string>, Task<UpdateAssetsResponse>> UpdateAssets;
-        public Func<UpdateCollectionAssetsProps, Dictionary<string, string>, Task<UpdateCollectionAssetsResponse>> UpdateCollectionAssets;
+        public AssetsRawDelegates.Info Info;
+        public AssetsRawDelegates.GetAsset GetAsset;
+        public AssetsRawDelegates.GetAssets GetAssets;
+        public AssetsRawDelegates.User User;
+        public AssetsRawDelegates.GetUserAssets GetUserAssets;
+        public AssetsRawDelegates.GetUserAssetIds GetUserAssetIds;
+        public AssetsRawDelegates.GetUserAssetCounts GetUserAssetCounts;
+        public AssetsRawDelegates.GetUserCollectionAssets GetUserCollectionAssets;
+        public AssetsRawDelegates.GetUserCollectionsAssets GetUserCollectionsAssets;
+        public AssetsRawDelegates.GetUserSlotAssets GetUserSlotAssets;
+        public AssetsRawDelegates.GetUserSlotsAssets GetUserSlotsAssets;
+        public AssetsRawDelegates.GetAssetHistory GetAssetHistory;
+        public AssetsRawDelegates.GetAssetMarketHistory GetAssetMarketHistory;
+        public AssetsRawDelegates.GetAssetOwnershipHistory GetAssetOwnershipHistory;
+        public AssetsRawDelegates.MintAssets MintAssets;
+        public AssetsRawDelegates.Send Send;
+        public AssetsRawDelegates.SendAsset SendAsset;
+        public AssetsRawDelegates.SendAssets SendAssets;
+        public AssetsRawDelegates.SendCollectionAssets SendCollectionAssets;
+        public AssetsRawDelegates.SendLowestAsset SendLowestAsset;
+        public AssetsRawDelegates.SendRandomAsset SendRandomAsset;
+        public AssetsRawDelegates.Update Update;
+        public AssetsRawDelegates.UpdateAsset UpdateAsset;
+        public AssetsRawDelegates.UpdateAssets UpdateAssets;
+        public AssetsRawDelegates.UpdateCollectionAssets UpdateCollectionAssets;
+        public AssetsRawDelegates.ExpressionValues ExpressionValues;
+        public AssetsRawDelegates.UpdateAssetExpressionValue UpdateAssetExpressionValue;
+        public AssetsRawDelegates.UpdateAssetsExpressionValue UpdateAssetsExpressionValue;
+        public AssetsRawDelegates.UpdateCollectionAssetsExpressionValue UpdateCollectionAssetsExpressionValue;
+        public AssetsRawDelegates.UpdateBulkExpressionValues UpdateBulkExpressionValues;
     }
-    public class AssetsSafeHandlers
-    {
-        // public Func<AppInfoProps, Dictionary<string, string>, Task<BasicResult<(App, List<App>)>>> Info;
-        /*
-        public Func<GetAppProps, Dictionary<string, string>, Task<BasicResult<App>>> GetApp;
-        public Func<GetAppsProps, Dictionary<string, string>, Task<BasicResult<App[]>>> GetApps;
-        public Func<AppSlotsProps, Dictionary<string, string>, Task<BasicResult<(SlotWithExpressions[], string[])>>> Slots;
-        public Func<GetAppSlotsProps, Dictionary<string, string>, Task<BasicResult<SlotWithExpressions[]>>> GetAppSlots;
-        public Func<GetAppSlotsProps, Dictionary<string, string>, Task<BasicResult<string[]>>> GetAppSlotIds;
-        public Func<AppsWithListingsProps, Dictionary<string, string>, Task<BasicResult<(AppWithListingsCount[], AppIdOnly[])>>> Listings;
-        public Func<Dictionary<string, string>, Task<BasicResult<AppWithListingsCount[]>>> GetAppsWithListings;
-        public Func<Dictionary<string, string>, Task<BasicResult<AppIdOnly[]>>> GetAppIdsWithListings;
-        */
+
+    public class AssetsSafeDelegates {
+        public delegate Task<BasicResult<(Asset, List<Asset>)>> Info(AssetInfoProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Asset>> GetAsset(GetAssetProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Asset>>> GetAssets(GetAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Asset>, List<AssetIdOnly>, object)>> User(AssetUserProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Asset>>> GetUserAssets(GetUserAssetsBaseProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<AssetIdOnly>>> GetUserAssetIds(GetUserAssetsBaseProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<object>> GetUserAssetCounts(GetUserAssetsBaseProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Asset>, List<AssetIdOnly>, object)>> GetUserCollectionAssets(GetUserCollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Asset>, List<AssetIdOnly>, object)>> GetUserCollectionsAssets(GetUserCollectionsAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Asset>, List<AssetIdOnly>, object)>> GetUserSlotAssets(GetUserSlotAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Asset>, List<AssetIdOnly>, object)>> GetUserSlotsAssets(GetUserSlotsAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<AssetHistoryRecord>>> GetAssetHistory(GetAssetHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<AssetHistoryRecord>>> GetAssetMarketHistory(GetAssetHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<AssetHistoryRecord>, List<UserAlias>)>> GetAssetOwnershipHistory(GetAssetOwnershipHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> MintAssets(MintAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(SendAssetResponseBody, SendAssetsResponseBody)>> Send(AssetSendProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<SendAssetResponseBody>> SendAsset(SendAssetProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<SendAssetsResponseBody>> SendAssets(SendAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<SendAssetsResponseBody>> SendCollectionAssets(SendCollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<SendAssetResponseBody>> SendLowestAsset(SendLowestAssetProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<SendAssetResponseBody>> SendRandomAsset(SendRandomAssetProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(UpdateAssetResponseBody, List<string>, string)>> Update(AssetUpdateProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<UpdateAssetResponseBody>> UpdateAsset(UpdateAssetProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<string>>> UpdateAssets(UpdateAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<string>> UpdateCollectionAssets(UpdateCollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(string, List<string>, bool?)>> ExpressionValues (UpdateExpressionValuesProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<string>> UpdateAssetExpressionValue (UpdateAssetExpressionValueProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<string>>> UpdateAssetsExpressionValue (UpdateAssetsExpressionValueProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> UpdateCollectionAssetsExpressionValue (UpdateCollectionAssetsExpressionValueProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<BulkExpressionValueLog>>> UpdateBulkExpressionValues (UpdateBulkExpressionValuesProps props, Dictionary<string, string> headers = null);
+
+    }
+
+    public class AssetsSafeHandlers {
+        public AssetsSafeDelegates.Info Info;
+        public AssetsSafeDelegates.GetAsset GetAsset;
+        public AssetsSafeDelegates.GetAssets GetAssets;
+        public AssetsSafeDelegates.User User;
+        public AssetsSafeDelegates.GetUserAssets GetUserAssets;
+        public AssetsSafeDelegates.GetUserAssetIds GetUserAssetIds;
+        public AssetsSafeDelegates.GetUserAssetCounts GetUserAssetCounts;
+        public AssetsSafeDelegates.GetUserCollectionAssets GetUserCollectionAssets;
+        public AssetsSafeDelegates.GetUserCollectionsAssets GetUserCollectionsAssets;
+        public AssetsSafeDelegates.GetUserSlotAssets GetUserSlotAssets;
+        public AssetsSafeDelegates.GetUserSlotsAssets GetUserSlotsAssets;
+        public AssetsSafeDelegates.GetAssetHistory GetAssetHistory;
+        public AssetsSafeDelegates.GetAssetMarketHistory GetAssetMarketHistory;
+        public AssetsSafeDelegates.GetAssetOwnershipHistory GetAssetOwnershipHistory;
+        public AssetsSafeDelegates.MintAssets MintAssets;
+        public AssetsSafeDelegates.Send Send;
+        public AssetsSafeDelegates.SendAsset SendAsset;
+        public AssetsSafeDelegates.SendAssets SendAssets;
+        public AssetsSafeDelegates.SendCollectionAssets SendCollectionAssets;
+        public AssetsSafeDelegates.SendLowestAsset SendLowestAsset;
+        public AssetsSafeDelegates.SendRandomAsset SendRandomAsset;
+        public AssetsSafeDelegates.Update Update;
+        public AssetsSafeDelegates.UpdateAsset UpdateAsset;
+        public AssetsSafeDelegates.UpdateAssets UpdateAssets;
+        public AssetsSafeDelegates.UpdateCollectionAssets UpdateCollectionAssets;
+        public AssetsSafeDelegates.ExpressionValues ExpressionValues;
+        public AssetsSafeDelegates.UpdateAssetExpressionValue UpdateAssetExpressionValue;
+        public AssetsSafeDelegates.UpdateAssetsExpressionValue UpdateAssetsExpressionValue;
+        public AssetsSafeDelegates.UpdateCollectionAssetsExpressionValue UpdateCollectionAssetsExpressionValue;
+        public AssetsSafeDelegates.UpdateBulkExpressionValues UpdateBulkExpressionValues;
     }
 }

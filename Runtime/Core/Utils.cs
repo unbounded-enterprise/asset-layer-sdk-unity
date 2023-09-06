@@ -4,11 +4,25 @@ using System.Reflection;
 using System.Text;
 using System.Web;
 using UnityEngine;
+using AssetLayer.SDK.Basic;
+using AssetLayer.SDK.Core.Networking;
 
 namespace AssetLayer.SDK.Utils
 {
     public static class AssetLayerUtils
     {
+        public static BasicError ParseBasicError(ErrorResponse response, int fallbackCode = 500)
+        {
+            if (response == null) { return new BasicError("Unknown Error", fallbackCode); }
+
+            string message = response.error ?? response.message ?? response.Error ?? response.Message ?? response.ErrorMessage ?? response.errorMessage ?? response.ReasonPhrase ?? "Unknown Error Message";
+            int status = response.statusCode ?? response.status ?? response.StatusCode ?? response.Status ?? (response.StatusCode != null ? (int)response.StatusCode : fallbackCode);
+
+            Debug.Log("Error: " + message + " (" + status + ")");
+
+            return new BasicError(message, status);
+        }
+
         public static string PropsToQueryString(object props)
         {
             if (props == null) return "";

@@ -76,7 +76,7 @@ namespace AssetLayer.SDK.Listings
             [Preserve]
         #endif
         [DataMember]
-        public double price { get; set; }
+        public decimal price { get; set; }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -137,12 +137,12 @@ namespace AssetLayer.SDK.Listings
             [Preserve]
         #endif
         [DataMember]
-        public double lowest { get; set; }
+        public decimal lowest { get; set; }
         #if UNITY_WEBGL
             [Preserve]
         #endif
         [DataMember]
-        public double highest { get; set; }
+        public decimal highest { get; set; }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -216,8 +216,8 @@ namespace AssetLayer.SDK.Listings
         public string collectionId { get; set; } 
     }
     [DataContract]
-    public class GetUserListingsAllProps : GetUserListingsProps { 
-        public GetUserListingsAllProps() : base() { }
+    public class ListingUserProps : GetUserListingsProps { 
+        public ListingUserProps() : base() { }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -277,8 +277,8 @@ namespace AssetLayer.SDK.Listings
         public List<string> collectionIds { get; set; }
     }
     [DataContract]
-    public class GetCollectionsListingsAllProps : GetCollectionListingsBaseProps { 
-        public GetCollectionsListingsAllProps() : base() { }
+    public class ListingCollectionProps : GetCollectionListingsBaseProps { 
+        public ListingCollectionProps() : base() { }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -316,8 +316,8 @@ namespace AssetLayer.SDK.Listings
         public long lastUpdatedAt { get; set; }
     }
     [DataContract]
-    public class GetAppListingsAllProps : GetAppListingsProps { 
-        public GetAppListingsAllProps() : base() { }
+    public class ListingAppProps : GetAppListingsProps { 
+        public ListingAppProps() : base() { }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -331,13 +331,13 @@ namespace AssetLayer.SDK.Listings
     }
 
     [DataContract]
-    public class CreateListingBase {
-        public CreateListingBase() { }
+    public class ListAssetBase {
+        public ListAssetBase() { }
         #if UNITY_WEBGL
             [Preserve]
         #endif
         [DataMember]
-        public double price { get; set; }
+        public decimal price { get; set; }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -355,7 +355,7 @@ namespace AssetLayer.SDK.Listings
         public string walletUserId { get; set; }
     }
     [DataContract]
-    public class ListAssetProps : CreateListingBase { 
+    public class ListAssetProps : ListAssetBase { 
         public ListAssetProps() : base() { }
         #if UNITY_WEBGL
             [Preserve]
@@ -364,7 +364,7 @@ namespace AssetLayer.SDK.Listings
         public string assetId { get; set; } 
     }
     [DataContract]
-    public class ListAssetsProps : CreateListingBase { 
+    public class ListAssetsProps : ListAssetBase { 
         public ListAssetsProps() : base() { }
         #if UNITY_WEBGL
             [Preserve]
@@ -373,7 +373,7 @@ namespace AssetLayer.SDK.Listings
         public List<string> assetIds { get; set; }
     }
     [DataContract]
-    public class ListCollectionAssetsProps : CreateListingBase { 
+    public class ListCollectionAssetsProps : ListAssetBase { 
         public ListCollectionAssetsProps() : base() { }
         #if UNITY_WEBGL
             [Preserve]
@@ -382,8 +382,8 @@ namespace AssetLayer.SDK.Listings
         public string collectionId { get; set; } 
     }
     [DataContract]
-    public class CreateListingAllProps : CreateListingBase { 
-        public CreateListingAllProps() : base() { }
+    public class ListingNewProps : ListAssetBase { 
+        public ListingNewProps() : base() { }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -413,7 +413,7 @@ namespace AssetLayer.SDK.Listings
             [Preserve]
         #endif
         [DataMember]
-        public double price { get; set; }
+        public decimal price { get; set; }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -443,7 +443,7 @@ namespace AssetLayer.SDK.Listings
             [Preserve]
         #endif
         [DataMember]
-        public double price { get; set; }
+        public decimal price { get; set; }
     }
 
     [DataContract]
@@ -461,11 +461,75 @@ namespace AssetLayer.SDK.Listings
         public string walletUserId { get; set; }
     }
 
-
-
     [DataContract]
-    public class CreateListingResponseBodyListing {
-        public CreateListingResponseBodyListing() { }
+    public class GetListingResponse : BasicResponse<GetListingResponseBody> { public GetListingResponse() : base() { } }
+    [DataContract]
+    public class GetListingResponseBody { 
+        public GetListingResponseBody() { }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public Listing listing { get; set; }
+    }
+    [DataContract]
+    public class GetListingsResponse : BasicResponse<GetListingsResponseBody> { public GetListingsResponse() : base() { } }
+    [DataContract]
+    public class GetListingsResponseBody { 
+        public GetListingsResponseBody() { }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<Listing> listing { get; set; }
+    }
+    [DataContract]
+    public class GetListingCountsResponse : BasicResponse<GetListingCountsResponseBody> { public GetListingCountsResponse() : base() { } }
+    [DataContract]
+    public class GetListingCountsResponseBody { 
+        public GetListingCountsResponseBody() { }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public Dictionary<string, long> listing { get; set; }
+    }
+    [DataContract]
+    public class GetUserListingsResponse : BasicResponse<GetUserListingsResponseBody> { public GetUserListingsResponse() : base() { } }
+    [DataContract]
+    public class GetUserListingsResponseBody { 
+        public GetUserListingsResponseBody() { }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<Listing> listings { get; set; }
+    }
+    [DataContract]
+    public class GetUserListingCountsResponse : BasicResponse<GetUserListingCountsResponseBody> { public GetUserListingCountsResponse() : base() { } }
+    [DataContract]
+    public class GetUserListingCountsResponseBody { 
+        public GetUserListingCountsResponseBody() { }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public Dictionary<string, long> listings { get; set; }
+    }
+    [DataContract]
+    public class GetAppListingsStatsResponse : BasicResponse<GetAppListingsStatsResponseBody> { public GetAppListingsStatsResponse() : base() { } }
+    [DataContract]
+    public class GetAppListingsStatsResponseBody { 
+        public GetAppListingsStatsResponseBody() { }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public Dictionary<string, CollectionListingsStats> listing { get; set; }
+    }
+    [DataContract]
+    public class ListAssetResponseBodyListing {
+        public ListAssetResponseBodyListing() { }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -480,7 +544,7 @@ namespace AssetLayer.SDK.Listings
             [Preserve]
         #endif
         [DataMember]
-        public double price { get; set; }
+        public decimal price { get; set; }
         #if UNITY_WEBGL
             [Preserve]
         #endif
@@ -499,35 +563,153 @@ namespace AssetLayer.SDK.Listings
     }
 
     [DataContract]
-    public class CreateListingResponse : BasicResponse<CreateListingResponseBody> { public CreateListingResponse() : base() { } }
+    public class ListAssetResponse : BasicResponse<ListAssetResponseBody> { public ListAssetResponse() : base() { } }
     [DataContract]
-    public class CreateListingResponseBody { 
-        public CreateListingResponseBody() { }
+    public class ListAssetResponseBody { 
+        public ListAssetResponseBody() { }
         #if UNITY_WEBGL
             [Preserve]
         #endif
         [DataMember]
-        public CreateListingResponseBodyListing listing { get; set; }
+        public ListAssetResponseBodyListing listing { get; set; }
     }
     [DataContract]
-    public class CreateListingsResponse : BasicResponse<CreateListingsResponseBody> { public CreateListingsResponse() : base() { } }
+    public class ListAssetsResponse : BasicResponse<ListAssetsResponseBody> { public ListAssetsResponse() : base() { } }
     [DataContract]
-    public class CreateListingsResponseBody { 
-        public CreateListingsResponseBody() { }
+    public class ListAssetsResponseBody { 
+        public ListAssetsResponseBody() { }
         #if UNITY_WEBGL
             [Preserve]
         #endif
         [DataMember]
         public List<string> assetIds { get; set; }
     }
-
-    public class ListingsRawHandlers
-    {
-        
+    [DataContract]
+    public class BuyListingResponse : BasicResponse<BuyListingResponseBody> { public BuyListingResponse() : base() { } }
+    [DataContract]
+    public class BuyListingResponseBody { 
+        public BuyListingResponseBody() { }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public bool buy { get; set; }
     }
 
-    public class ListingsSafeHandlers
-    {
-        
+
+    public class ListingsRawDelegates {
+        public delegate Task<GetListingResponse> GetListing(GetListingProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetUserListingsResponse, GetUserListingCountsResponse)> User(ListingUserProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetUserListingsResponse> GetUserListings(GetUserListingsMinProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetUserListingCountsResponse> GetUserListingsCounts(GetUserListingsMinProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetUserListingsResponse> GetUserCollectionListings(GetUserCollectionListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetUserListingCountsResponse> GetUserCollectionListingsCounts(GetUserCollectionListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetUserListingsResponse> GetUserSales(GetUserHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetUserListingCountsResponse> GetUserSalesCounts(GetUserHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetUserListingsResponse> GetUserPurchases(GetUserHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetUserListingCountsResponse> GetUserPurchasesCounts(GetUserHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetListingsResponse, GetListingCountsResponse)> Collection(ListingCollectionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetListingsResponse> GetCollectionListings(GetCollectionListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetListingsResponse> GetCollectionsListings(GetCollectionsListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetListingCountsResponse> GetCollectionListingsCounts(GetCollectionListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetListingCountsResponse> GetCollectionsListingsCounts(GetCollectionsListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetListingsResponse, GetListingCountsResponse, GetAppListingsStatsResponse)> App(ListingAppProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetListingsResponse> GetAppListings(GetAppListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetListingCountsResponse> GetAppListingsCounts(GetAppListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetAppListingsStatsResponse> GetAppListingsStats(GetAppListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(ListAssetResponse, ListAssetsResponse)> New(ListingNewProps props, Dictionary<string, string> headers = null);
+        public delegate Task<ListAssetResponse> ListAsset(ListAssetProps props, Dictionary<string, string> headers = null);
+        public delegate Task<ListAssetsResponse> ListAssets(ListAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<ListAssetsResponse> ListCollectionAssets(ListCollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicSuccessResponse> UpdateListing(UpdateListingProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BuyListingResponse> BuyListing(BuyListingProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicSuccessResponse> RemoveListing(RemoveListingProps props, Dictionary<string, string> headers = null);
+    }
+
+    public class ListingsRawHandlers {
+        public ListingsRawDelegates.GetListing GetListing;
+        public ListingsRawDelegates.User User;
+        public ListingsRawDelegates.GetUserListings GetUserListings;
+        public ListingsRawDelegates.GetUserListingsCounts GetUserListingsCounts;
+        public ListingsRawDelegates.GetUserCollectionListings GetUserCollectionListings;
+        public ListingsRawDelegates.GetUserCollectionListingsCounts GetUserCollectionListingsCounts;
+        public ListingsRawDelegates.GetUserSales GetUserSales;
+        public ListingsRawDelegates.GetUserSalesCounts GetUserSalesCounts;
+        public ListingsRawDelegates.GetUserPurchases GetUserPurchases;
+        public ListingsRawDelegates.GetUserPurchasesCounts GetUserPurchasesCounts;
+        public ListingsRawDelegates.Collection Collection;
+        public ListingsRawDelegates.GetCollectionListings GetCollectionListings;
+        public ListingsRawDelegates.GetCollectionsListings GetCollectionsListings;
+        public ListingsRawDelegates.GetCollectionListingsCounts GetCollectionListingsCounts;
+        public ListingsRawDelegates.GetCollectionsListingsCounts GetCollectionsListingsCounts;
+        public ListingsRawDelegates.App App;
+        public ListingsRawDelegates.GetAppListings GetAppListings;
+        public ListingsRawDelegates.GetAppListingsCounts GetAppListingsCounts;
+        public ListingsRawDelegates.GetAppListingsStats GetAppListingsStats;
+        public ListingsRawDelegates.New New;
+        public ListingsRawDelegates.ListAsset ListAsset;
+        public ListingsRawDelegates.ListAssets ListAssets;
+        public ListingsRawDelegates.ListCollectionAssets ListCollectionAssets;
+        public ListingsRawDelegates.UpdateListing UpdateListing;
+        public ListingsRawDelegates.BuyListing BuyListing;
+        public ListingsRawDelegates.RemoveListing RemoveListing;
+    }
+
+    public class ListingsSafeDelegates {
+        public delegate Task<BasicResult<Listing>> GetListing(GetListingProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Listing>, Dictionary<string, long>)>> User(ListingUserProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Listing>>> GetUserListings(GetUserListingsMinProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, long>>> GetUserListingsCounts(GetUserListingsMinProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Listing>>> GetUserCollectionListings(GetUserCollectionListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, long>>> GetUserCollectionListingsCounts(GetUserCollectionListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Listing>>> GetUserSales(GetUserHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, long>>> GetUserSalesCounts(GetUserHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Listing>>> GetUserPurchases(GetUserHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, long>>> GetUserPurchasesCounts(GetUserHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Listing>, Dictionary<string, long>)>> Collection(ListingCollectionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Listing>>> GetCollectionListings(GetCollectionListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Listing>>> GetCollectionsListings(GetCollectionsListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, long>>> GetCollectionListingsCounts(GetCollectionListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, long>>> GetCollectionsListingsCounts(GetCollectionsListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Listing>, Dictionary<string, long>, Dictionary<string, CollectionListingsStats>)>> App(ListingAppProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Listing>>> GetAppListings(GetAppListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, long>>> GetAppListingsCounts(GetAppListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, CollectionListingsStats>>> GetAppListingsStats(GetAppListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(ListAssetResponseBodyListing,  List<string>)>> New(ListingNewProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<ListAssetResponseBodyListing>> ListAsset(ListAssetProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<string>>> ListAssets(ListAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<string>>> ListCollectionAssets(ListCollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> UpdateListing(UpdateListingProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> BuyListing(BuyListingProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> RemoveListing(RemoveListingProps props, Dictionary<string, string> headers = null);
+    }
+
+    public class ListingsSafeHandlers {
+        public ListingsSafeDelegates.GetListing GetListing;
+        public ListingsSafeDelegates.User User;
+        public ListingsSafeDelegates.GetUserListings GetUserListings;
+        public ListingsSafeDelegates.GetUserListingsCounts GetUserListingsCounts;
+        public ListingsSafeDelegates.GetUserCollectionListings GetUserCollectionListings;
+        public ListingsSafeDelegates.GetUserCollectionListingsCounts GetUserCollectionListingsCounts;
+        public ListingsSafeDelegates.GetUserSales GetUserSales;
+        public ListingsSafeDelegates.GetUserSalesCounts GetUserSalesCounts;
+        public ListingsSafeDelegates.GetUserPurchases GetUserPurchases;
+        public ListingsSafeDelegates.GetUserPurchasesCounts GetUserPurchasesCounts;
+        public ListingsSafeDelegates.Collection Collection;
+        public ListingsSafeDelegates.GetCollectionListings GetCollectionListings;
+        public ListingsSafeDelegates.GetCollectionsListings GetCollectionsListings;
+        public ListingsSafeDelegates.GetCollectionListingsCounts GetCollectionListingsCounts;
+        public ListingsSafeDelegates.GetCollectionsListingsCounts GetCollectionsListingsCounts;
+        public ListingsSafeDelegates.App App;
+        public ListingsSafeDelegates.GetAppListings GetAppListings;
+        public ListingsSafeDelegates.GetAppListingsCounts GetAppListingsCounts;
+        public ListingsSafeDelegates.GetAppListingsStats GetAppListingsStats;
+        public ListingsSafeDelegates.New New;
+        public ListingsSafeDelegates.ListAsset ListAsset;
+        public ListingsSafeDelegates.ListAssets ListAssets;
+        public ListingsSafeDelegates.ListCollectionAssets ListCollectionAssets;
+        public ListingsSafeDelegates.UpdateListing UpdateListing;
+        public ListingsSafeDelegates.BuyListing BuyListing;
+        public ListingsSafeDelegates.RemoveListing RemoveListing;
     }
 }

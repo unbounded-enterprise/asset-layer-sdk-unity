@@ -28,7 +28,7 @@ namespace AssetLayer.SDK.Core.Base
 
         public void SetDidToken(string didToken) { this.didToken = didToken; }
 
-        protected async Task<T> Request<T>(string endpoint, string method = "GET", Dictionary<string, string> headers = null)
+        protected async Task<T> Request<T>(string endpoint, string method = "GET", object body = null, Dictionary<string, string> headers = null)
         {
             string url = $"{this.baseUrl}{endpoint}";
             Debug.Log("GetRequest: " + url);
@@ -38,9 +38,9 @@ namespace AssetLayer.SDK.Core.Base
             if (this.didToken != null && !head.ContainsKey("didtoken")) head.Add("didtoken", this.didToken);
             
             #if UNITY_WEBGL
-                return await UnityNetworking.Request<T>(url, method, head);
+                return await UnityNetworking.Request<T>(url, method, body, head);
             #else
-                return await BasicNetworking.Request<T>(url, method, head);
+                return await BasicNetworking.Request<T>(url, method, body, head);
             #endif
         }
     }
