@@ -11,7 +11,7 @@ namespace AssetLayer.SDK.Utils
 {
     public static class AssetLayerUtils
     {
-        public static BasicError ParseBasicError(ErrorResponse response, int fallbackCode = 500)
+        public static BasicError ParseBasicError(BasicErrorResponse response, int fallbackCode = 500)
         {
             if (response == null) { return new BasicError("Unknown Error", fallbackCode); }
 
