@@ -42,34 +42,5 @@ namespace AssetLayer.SDK.Utils
             }
             return "?" + string.Join("&", parameters);
         }
-
-        public static string PropsToQueryStringDict(Dictionary<string, object> props)
-        {
-            return "";
-            /*
-            if (props == null) return "";
-            var parameters = new List<string>();
-            foreach (var key in props.Keys)
-            {
-                if (props[key] == null) continue;
-                else if (props[key] is string[])
-                {
-                    foreach (var value in (string[])props[key])
-                    {
-                        if (!string.IsNullOrEmpty(value))
-                        {
-                            parameters.Add($"{key}[]={HttpUtility.UrlEncode(value)}");
-                        }
-                    }
-                }
-                else
-                {
-                    parameters.Add($"{key}={HttpUtility.UrlEncode(props[key].ToString())}");
-                }
-            }
-            Console.WriteLine("qs: " + string.Join("&", parameters));
-            return "?" + string.Join("&", parameters);
-            */
-        }
     }
 }
