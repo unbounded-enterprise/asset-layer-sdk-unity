@@ -74,4 +74,64 @@ namespace AssetLayer.SDK.Basic
         [DataMember]
         public bool uploaded { get; set; }
     }
+
+    [DataContract]
+    public class BasicErrorResponse {
+        public BasicErrorResponse() { }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string error { get; set; }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string message { get; set; }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string errorMessage { get; set; }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public int? status { get; set; }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public int? statusCode { get; set; }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string Error { get; set; }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string Message { get; set; }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string ReasonPhrase { get; set; }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string ErrorMessage { get; set; }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public int? Status { get; set; }
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public int? StatusCode { get; set; }
+    }
 }

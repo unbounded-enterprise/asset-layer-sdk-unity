@@ -18,19 +18,6 @@ using UnityEngine;
 
 namespace AssetLayer.SDK.Core.Networking
 {
-    public class ErrorResponse {
-        public string error { get; set; }
-        public string message { get; set; }
-        public string errorMessage { get; set; }
-        public int? status { get; set; }
-        public int? statusCode { get; set; }
-        public string Error { get; set; }
-        public string Message { get; set; }
-        public string ReasonPhrase { get; set; }
-        public string ErrorMessage { get; set; }
-        public int? Status { get; set; }
-        public int? StatusCode { get; set; }
-    }
     public static class NetworkingUtils {
         public static T GetContentAsObject<T>(string jsonContent) {
             using (var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(jsonContent))) {
@@ -72,7 +59,7 @@ namespace AssetLayer.SDK.Core.Networking
                     return NetworkingUtils.GetContentAsObject<T>(www.downloadHandler.text);
                 } else {
                     Debug.Log("GetResponseUnity Error: " + www.error + " " + www.downloadHandler.text);
-                    ErrorResponse err = NetworkingUtils.GetContentAsObject<ErrorResponse>(www.downloadHandler.text); 
+                    BasicErrorResponse err = NetworkingUtils.GetContentAsObject<BasicErrorResponse>(www.downloadHandler.text); 
                     BasicError error = AssetLayerUtils.ParseBasicError(err);
                     throw error;
                 }
@@ -100,7 +87,7 @@ namespace AssetLayer.SDK.Core.Networking
                     HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
                     if (method != "GET" && BasicNetworkingUtils.HttpMethodMap.TryGetValue(method, out HttpMethod httpMethod)) { request.Method = httpMethod; }
                     if (body != null) {
-                        request.Content = new StringContent(GetObjectAsJSON(body), Encoding.UTF8, "application/json");
+                        request.Content = new StringContent(NetworkingUtils.GetObjectAsJSON(body), Encoding.UTF8, "application/json");
                         if (!client.DefaultRequestHeaders.Contains("Content-Type")) 
                             client.DefaultRequestHeaders.Add("Content-Type", "application/json");
                     }
@@ -113,7 +100,7 @@ namespace AssetLayer.SDK.Core.Networking
                         T data = await GetContentAsObjectAsync<T>(response);
                         return data;
                     } else {
-                        ErrorResponse err = await GetContentAsObjectAsync<ErrorResponse>(response); 
+                        BasicErrorResponse err = await GetContentAsObjectAsync<BasicErrorResponse>(response); 
                         BasicError error = AssetLayerUtils.ParseBasicError(err);
                         // Console.WriteLine($"[AssetLayer@{endpoint.Split('?')[0]}]: {response.ReasonPhrase} ({response.StatusCode}) // {error.message}");
                         // throw new BasicError((error.message), response.StatusCode);
