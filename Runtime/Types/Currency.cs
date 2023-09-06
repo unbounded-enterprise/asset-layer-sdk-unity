@@ -184,7 +184,7 @@ namespace AssetLayer.SDK.Currencies
         public Currency currency { get; set; } 
     }
     [DataContract]
-    public class GetCurrencyBalanceResponse : BasicResponse<CurrencyWithBalance> { 
+    public class GetCurrencyBalanceResponse : BasicResponse<List<CurrencyWithBalance>> { 
         public GetCurrencyBalanceResponse() : base() { }
     }
     [DataContract]
@@ -250,8 +250,8 @@ namespace AssetLayer.SDK.Currencies
     public class CurrenciesSafeDelegates {
         public delegate Task<BasicResult<Currency>> Info(GetCurrencyProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<Currency>> GetCurrency(GetCurrencyProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicResult<CurrencyWithBalance>> Balance(GetCurrencyBalanceProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicResult<CurrencyWithBalance>> GetCurrencyBalance(GetCurrencyBalanceProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<CurrencyWithBalance>>> Balance(GetCurrencyBalanceProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<CurrencyWithBalance>>> GetCurrencyBalance(GetCurrencyBalanceProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<CurrencySummary>>> GetCurrencySummary(GetCurrencySummaryProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<decimal>> IncreaseCurrencyBalance(IncreaseCurrencyBalanceProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<decimal>> DecreaseCurrencyBalance(DecreaseCurrencyBalanceProps props, Dictionary<string, string> headers = null);
