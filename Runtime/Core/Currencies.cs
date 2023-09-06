@@ -20,9 +20,9 @@ namespace AssetLayer.SDK.Core.Currencies
             return (await this.Raw.Info(props, headers)).body.currency; }
         public async Task<Currency> GetCurrency(GetCurrencyProps props, Dictionary<string, string> headers = null) {
             return (await this.Raw.GetCurrency(props, headers)).body.currency; }
-        public async Task<CurrencyWithBalance> Balance(GetCurrencyBalanceProps props, Dictionary<string, string> headers = null) {
+        public async Task<List<CurrencyWithBalance>> Balance(GetCurrencyBalanceProps props, Dictionary<string, string> headers = null) {
             return (await this.Raw.Balance(props, headers)).body; }
-        public async Task<CurrencyWithBalance> GetCurrencyBalance(GetCurrencyBalanceProps props, Dictionary<string, string> headers = null) {
+        public async Task<List<CurrencyWithBalance>> GetCurrencyBalance(GetCurrencyBalanceProps props, Dictionary<string, string> headers = null) {
             return (await this.Raw.GetCurrencyBalance(props, headers)).body; }
         public async Task<List<CurrencySummary>> GetCurrencySummary(GetCurrencySummaryProps props, Dictionary<string, string> headers = null) {
             return (await this.Raw.GetCurrencySummary(props, headers)).body.currencies; }
@@ -53,11 +53,11 @@ namespace AssetLayer.SDK.Core.Currencies
                 try { return new BasicResult<Currency> { Result = await _this.GetCurrency(props, headers) }; }
                 catch (BasicError e) { return new BasicResult<Currency> { Error = e }; } },
             Balance = async (props, headers) => {
-                try { return new BasicResult<CurrencyWithBalance> { Result = await _this.Balance(props, headers) }; }
-                catch (BasicError e) { return new BasicResult<CurrencyWithBalance> { Error = e }; } },
+                try { return new BasicResult<List<CurrencyWithBalance>> { Result = await _this.Balance(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<List<CurrencyWithBalance>> { Error = e }; } },
             GetCurrencyBalance = async (props, headers) => {
-                try { return new BasicResult<CurrencyWithBalance> { Result = await _this.GetCurrencyBalance(props, headers) }; }
-                catch (BasicError e) { return new BasicResult<CurrencyWithBalance> { Error = e }; } },
+                try { return new BasicResult<List<CurrencyWithBalance>> { Result = await _this.GetCurrencyBalance(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<List<CurrencyWithBalance>> { Error = e }; } },
             GetCurrencySummary = async (props, headers) => {
                 try { return new BasicResult<List<CurrencySummary>> { Result = await _this.GetCurrencySummary(props, headers) }; }
                 catch (BasicError e) { return new BasicResult<List<CurrencySummary>> { Error = e }; } },
