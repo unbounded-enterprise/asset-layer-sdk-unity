@@ -41,23 +41,23 @@ namespace AssetLayer.SDK.Core.Apps
 
         public AppsRawHandlers Raw = new AppsRawHandlers {
             Info = async (props, headers) => {
-                if (props.appIds != null) return (null, await _this.Request<GetAppsResponse>("/app/info" + AssetLayerUtils.PropsToQueryString(props)));
-                else return (await _this.Request<GetAppResponse>("/app/info" + AssetLayerUtils.PropsToQueryString(props)), null);
+                if (props.appIds != null) return (null, await _this.Request<GetAppsResponse>("/app/info" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers));
+                else return (await _this.Request<GetAppResponse>("/app/info" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
             },
-            GetApp = async (props, headers) => await _this.Request<GetAppResponse>("/app/info" + AssetLayerUtils.PropsToQueryString(props)),
-            GetApps = async (props, headers) => await _this.Request<GetAppsResponse>("/app/info" + AssetLayerUtils.PropsToQueryString(props)),
+            GetApp = async (props, headers) => await _this.Request<GetAppResponse>("/app/info" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
+            GetApps = async (props, headers) => await _this.Request<GetAppsResponse>("/app/info" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
             Slots = async (props, headers) => {
-                if (props.idOnly == true) return (null, await _this.Request<GetAppSlotIdsResponse>("/app/slots" + AssetLayerUtils.PropsToQueryString(props)));
-                else return (await _this.Request<GetAppSlotsResponse>("/app/slots" + AssetLayerUtils.PropsToQueryString(props)), null);
+                if (props.idOnly == true) return (null, await _this.Request<GetAppSlotIdsResponse>("/app/slots" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers));
+                else return (await _this.Request<GetAppSlotsResponse>("/app/slots" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
             },
-            GetAppSlots = async (props, headers) => await _this.Request<GetAppSlotsResponse>("/app/slots" + AssetLayerUtils.PropsToQueryString(props)),
-            GetAppSlotIds = async (props, headers) => await _this.Request<GetAppSlotIdsResponse>("/app/slots" + AssetLayerUtils.PropsToQueryString(props)),
+            GetAppSlots = async (props, headers) => await _this.Request<GetAppSlotsResponse>("/app/slots" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
+            GetAppSlotIds = async (props, headers) => await _this.Request<GetAppSlotIdsResponse>("/app/slots" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
             Listings = async (props, headers) => {
-                if (props.idOnly == true) return (null, await _this.Request<GetAppIdsWithListingsResponse>("/app/listings" + AssetLayerUtils.PropsToQueryString(props)));
-                else return (await _this.Request<GetAppsWithListingsResponse>("/app/listings" + AssetLayerUtils.PropsToQueryString(props)), null);
+                if (props.idOnly == true) return (null, await _this.Request<GetAppIdsWithListingsResponse>("/app/listings" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers));
+                else return (await _this.Request<GetAppsWithListingsResponse>("/app/listings" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
             },
-            GetAppsWithListings = async (headers) => await _this.Request<GetAppsWithListingsResponse>("/app/listings"),
-            GetAppIdsWithListings = async (headers) => await _this.Request<GetAppIdsWithListingsResponse>("/app/listings?idOnly=true"),
+            GetAppsWithListings = async (headers) => await _this.Request<GetAppsWithListingsResponse>("/app/listings", "GET", null, headers),
+            GetAppIdsWithListings = async (headers) => await _this.Request<GetAppIdsWithListingsResponse>("/app/listings?idOnly=true", "GET", null, headers),
         };
 
         public AppsSafeHandlers Safe = new AppsSafeHandlers {

@@ -29,7 +29,7 @@ namespace AssetLayer.SDK.Core.Users
 
 
         public UsersRawHandlers Raw = new UsersRawHandlers {
-            GetUser = async (headers) => await _this.Request<GetUserResponse>("/user/info"),
+            GetUser = async (headers) => await _this.Request<GetUserResponse>("/user/info", "GET", null, headers),
             Register = async (props, headers) => {
                 if (props.otp != null) return (null, await _this.Request<RegisterUserResponse>("/user/register", "POST", props, headers));
                 else return (await _this.Request<GetOTPResponse>("/user/register", "POST", props, headers), null);

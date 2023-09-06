@@ -38,15 +38,15 @@ namespace AssetLayer.SDK.Core.Slots
 
 
         public SlotsRawHandlers Raw = new SlotsRawHandlers {
-            GetSlot = async (props, headers) => await _this.Request<GetSlotResponse>("/slot/info" + AssetLayerUtils.PropsToQueryString(props)),
+            GetSlot = async (props, headers) => await _this.Request<GetSlotResponse>("/slot/info" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
             Collections = async (props, headers) => {
-                if (props.idOnly == true) return (null, await _this.Request<GetSlotCollectionsIdsResponse>("/slot/collections" + AssetLayerUtils.PropsToQueryString(props)));
-                else return (await _this.Request<GetSlotCollectionsResponse>("/slot/collections" + AssetLayerUtils.PropsToQueryString(props)), null);
+                if (props.idOnly == true) return (null, await _this.Request<GetSlotCollectionsIdsResponse>("/slot/collections" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers));
+                else return (await _this.Request<GetSlotCollectionsResponse>("/slot/collections" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
             },
-            GetSlotCollections = async (props, headers) => await _this.Request<GetSlotCollectionsResponse>("/slot/collections" + AssetLayerUtils.PropsToQueryString(props)),
-            GetSlotCollectionIds = async (props, headers) => await _this.Request<GetSlotCollectionsIdsResponse>("/slot/collections" + AssetLayerUtils.PropsToQueryString(props)),
-            GetExpressionTypes = async (headers) => await _this.Request<GetExpressionTypesResponse>("/slot/expressions/types"),
-            GetSlotExpressions = async (props, headers) => await _this.Request<GetSlotExpressionsResponse>("/slot/expressions" + AssetLayerUtils.PropsToQueryString(props)),
+            GetSlotCollections = async (props, headers) => await _this.Request<GetSlotCollectionsResponse>("/slot/collections" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
+            GetSlotCollectionIds = async (props, headers) => await _this.Request<GetSlotCollectionsIdsResponse>("/slot/collections" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
+            GetExpressionTypes = async (headers) => await _this.Request<GetExpressionTypesResponse>("/slot/expressions/types", "GET", null, headers),
+            GetSlotExpressions = async (props, headers) => await _this.Request<GetSlotExpressionsResponse>("/slot/expressions" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
             CreateExpression = async (props, headers) => await _this.Request<CreateExpressionResponse>("/slot/expressions/new", "POST", props, headers),
             UpdateExpression = async (props, headers) => await _this.Request<BasicSuccessResponse>("/slot/expressions/update", "PUT", props, headers)
         };

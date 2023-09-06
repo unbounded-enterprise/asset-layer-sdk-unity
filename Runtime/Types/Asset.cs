@@ -205,7 +205,7 @@ namespace AssetLayer.SDK.Assets
     // For GetUserAssetsAllProps
     [DataContract]
     public class AssetUserProps : GetUserAssetsBaseProps {
-        public AssetUserProps() { }
+        public AssetUserProps() : base() { }
 
         #if UNITY_WEBGL
             [Preserve]
@@ -385,7 +385,7 @@ namespace AssetLayer.SDK.Assets
     // For GetAssetOwnershipHistoryProps
     [DataContract]
     public class GetAssetOwnershipHistoryProps : GetAssetHistoryProps {
-        public GetAssetOwnershipHistoryProps() { }
+        public GetAssetOwnershipHistoryProps() : base() { }
 
         #if UNITY_WEBGL
             [Preserve]
@@ -427,7 +427,7 @@ namespace AssetLayer.SDK.Assets
     // For SendAssetBase
     [DataContract]
     public class SendAssetBase {
-        public SendAssetBase() { }
+        public SendAssetBase() : base() { }
 
         #if UNITY_WEBGL
             [Preserve]
@@ -445,7 +445,7 @@ namespace AssetLayer.SDK.Assets
     // For SendAssetProps
     [DataContract]
     public class SendAssetProps : SendAssetBase {
-        public SendAssetProps() { }
+        public SendAssetProps() : base() { }
 
         #if UNITY_WEBGL
             [Preserve]
@@ -457,7 +457,7 @@ namespace AssetLayer.SDK.Assets
     // For SendAssetsProps
     [DataContract]
     public class SendAssetsProps : SendAssetBase {
-        public SendAssetsProps() { }
+        public SendAssetsProps() : base() { }
 
         #if UNITY_WEBGL
             [Preserve]
@@ -469,7 +469,7 @@ namespace AssetLayer.SDK.Assets
     // For SendCollectionAssetsProps
     [DataContract]
     public class SendCollectionAssetsProps : SendAssetBase {
-        public SendCollectionAssetsProps() { }
+        public SendCollectionAssetsProps() : base() { }
 
         #if UNITY_WEBGL
             [Preserve]
@@ -481,7 +481,7 @@ namespace AssetLayer.SDK.Assets
     // For SendAssetAllProps
     [DataContract]
     public class AssetSendProps : SendAssetBase {
-        public AssetSendProps() { }
+        public AssetSendProps() : base() { }
 
         #if UNITY_WEBGL
             [Preserve]
@@ -633,6 +633,104 @@ namespace AssetLayer.SDK.Assets
         [DataMember]
         public string collectionId { get; set; }
     }
+    [DataContract]
+    public class UpdateExpressionValueBase {
+        public UpdateExpressionValueBase() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string expressionAttributeName { get; set; }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string value { get; set; }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string expressionId { get; set; }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string expressionName { get; set; }
+    }
+    [DataContract]
+    public class UpdateExpressionValuesProps : UpdateExpressionValueBase {
+        public UpdateExpressionValuesProps() : base() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string assetId { get; set; }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<string> assetIds { get; set; }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string collectionId { get; set; }
+    }
+    [DataContract]
+    public class UpdateAssetExpressionValueProps : UpdateExpressionValueBase {
+        public UpdateAssetExpressionValueProps() : base() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string assetId { get; set; }
+    }
+    [DataContract]
+    public class UpdateAssetsExpressionValueProps : UpdateExpressionValueBase {
+        public UpdateAssetsExpressionValueProps() : base() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<string> assetIds { get; set; }
+    }
+    [DataContract]
+    public class UpdateCollectionAssetsExpressionValueProps : UpdateExpressionValueBase {
+        public UpdateCollectionAssetsExpressionValueProps() : base() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string collectionId { get; set; }
+    }
+    [DataContract]
+    public class UpdateBulkExpressionValuesProps {
+        public UpdateBulkExpressionValuesProps() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string collectionId { get; set; }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string value { get; set; }
+    }
+
+
 
     [DataContract]
     public class GetAssetsResponse : BasicResponse<GetAssetsResponseBody> { 
@@ -894,7 +992,64 @@ namespace AssetLayer.SDK.Assets
         [DataMember]
         public string collectionId { get; set; }
     }
+    [DataContract]
+    public class UpdateAssetExpressionValueResponse : BasicResponse<UpdateAssetExpressionValueResponseBody> {
+        public UpdateAssetExpressionValueResponse() : base() { }
+    }
+    [DataContract]
+    public class UpdateAssetExpressionValueResponseBody {
+        public UpdateAssetExpressionValueResponseBody() { }
 
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string expressionValueId { get; set; }
+    }
+    [DataContract]
+    public class UpdateAssetsExpressionValueResponse : BasicResponse<UpdateAssetsExpressionValueResponseBody> {
+        public UpdateAssetsExpressionValueResponse() : base() { }
+    }
+    [DataContract]
+    public class UpdateAssetsExpressionValueResponseBody {
+        public UpdateAssetsExpressionValueResponseBody() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<string> assetIds { get; set; }
+    }
+    [DataContract]
+    public class UpdateBulkExpressionValuesResponse : BasicResponse<UpdateBulkExpressionValuesResponseBody> {
+        public UpdateBulkExpressionValuesResponse() : base() { }
+    }
+    [DataContract]
+    public class UpdateBulkExpressionValuesResponseBody {
+        public UpdateBulkExpressionValuesResponseBody() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<BulkExpressionValueLog> log { get; set; } // WARN! CAN ALSO BE FALSE
+    }
+    [DataContract]
+    public class BulkExpressionValueLog {
+        public BulkExpressionValueLog() { }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public string filename { get; set; }
+
+        #if UNITY_WEBGL
+            [Preserve]
+        #endif
+        [DataMember]
+        public bool success { get; set; }
+    }
 
     public class AssetsRawDelegates {
         public delegate Task<GetAssetsResponse> Info(AssetInfoProps props, Dictionary<string, string> headers = null);
@@ -911,7 +1066,7 @@ namespace AssetLayer.SDK.Assets
         public delegate Task<GetAssetHistoryResponse> GetAssetHistory(GetAssetHistoryProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetAssetMarketHistoryResponse> GetAssetMarketHistory(GetAssetHistoryProps props, Dictionary<string, string> headers = null);
         public delegate Task<(GetAssetMarketHistoryResponse, GetAssetOwnershipHistoryResponse)> GetAssetOwnershipHistory(GetAssetOwnershipHistoryProps props, Dictionary<string, string> headers = null);
-        public delegate Task<GetAssetsResponse> MintAssets(MintAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicSuccessResponse> MintAssets(MintAssetsProps props, Dictionary<string, string> headers = null);
         public delegate Task<(SendAssetResponse, SendAssetsResponse)> Send(AssetSendProps props, Dictionary<string, string> headers = null);
         public delegate Task<SendAssetResponse> SendAsset(SendAssetProps props, Dictionary<string, string> headers = null);
         public delegate Task<SendAssetsResponse> SendAssets(SendAssetsProps props, Dictionary<string, string> headers = null);
@@ -922,6 +1077,11 @@ namespace AssetLayer.SDK.Assets
         public delegate Task<UpdateAssetResponse> UpdateAsset(UpdateAssetProps props, Dictionary<string, string> headers = null);
         public delegate Task<UpdateAssetsResponse> UpdateAssets(UpdateAssetsProps props, Dictionary<string, string> headers = null);
         public delegate Task<UpdateCollectionAssetsResponse> UpdateCollectionAssets(UpdateCollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(UpdateAssetExpressionValueResponse, UpdateAssetsExpressionValueResponse, BasicSuccessResponse)> ExpressionValues (UpdateExpressionValuesProps props, Dictionary<string, string> headers = null);
+        public delegate Task<UpdateAssetExpressionValueResponse> UpdateAssetExpressionValue (UpdateAssetExpressionValueProps props, Dictionary<string, string> headers = null);
+        public delegate Task<UpdateAssetsExpressionValueResponse> UpdateAssetsExpressionValue (UpdateAssetsExpressionValueProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicSuccessResponse> UpdateCollectionAssetsExpressionValue (UpdateCollectionAssetsExpressionValueProps props, Dictionary<string, string> headers = null);
+        public delegate Task<UpdateBulkExpressionValuesResponse> UpdateBulkExpressionValues (UpdateBulkExpressionValuesProps props, Dictionary<string, string> headers = null);
     }
 
     public class AssetsRawHandlers {
@@ -950,6 +1110,11 @@ namespace AssetLayer.SDK.Assets
         public AssetsRawDelegates.UpdateAsset UpdateAsset;
         public AssetsRawDelegates.UpdateAssets UpdateAssets;
         public AssetsRawDelegates.UpdateCollectionAssets UpdateCollectionAssets;
+        public AssetsRawDelegates.ExpressionValues ExpressionValues;
+        public AssetsRawDelegates.UpdateAssetExpressionValue UpdateAssetExpressionValue;
+        public AssetsRawDelegates.UpdateAssetsExpressionValue UpdateAssetsExpressionValue;
+        public AssetsRawDelegates.UpdateCollectionAssetsExpressionValue UpdateCollectionAssetsExpressionValue;
+        public AssetsRawDelegates.UpdateBulkExpressionValues UpdateBulkExpressionValues;
     }
 
     public class AssetsSafeDelegates {
@@ -967,7 +1132,7 @@ namespace AssetLayer.SDK.Assets
         public delegate Task<BasicResult<List<AssetHistoryRecord>>> GetAssetHistory(GetAssetHistoryProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<AssetHistoryRecord>>> GetAssetMarketHistory(GetAssetHistoryProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<(List<AssetHistoryRecord>, List<UserAlias>)>> GetAssetOwnershipHistory(GetAssetOwnershipHistoryProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicResult<List<Asset>>> MintAssets(MintAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> MintAssets(MintAssetsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<(SendAssetResponseBody, SendAssetsResponseBody)>> Send(AssetSendProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<SendAssetResponseBody>> SendAsset(SendAssetProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<SendAssetsResponseBody>> SendAssets(SendAssetsProps props, Dictionary<string, string> headers = null);
@@ -978,6 +1143,12 @@ namespace AssetLayer.SDK.Assets
         public delegate Task<BasicResult<UpdateAssetResponseBody>> UpdateAsset(UpdateAssetProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<string>>> UpdateAssets(UpdateAssetsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<string>> UpdateCollectionAssets(UpdateCollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(string, List<string>, bool?)>> ExpressionValues (UpdateExpressionValuesProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<string>> UpdateAssetExpressionValue (UpdateAssetExpressionValueProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<string>>> UpdateAssetsExpressionValue (UpdateAssetsExpressionValueProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> UpdateCollectionAssetsExpressionValue (UpdateCollectionAssetsExpressionValueProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<BulkExpressionValueLog>>> UpdateBulkExpressionValues (UpdateBulkExpressionValuesProps props, Dictionary<string, string> headers = null);
+
     }
 
     public class AssetsSafeHandlers {
@@ -1006,5 +1177,10 @@ namespace AssetLayer.SDK.Assets
         public AssetsSafeDelegates.UpdateAsset UpdateAsset;
         public AssetsSafeDelegates.UpdateAssets UpdateAssets;
         public AssetsSafeDelegates.UpdateCollectionAssets UpdateCollectionAssets;
+        public AssetsSafeDelegates.ExpressionValues ExpressionValues;
+        public AssetsSafeDelegates.UpdateAssetExpressionValue UpdateAssetExpressionValue;
+        public AssetsSafeDelegates.UpdateAssetsExpressionValue UpdateAssetsExpressionValue;
+        public AssetsSafeDelegates.UpdateCollectionAssetsExpressionValue UpdateCollectionAssetsExpressionValue;
+        public AssetsSafeDelegates.UpdateBulkExpressionValues UpdateBulkExpressionValues;
     }
 }

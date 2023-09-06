@@ -63,8 +63,8 @@ namespace AssetLayer.SDK.Core.Assets
             if (props.ownersOnly == true) return (null, (await this.Raw.GetAssetOwnershipHistory(props, headers)).Item2.body.history);
             else return ((await this.Raw.GetAssetOwnershipHistory(props, headers)).Item1.body.history, null);
         }
-        public async Task<List<Asset>> MintAssets(MintAssetsProps props, Dictionary<string, string> headers = null) {
-            return (await this.Raw.MintAssets(props, headers)).body.assets; }
+        public async Task<bool> MintAssets(MintAssetsProps props, Dictionary<string, string> headers = null) {
+            return (await this.Raw.MintAssets(props, headers)).success; }
         public async Task<(SendAssetResponseBody, SendAssetsResponseBody)> Send(AssetSendProps props, Dictionary<string, string> headers = null) {
             if (props.collectionId != null || props.assetIds != null) return (null, (await this.Raw.Send(props, headers)).Item2.body);
             else return ((await this.Raw.Send(props, headers)).Item1.body, null);
@@ -90,46 +90,59 @@ namespace AssetLayer.SDK.Core.Assets
             return (await this.Raw.UpdateAssets(props, headers)).body.assetIds; }
         public async Task<string> UpdateCollectionAssets(UpdateCollectionAssetsProps props, Dictionary<string, string> headers = null) {
             return (await this.Raw.UpdateCollectionAssets(props, headers)).body.collectionId; }
+        public async Task<(string, List<string>, bool?)> ExpressionValues(UpdateExpressionValuesProps props, Dictionary<string, string> headers = null) {
+            if (props.collectionId != null) return (null, null, (await this.Raw.ExpressionValues(props, headers)).Item3.success);
+            else if (props.assetIds != null) return (null, (await this.Raw.ExpressionValues(props, headers)).Item2.body.assetIds, null);
+            else return ((await this.Raw.ExpressionValues(props, headers)).Item1.body.expressionValueId, null, null);
+        }
+        public async Task<string> UpdateAssetExpressionValue(UpdateAssetExpressionValueProps props, Dictionary<string, string> headers = null) {
+            return (await this.Raw.UpdateAssetExpressionValue(props, headers)).body.expressionValueId; }
+        public async Task<List<string>> UpdateAssetsExpressionValue(UpdateAssetsExpressionValueProps props, Dictionary<string, string> headers = null) {
+            return (await this.Raw.UpdateAssetsExpressionValue(props, headers)).body.assetIds; }
+        public async Task<bool> UpdateCollectionAssetsExpressionValue(UpdateCollectionAssetsExpressionValueProps props, Dictionary<string, string> headers = null) {
+            return (await this.Raw.UpdateCollectionAssetsExpressionValue(props, headers)).success; }
+        public async Task<List<BulkExpressionValueLog>> UpdateBulkExpressionValues(UpdateBulkExpressionValuesProps props, Dictionary<string, string> headers = null) {
+            return (await this.Raw.UpdateBulkExpressionValues(props, headers)).body.log; }
         
         public AssetsRawHandlers Raw = new AssetsRawHandlers {
-            Info = async (props, headers) => await _this.Request<GetAssetsResponse>("/asset/info" + AssetLayerUtils.PropsToQueryString(props)),
-            GetAsset = async (props, headers) => await _this.Request<GetAssetsResponse>("/asset/info" + AssetLayerUtils.PropsToQueryString(props)),
-            GetAssets = async (props, headers) => await _this.Request<GetAssetsResponse>("/asset/info" + AssetLayerUtils.PropsToQueryString(props)),
+            Info = async (props, headers) => await _this.Request<GetAssetsResponse>("/asset/info" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
+            GetAsset = async (props, headers) => await _this.Request<GetAssetsResponse>("/asset/info" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
+            GetAssets = async (props, headers) => await _this.Request<GetAssetsResponse>("/asset/info" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
             User = async (props, headers) => {
-                if (props.countsOnly == true) return (null, null, await _this.Request<GetAssetCountsResponse>("/asset/user" + AssetLayerUtils.PropsToQueryString(props)));
-                else if (props.idOnly == true) return (null, await _this.Request<GetAssetIdsResponse>("/asset/user" + AssetLayerUtils.PropsToQueryString(props)), null);
-                else return (await _this.Request<GetAssetsResponse>("/asset/user" + AssetLayerUtils.PropsToQueryString(props)), null, null);
+                if (props.countsOnly == true) return (null, null, await _this.Request<GetAssetCountsResponse>("/asset/user" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers));
+                else if (props.idOnly == true) return (null, await _this.Request<GetAssetIdsResponse>("/asset/user" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
+                else return (await _this.Request<GetAssetsResponse>("/asset/user" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null, null);
             },
-            GetUserAssets = async (props, headers) => await _this.Request<GetAssetsResponse>("/asset/user" + AssetLayerUtils.PropsToQueryString(props)),
-            GetUserAssetIds = async (props, headers) => await _this.Request<GetAssetIdsResponse>("/asset/user" + AssetLayerUtils.PropsToQueryString(props)),
-            GetUserAssetCounts = async (props, headers) => await _this.Request<GetAssetCountsResponse>("/asset/user" + AssetLayerUtils.PropsToQueryString(props)),
+            GetUserAssets = async (props, headers) => await _this.Request<GetAssetsResponse>("/asset/user" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
+            GetUserAssetIds = async (props, headers) => await _this.Request<GetAssetIdsResponse>("/asset/user" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
+            GetUserAssetCounts = async (props, headers) => await _this.Request<GetAssetCountsResponse>("/asset/user" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
             GetUserCollectionAssets = async (props, headers) => {
-                if (props.countsOnly == true) return (null, null, await _this.Request<GetAssetCountsResponse>("/asset/user/collections" + AssetLayerUtils.PropsToQueryString(props)));
-                else if (props.idOnly == true) return (null, await _this.Request<GetAssetIdsResponse>("/asset/user/collections" + AssetLayerUtils.PropsToQueryString(props)), null);
-                else return (await _this.Request<GetAssetsResponse>("/asset/user/collections" + AssetLayerUtils.PropsToQueryString(props)), null, null);
+                if (props.countsOnly == true) return (null, null, await _this.Request<GetAssetCountsResponse>("/asset/collection" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers));
+                else if (props.idOnly == true) return (null, await _this.Request<GetAssetIdsResponse>("/asset/collection" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
+                else return (await _this.Request<GetAssetsResponse>("/asset/collection" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null, null);
             },
             GetUserCollectionsAssets = async (props, headers) => {
-                if (props.countsOnly == true) return (null, null, await _this.Request<GetCollectionsAssetCountsResponse>("/asset/user/collections" + AssetLayerUtils.PropsToQueryString(props)));
-                else if (props.idOnly == true) return (null, await _this.Request<GetCollectionsAssetIdsResponse>("/asset/user/collections" + AssetLayerUtils.PropsToQueryString(props)), null);
-                else return (await _this.Request<GetCollectionsAssetsResponse>("/asset/user/collections" + AssetLayerUtils.PropsToQueryString(props)), null, null);
+                if (props.countsOnly == true) return (null, null, await _this.Request<GetCollectionsAssetCountsResponse>("/asset/collections" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers));
+                else if (props.idOnly == true) return (null, await _this.Request<GetCollectionsAssetIdsResponse>("/asset/collections" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
+                else return (await _this.Request<GetCollectionsAssetsResponse>("/asset/collections" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null, null);
             },
             GetUserSlotAssets = async (props, headers) => {
-                if (props.countsOnly == true) return (null, null, await _this.Request<GetAssetCountsResponse>("/asset/user/slots" + AssetLayerUtils.PropsToQueryString(props)));
-                else if (props.idOnly == true) return (null, await _this.Request<GetAssetIdsResponse>("/asset/user/slots" + AssetLayerUtils.PropsToQueryString(props)), null);
-                else return (await _this.Request<GetAssetsResponse>("/asset/user/slots" + AssetLayerUtils.PropsToQueryString(props)), null, null);
+                if (props.countsOnly == true) return (null, null, await _this.Request<GetAssetCountsResponse>("/asset/slot" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers));
+                else if (props.idOnly == true) return (null, await _this.Request<GetAssetIdsResponse>("/asset/slot" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
+                else return (await _this.Request<GetAssetsResponse>("/asset/slot" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null, null);
             },
             GetUserSlotsAssets = async (props, headers) => {
-                if (props.countsOnly == true) return (null, null, await _this.Request<GetAssetCountsResponse>("/asset/user/slots" + AssetLayerUtils.PropsToQueryString(props)));
-                else if (props.idOnly == true) return (null, await _this.Request<GetAssetIdsResponse>("/asset/user/slots" + AssetLayerUtils.PropsToQueryString(props)), null);
-                else return (await _this.Request<GetAssetsResponse>("/asset/user/slots" + AssetLayerUtils.PropsToQueryString(props)), null, null);
+                if (props.countsOnly == true) return (null, null, await _this.Request<GetAssetCountsResponse>("/asset/slots" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers));
+                else if (props.idOnly == true) return (null, await _this.Request<GetAssetIdsResponse>("/asset/slots" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
+                else return (await _this.Request<GetAssetsResponse>("/asset/slots" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null, null);
             },
-            GetAssetHistory = async (props, headers) => await _this.Request<GetAssetHistoryResponse>("/asset/history" + AssetLayerUtils.PropsToQueryString(props)),
-            GetAssetMarketHistory = async (props, headers) => await _this.Request<GetAssetMarketHistoryResponse>("/asset/history" + AssetLayerUtils.PropsToQueryString(props)),
+            GetAssetHistory = async (props, headers) => await _this.Request<GetAssetHistoryResponse>("/asset/history" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
+            GetAssetMarketHistory = async (props, headers) => await _this.Request<GetAssetMarketHistoryResponse>("/asset/history" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
             GetAssetOwnershipHistory = async (props, headers) => {
-                if (props.ownersOnly == true) return (null, await _this.Request<GetAssetOwnershipHistoryResponse>("/asset/history" + AssetLayerUtils.PropsToQueryString(props)));
-                else return (await _this.Request<GetAssetMarketHistoryResponse>("/asset/history" + AssetLayerUtils.PropsToQueryString(props)), null);
+                if (props.ownersOnly == true) return (null, await _this.Request<GetAssetOwnershipHistoryResponse>("/asset/history" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers));
+                else return (await _this.Request<GetAssetMarketHistoryResponse>("/asset/history" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
             },
-            MintAssets = async (props, headers) => await _this.Request<GetAssetsResponse>("/asset/mint", "POST", props, headers),
+            MintAssets = async (props, headers) => await _this.Request<BasicSuccessResponse>("/asset/mint", "POST", props, headers),
             Send = async (props, headers) => {
                 if (props.collectionId != null || props.assetIds != null) return (null, await _this.Request<SendAssetsResponse>("/asset/send", "POST", props, headers));
                 else return (await _this.Request<SendAssetResponse>("/asset/send", "POST", props, headers), null);
@@ -146,7 +159,16 @@ namespace AssetLayer.SDK.Core.Assets
             },
             UpdateAsset = async (props, headers) => await _this.Request<UpdateAssetResponse>("/asset/update", "PUT", props, headers),
             UpdateAssets = async (props, headers) => await _this.Request<UpdateAssetsResponse>("/asset/update", "PUT", props, headers),
-            UpdateCollectionAssets = async (props, headers) => await _this.Request<UpdateCollectionAssetsResponse>("/asset/update", "PUT", props, headers)
+            UpdateCollectionAssets = async (props, headers) => await _this.Request<UpdateCollectionAssetsResponse>("/asset/update", "PUT", props, headers),
+            ExpressionValues = async (props, headers) => {
+                if (props.collectionId != null) return (null, null, await _this.Request<BasicSuccessResponse>("/asset/expressionValues", "POST", props, headers));
+                else if (props.assetIds != null) return (null, await _this.Request<UpdateAssetsExpressionValueResponse>("/asset/expressionValues", "POST", props, headers), null);
+                else return (await _this.Request<UpdateAssetExpressionValueResponse>("/asset/expressionValues", "POST", props, headers), null, null);
+            },
+            UpdateAssetExpressionValue = async (props, headers) => await _this.Request<UpdateAssetExpressionValueResponse>("/asset/expressionValues", "POST", props, headers),
+            UpdateAssetsExpressionValue = async (props, headers) => await _this.Request<UpdateAssetsExpressionValueResponse>("/asset/expressionValues", "POST", props, headers),
+            UpdateCollectionAssetsExpressionValue = async (props, headers) => await _this.Request<BasicSuccessResponse>("/asset/expressionValues", "POST", props, headers),
+            UpdateBulkExpressionValues = async (props, headers) => await _this.Request<UpdateBulkExpressionValuesResponse>("/asset/expressionValues", "POST", props, headers),
         };
 
         public AssetsSafeHandlers Safe = new AssetsSafeHandlers {
@@ -193,8 +215,8 @@ namespace AssetLayer.SDK.Core.Assets
                 try { return new BasicResult<(List<AssetHistoryRecord>, List<UserAlias>)> { Result = await _this.GetAssetOwnershipHistory(props, headers) }; }
                 catch (BasicError e) { return new BasicResult<(List<AssetHistoryRecord>, List<UserAlias>)> { Error = e }; } },
             MintAssets = async (props, headers) => {
-                try { return new BasicResult<List<Asset>> { Result = await _this.MintAssets(props, headers) }; }
-                catch (BasicError e) { return new BasicResult<List<Asset>> { Error = e }; } },
+                try { return new BasicResult<bool> { Result = await _this.MintAssets(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<bool> { Error = e }; } },
             Send = async (props, headers) => {
                 try { return new BasicResult<(SendAssetResponseBody, SendAssetsResponseBody)> { Result = await _this.Send(props, headers) }; }
                 catch (BasicError e) { return new BasicResult<(SendAssetResponseBody, SendAssetsResponseBody)> { Error = e }; } },
@@ -224,7 +246,22 @@ namespace AssetLayer.SDK.Core.Assets
                 catch (BasicError e) { return new BasicResult<List<string>> { Error = e }; } },
             UpdateCollectionAssets = async (props, headers) => {
                 try { return new BasicResult<string> { Result = await _this.UpdateCollectionAssets(props, headers) }; }
-                catch (BasicError e) { return new BasicResult<string> { Error = e }; } }
+                catch (BasicError e) { return new BasicResult<string> { Error = e }; } },
+            ExpressionValues = async (props, headers) => {
+                try { return new BasicResult<(string, List<string>, bool?)> { Result = await _this.ExpressionValues(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<(string, List<string>, bool?)> { Error = e }; } },
+            UpdateAssetExpressionValue = async (props, headers) => {
+                try { return new BasicResult<string> { Result = await _this.UpdateAssetExpressionValue(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<string> { Error = e }; } },
+            UpdateAssetsExpressionValue = async (props, headers) => {
+                try { return new BasicResult<List<string>> { Result = await _this.UpdateAssetsExpressionValue(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<List<string>> { Error = e }; } },
+            UpdateCollectionAssetsExpressionValue = async (props, headers) => {
+                try { return new BasicResult<bool> { Result = await _this.UpdateCollectionAssetsExpressionValue(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<bool> { Error = e }; } },
+            UpdateBulkExpressionValues = async (props, headers) => {
+                try { return new BasicResult<List<BulkExpressionValueLog>> { Result = await _this.UpdateBulkExpressionValues(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<List<BulkExpressionValueLog>> { Error = e }; } }
         };
     }
 }

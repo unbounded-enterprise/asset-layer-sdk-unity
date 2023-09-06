@@ -43,15 +43,15 @@ namespace AssetLayer.SDK.Core.Collections
             return (await this.Raw.DeactivateCollection(props, headers)).updated; }
 
         public CollectionsRawHandlers Raw = new CollectionsRawHandlers {
-            Info = async (props, headers) => await _this.Request<GetCollectionsResponse>("/collection/info" + AssetLayerUtils.PropsToQueryString(props)),
-            GetCollection = async (props, headers) => await _this.Request<GetCollectionsResponse>("/collection/info" + AssetLayerUtils.PropsToQueryString(props)),
-            GetCollections = async (props, headers) => await _this.Request<GetCollectionsResponse>("/collection/info" + AssetLayerUtils.PropsToQueryString(props)),
+            Info = async (props, headers) => await _this.Request<GetCollectionsResponse>("/collection/info" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
+            GetCollection = async (props, headers) => await _this.Request<GetCollectionsResponse>("/collection/info" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
+            GetCollections = async (props, headers) => await _this.Request<GetCollectionsResponse>("/collection/info" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
             Assets = async (props, headers) => {
-                if (props.idOnly == true) return (null, await _this.Request<GetCollectionAssetIdsResponse>("/collection/assets" + AssetLayerUtils.PropsToQueryString(props)));
-                else return (await _this.Request<GetCollectionAssetsResponse>("/collection/assets" + AssetLayerUtils.PropsToQueryString(props)), null);
+                if (props.idOnly == true) return (null, await _this.Request<GetCollectionAssetIdsResponse>("/collection/assets" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers));
+                else return (await _this.Request<GetCollectionAssetsResponse>("/collection/assets" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
             },
-            GetCollectionAssets = async (props, headers) => await _this.Request<GetCollectionAssetsResponse>("/collection/assets" + AssetLayerUtils.PropsToQueryString(props)),
-            GetCollectionAssetIds = async (props, headers) => await _this.Request<GetCollectionAssetIdsResponse>("/collection/assets" + AssetLayerUtils.PropsToQueryString(props)),
+            GetCollectionAssets = async (props, headers) => await _this.Request<GetCollectionAssetsResponse>("/collection/assets" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
+            GetCollectionAssetIds = async (props, headers) => await _this.Request<GetCollectionAssetIdsResponse>("/collection/assets" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
             CreateCollection = async (props, headers) => await _this.Request<CreateCollectionResponse>("/collection/new", "POST", props, headers),
             UpdateCollectionImage = async (props, headers) => await _this.Request<BasicUploadedResponse>("/collection/image", "POST", props, headers),
             UpdateCollection = async (props, headers) => await _this.Request<BasicUpdatedResponse>("/collection/update", "PUT", props, headers),

@@ -35,11 +35,11 @@ namespace AssetLayer.SDK.Core.Currencies
 
 
         public CurrenciesRawHandlers Raw = new CurrenciesRawHandlers {
-            Info = async (props, headers) => await _this.Request<GetCurrencyResponse>("/currency/info" + AssetLayerUtils.PropsToQueryString(props)),
-            GetCurrency = async (props, headers) => await _this.Request<GetCurrencyResponse>("/currency/info" + AssetLayerUtils.PropsToQueryString(props)),
-            Balance = async (props, headers) => await _this.Request<GetCurrencyBalanceResponse>("/currency/balance" + AssetLayerUtils.PropsToQueryString(props)),
-            GetCurrencyBalance = async (props, headers) => await _this.Request<GetCurrencyBalanceResponse>("/currency/balance" + AssetLayerUtils.PropsToQueryString(props)),
-            GetCurrencySummary = async (props, headers) => await _this.Request<GetCurrencySummaryResponse>("/currency/summary" + AssetLayerUtils.PropsToQueryString(props)),
+            Info = async (props, headers) => await _this.Request<GetCurrencyResponse>("/currency/info" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
+            GetCurrency = async (props, headers) => await _this.Request<GetCurrencyResponse>("/currency/info" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
+            Balance = async (props, headers) => await _this.Request<GetCurrencyBalanceResponse>("/currency/balance" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
+            GetCurrencyBalance = async (props, headers) => await _this.Request<GetCurrencyBalanceResponse>("/currency/balance" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
+            GetCurrencySummary = async (props, headers) => await _this.Request<GetCurrencySummaryResponse>("/currency/summary" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
             IncreaseCurrencyBalance = async (props, headers) => await _this.Request<IncreaseCurrencyBalanceResponse>("/currency/increaseBalance", "POST", props, headers),
             DecreaseCurrencyBalance = async (props, headers) => await _this.Request<DecreaseCurrencyBalanceResponse>("/currency/decreaseBalance", "POST", props, headers),
             TransferCurrency = async (props, headers) => await _this.Request<TransferCurrencyResponse>("/currency/transfer", "POST", props, headers),

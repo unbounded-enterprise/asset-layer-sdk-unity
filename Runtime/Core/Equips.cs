@@ -25,7 +25,7 @@ namespace AssetLayer.SDK.Core.Equips
 
 
         public EquipsRawHandlers Raw = new EquipsRawHandlers {
-            GetEquips = async (props, headers) => await _this.Request<GetEquipsResponse>("/equip/info" + AssetLayerUtils.PropsToQueryString(props)),
+            GetEquips = async (props, headers) => await _this.Request<GetEquipsResponse>("/equip/info" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
             SetEquip = async (props, headers) => await _this.Request<SetEquipResponse>("/equip/new", "POST", props, headers),
             RemoveEquip = async (props, headers) => await _this.Request<BasicSuccessResponse>("/equip", "DELETE", props, headers)
         };
