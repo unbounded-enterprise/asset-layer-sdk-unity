@@ -13,8 +13,8 @@ using AssetLayer.SDK.Slots;
 namespace AssetLayer.SDK.Slots 
 {
     [DataContract]
-    public class Slot { 
-        public Slot() { }
+    public class SlotCore { 
+        public SlotCore() { }
         // [JsonPropertyName("slotId")]
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -75,6 +75,10 @@ namespace AssetLayer.SDK.Slots
         #endif
         [DataMember]
         public long updatedAt { get; set; }
+    }
+    [DataContract]
+    public class Slot : SlotCore { 
+        public Slot() : base() { }
         // [JsonPropertyName("collections")]
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -88,42 +92,50 @@ namespace AssetLayer.SDK.Slots
         [DataMember]
         public List<string> expressions { get; set; }
     }
-
     [DataContract]
-    public class SlotWithExpressions : Slot { 
+    public class SlotWithExpressions : SlotCore { 
         public SlotWithExpressions() : base() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
-        public new Expression[] expressions { get; set; } 
+        public List<string> collections { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public Expression[] expressions { get; set; } 
     }
 
     [DataContract]
-    public class SlotWithCollections : Slot {
+    public class SlotWithCollections : SlotCore {
         public SlotWithCollections() : base() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
-        public new List<Collection> collections { get; set; }
+        public List<Collection> collections { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<string> expressions { get; set; }
     }
 
     [DataContract]
-    public class SlotWithExpressionsAndCollections : Slot {
-        public SlotWithExpressionsAndCollections() : base() { }
-
+    public class SlotWithCollectionsAndExpressions : SlotCore {
+        public SlotWithCollectionsAndExpressions() : base() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
-        public new List<Expression> expressions { get; set; }
+        public List<Collection> collections { get; set; }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
-        public new List<Collection> collections { get; set; }
+        public List<Expression> expressions { get; set; }
     }
 
 
