@@ -51,7 +51,7 @@ namespace AssetLayer.SDK.Core.Collections
                 else return (await _this.Request<GetCollectionAssetsResponse>("/collection/assets" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
             },
             GetCollectionAssets = async (props, headers) => await _this.Request<GetCollectionAssetsResponse>("/collection/assets" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
-            GetCollectionAssetIds = async (props, headers) => await _this.Request<GetCollectionAssetIdsResponse>("/collection/assets" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
+            GetCollectionAssetIds = async (props, headers) => await _this.Request<GetCollectionAssetIdsResponse>("/collection/assets" + AssetLayerUtils.PropsToQueryString(props, new { idOnly = true }), "GET", null, headers),
             CreateCollection = async (props, headers) => await _this.Request<CreateCollectionResponse>("/collection/new", "POST", props, headers),
             UpdateCollectionImage = async (props, headers) => await _this.Request<BasicUploadedResponse>("/collection/image", "POST", props, headers),
             UpdateCollection = async (props, headers) => await _this.Request<BasicUpdatedResponse>("/collection/update", "PUT", props, headers),

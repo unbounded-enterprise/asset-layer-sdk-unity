@@ -114,8 +114,8 @@ namespace AssetLayer.SDK.Core.Assets
                 else return (await _this.Request<GetAssetsResponse>("/asset/user" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null, null);
             },
             GetUserAssets = async (props, headers) => await _this.Request<GetAssetsResponse>("/asset/user" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
-            GetUserAssetIds = async (props, headers) => await _this.Request<GetAssetIdsResponse>("/asset/user" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
-            GetUserAssetCounts = async (props, headers) => await _this.Request<GetAssetCountsResponse>("/asset/user" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
+            GetUserAssetIds = async (props, headers) => await _this.Request<GetAssetIdsResponse>("/asset/user" + AssetLayerUtils.PropsToQueryString(props, new { idOnly = true }), "GET", null, headers),
+            GetUserAssetCounts = async (props, headers) => await _this.Request<GetAssetCountsResponse>("/asset/user" + AssetLayerUtils.PropsToQueryString(props, new { countsOnly = true }), "GET", null, headers),
             GetUserCollectionAssets = async (props, headers) => {
                 if (props.countsOnly == true) return (null, null, await _this.Request<GetAssetCountsResponse>("/asset/collection" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers));
                 else if (props.idOnly == true) return (null, await _this.Request<GetAssetIdsResponse>("/asset/collection" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);

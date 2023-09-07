@@ -12,8 +12,9 @@ using AssetLayer.SDK.Users;
 
 namespace AssetLayer.SDK.Apps 
 {
-    public class AppBase {
-        public AppBase() { }
+    [DataContract]
+    public class AppCore {
+        public AppCore() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
@@ -54,11 +55,6 @@ namespace AssetLayer.SDK.Apps
         #endif
         [DataMember]
         public long updatedAt { get; set; }
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
-        public List<string> slots { get; set; }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
@@ -66,53 +62,17 @@ namespace AssetLayer.SDK.Apps
         public string handcashAppId { get; set; }
     }
     [DataContract]
-    public class App { 
-        public App() { }
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
-        public string appId { get; set; }
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
-        public string appName { get; set; }
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
-        public string appImage { get; set; }
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
-        public string appBanner { get; set; }
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
-        public string teamId { get; set; }
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
-        public string status { get; set; }
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
-        public long createdAt { get; set; }
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
-        public long updatedAt { get; set; }
+    public class AppBase : AppCore {
+        public AppBase() : base() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public List<string> slots { get; set; }
+    }
+    [DataContract]
+    public class AppExtendedCore : AppCore { 
+        public AppExtendedCore() : base() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
@@ -142,12 +102,16 @@ namespace AssetLayer.SDK.Apps
             [Preserve]
         #endif
         [DataMember]
-        public string handcashAppId { get; set; }
+        public List<string> marketCurrencies { get; set; }
+    }
+    [DataContract]
+    public class App : AppExtendedCore {
+        public App() : base() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
-        public List<string> marketCurrencies { get; set; }
+        public List<string> slots { get; set; }
     }
     [DataContract]
     public class AppIdOnly { 
@@ -159,13 +123,13 @@ namespace AssetLayer.SDK.Apps
         public string appId { get; set; } 
     }
     [DataContract]
-    public class AppWithSlotsWithExpressions : App { 
+    public class AppWithSlotsWithExpressions : AppExtendedCore { 
         public AppWithSlotsWithExpressions() : base() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
-        public new List<SlotWithExpressions> slots { get; set; } 
+        public List<SlotWithExpressions> slots { get; set; } 
     }
     [DataContract]
     public class AppWithListingsCount : AppBase { 
