@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using AssetLayer.SDK.Basic;
-#if UNITY_WEBGL
+#if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
     using UnityEngine.Scripting;
 #endif
 
@@ -14,28 +14,28 @@ namespace AssetLayer.SDK.Currencies
         public Currency() { }
         
         // [JsonPropertyName("currencyId")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string currencyId { get; set; }
 
         // [JsonPropertyName("currencyCode")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string currencyCode { get; set; }
 
         // [JsonPropertyName("name")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string name { get; set; }
 
         // [JsonPropertyName("currencyIcon")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -46,12 +46,12 @@ namespace AssetLayer.SDK.Currencies
     public class CurrencySummary : Currency { 
         public CurrencySummary() : base() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public decimal totalIssued { get; set; } 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -61,7 +61,7 @@ namespace AssetLayer.SDK.Currencies
     public class CurrencyWithBalance : Currency { 
         public CurrencyWithBalance() : base() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -72,7 +72,7 @@ namespace AssetLayer.SDK.Currencies
     public class GetCurrencyProps { 
         public GetCurrencyProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -82,12 +82,12 @@ namespace AssetLayer.SDK.Currencies
     public class GetCurrencyBalanceProps { 
         public GetCurrencyBalanceProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string appId { get; set; } 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -97,7 +97,7 @@ namespace AssetLayer.SDK.Currencies
     public class GetCurrencySummaryProps { 
         public GetCurrencySummaryProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -107,17 +107,17 @@ namespace AssetLayer.SDK.Currencies
     public class IncreaseCurrencyBalanceProps { 
         public IncreaseCurrencyBalanceProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string currencyId { get; set; } 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public decimal amount { get; set; } 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -127,17 +127,17 @@ namespace AssetLayer.SDK.Currencies
     public class DecreaseCurrencyBalanceProps { 
         public DecreaseCurrencyBalanceProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string currencyId { get; set; } 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public decimal amount { get; set; } 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -147,22 +147,22 @@ namespace AssetLayer.SDK.Currencies
     public class TransferCurrencyProps { 
         public TransferCurrencyProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string currencyId { get; set; } 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public decimal amount { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string receiver { get; set; } 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -177,7 +177,7 @@ namespace AssetLayer.SDK.Currencies
     public class GetCurrencyResponseBody { 
         public GetCurrencyResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -195,7 +195,7 @@ namespace AssetLayer.SDK.Currencies
     public class GetCurrencySummaryResponseBody { 
         public GetCurrencySummaryResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -217,7 +217,7 @@ namespace AssetLayer.SDK.Currencies
     public class TransferCurrencyResponseBody { 
         public TransferCurrencyResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]

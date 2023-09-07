@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using AssetLayer.SDK.Basic;
-#if UNITY_WEBGL
+#if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
     using UnityEngine.Scripting;
 #endif
 
@@ -14,13 +14,13 @@ namespace AssetLayer.SDK.Users
         public UserRole() { }
 
         // [JsonPropertyName("teamId")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string teamId { get; set; }
         // [JsonPropertyName("role")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -32,13 +32,13 @@ namespace AssetLayer.SDK.Users
         public UserAlias() { }
 
         // [JsonPropertyName("userId")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string UserId { get; set; }
         // [JsonPropertyName("handle")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -49,49 +49,49 @@ namespace AssetLayer.SDK.Users
         public User() { }
 
         // [JsonPropertyName("userId")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string userId { get; set; }
         // [JsonPropertyName("email")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string email { get; set; }
         // [JsonPropertyName("handle")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string handle { get; set; }
         // [JsonPropertyName("roles")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public List<UserRole> roles { get; set; }
         // [JsonPropertyName("createdAt")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public long createdAt { get; set; }
         // [JsonPropertyName("updatedAt")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public long updatedAt { get; set; }
         // [JsonPropertyName("name")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string name { get; set; }
         // [JsonPropertyName("status")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -102,12 +102,12 @@ namespace AssetLayer.SDK.Users
     public class UserLoginProps { 
         public UserLoginProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string didToken { get; set; } 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -117,7 +117,7 @@ namespace AssetLayer.SDK.Users
     public class RegisterUserProps { 
         public RegisterUserProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -127,7 +127,7 @@ namespace AssetLayer.SDK.Users
     public class RegisterDidProps { 
         public RegisterDidProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -141,7 +141,7 @@ namespace AssetLayer.SDK.Users
     public class GetUserResponseBody { 
         public GetUserResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -153,7 +153,7 @@ namespace AssetLayer.SDK.Users
     public class GetOTPResponseBody { 
         public GetOTPResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -165,17 +165,17 @@ namespace AssetLayer.SDK.Users
     public class RegisterUserResponseBody {
         public RegisterUserResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string _id { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string email { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]

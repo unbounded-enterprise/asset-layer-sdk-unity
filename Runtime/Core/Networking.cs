@@ -9,7 +9,7 @@ using AssetLayer.SDK.Basic;
 using AssetLayer.SDK.Utils;
 using UnityEngine;
 
-#if UNITY_WEBGL
+#if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
     using UnityEngine.Networking;
 #else
     using System.Net.Http;
@@ -35,7 +35,7 @@ namespace AssetLayer.SDK.Core.Networking
             }
         }
     }
-    #if UNITY_WEBGL
+    #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
         public static class UnityNetworking {
             public static async Task<T> Request<T>(string url, string method = "GET", object body = null, Dictionary<string, string> headers = null) {
                 UnityWebRequest www = new UnityWebRequest(url, method);

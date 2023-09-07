@@ -6,7 +6,7 @@ using AssetLayer.SDK.Basic;
 using AssetLayer.SDK.Currencies;
 using AssetLayer.SDK.Slots;
 using AssetLayer.SDK.Users;
-#if UNITY_WEBGL
+#if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
     using UnityEngine.Scripting;
 #endif
 
@@ -14,52 +14,52 @@ namespace AssetLayer.SDK.Apps
 {
     public class AppBase {
         public AppBase() { }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string appId { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string appName { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string appImage { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string appBanner { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string teamId { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string status { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public long createdAt { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public long updatedAt { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public List<string> slots { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -68,82 +68,82 @@ namespace AssetLayer.SDK.Apps
     [DataContract]
     public class App { 
         public App() { }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string appId { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string appName { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string appImage { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string appBanner { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string teamId { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string status { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public long createdAt { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public long updatedAt { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public List<string> slots { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public List<UserAlias> appWallets { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public List<Currency> appCurrencies { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public bool? autoGrantRead { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string description { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string url { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string handcashAppId { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -152,7 +152,7 @@ namespace AssetLayer.SDK.Apps
     [DataContract]
     public class AppIdOnly { 
         public AppIdOnly() { }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -161,7 +161,7 @@ namespace AssetLayer.SDK.Apps
     [DataContract]
     public class AppWithSlotsWithExpressions : App { 
         public AppWithSlotsWithExpressions() : base() { }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -170,7 +170,7 @@ namespace AssetLayer.SDK.Apps
     [DataContract]
     public class AppWithListingsCount : AppBase { 
         public AppWithListingsCount() : base() { }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -178,48 +178,68 @@ namespace AssetLayer.SDK.Apps
     }
 
 
+    [DataContract]
     public class AppInfoProps { 
-        #if UNITY_WEBGL
+        public AppInfoProps() { }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
+        [DataMember]
         public string appId { get; set; } 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
+        [DataMember]
         public string[] appIds { get; set; }
     }
+    [DataContract]
     public class GetAppProps { 
-        #if UNITY_WEBGL
+        public GetAppProps() { }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
+        [DataMember]
         public string appId { get; set; } 
     }
+    [DataContract]
     public class GetAppsProps { 
-        #if UNITY_WEBGL
+        public GetAppsProps() { }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
+        [DataMember]
         public string[] appIds { get; set; } 
     }
+    [DataContract]
     public class AppSlotsProps { 
-        #if UNITY_WEBGL
+        public AppSlotsProps() { }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
+        [DataMember]
         public string appId { get; set; } 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
+        [DataMember]
         public bool? idOnly { get; set; }
     }
+    [DataContract]
     public class GetAppSlotsProps { 
-        #if UNITY_WEBGL
+        public GetAppSlotsProps() { }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
+        [DataMember]
         public string appId { get; set; } 
     }
-    public class AppsWithListingsProps { 
-        #if UNITY_WEBGL
+    [DataContract]
+    public class AppListingsProps { 
+        public AppListingsProps() { }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
+        [DataMember]
         public bool? idOnly { get; set; } 
     }
 
@@ -229,7 +249,7 @@ namespace AssetLayer.SDK.Apps
     [DataContract]
     public class GetAppResponseBody { 
         public GetAppResponseBody() { }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -240,7 +260,7 @@ namespace AssetLayer.SDK.Apps
     [DataContract]
     public class GetAppsResponseBody { 
         public GetAppsResponseBody() { }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -251,7 +271,7 @@ namespace AssetLayer.SDK.Apps
     [DataContract]
     public class GetAppSlotsResponseBody { 
         public GetAppSlotsResponseBody() { }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -262,7 +282,7 @@ namespace AssetLayer.SDK.Apps
     [DataContract]
     public class GetAppSlotIdsResponseBody { 
         public GetAppSlotIdsResponseBody() { }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -273,7 +293,7 @@ namespace AssetLayer.SDK.Apps
     [DataContract]
     public class GetAppsWithListingsResponseBody { 
         public GetAppsWithListingsResponseBody() { }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -284,7 +304,7 @@ namespace AssetLayer.SDK.Apps
     [DataContract]
     public class GetAppIdsWithListingsResponseBody { 
         public GetAppIdsWithListingsResponseBody() { }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -299,7 +319,7 @@ namespace AssetLayer.SDK.Apps
         public delegate Task<(GetAppSlotsResponse, GetAppSlotIdsResponse)> Slots(AppSlotsProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetAppSlotsResponse> GetAppSlots(GetAppSlotsProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetAppSlotIdsResponse> GetAppSlotIds(GetAppSlotsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<(GetAppsWithListingsResponse, GetAppIdsWithListingsResponse)> Listings(AppsWithListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetAppsWithListingsResponse, GetAppIdsWithListingsResponse)> Listings(AppListingsProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetAppsWithListingsResponse> GetAppsWithListings(Dictionary<string, string> headers = null);
         public delegate Task<GetAppIdsWithListingsResponse> GetAppIdsWithListings(Dictionary<string, string> headers = null);
     }
@@ -314,17 +334,6 @@ namespace AssetLayer.SDK.Apps
         public AppsRawDelegates.Listings Listings;
         public AppsRawDelegates.GetAppsWithListings GetAppsWithListings;
         public AppsRawDelegates.GetAppIdsWithListings GetAppIdsWithListings;
-        /*
-        public Func<AppInfoProps, Dictionary<string, string>, Task<(GetAppResponse, GetAppsResponse)>> Info;
-        public Func<GetAppProps, Dictionary<string, string>, Task<GetAppResponse>> GetApp;
-        public Func<GetAppsProps, Dictionary<string, string>, Task<GetAppsResponse>> GetApps;
-        public Func<AppSlotsProps, Dictionary<string, string>, Task<(GetAppSlotsResponse, GetAppSlotIdsResponse)>> Slots;
-        public Func<GetAppSlotsProps, Dictionary<string, string>, Task<GetAppSlotsResponse>> GetAppSlots;
-        public Func<GetAppSlotsProps, Dictionary<string, string>, Task<GetAppSlotIdsResponse>> GetAppSlotIds;
-        public Func<AppsWithListingsProps, Dictionary<string, string>, Task<(GetAppsWithListingsResponse, GetAppIdsWithListingsResponse)>> Listings;
-        public Func<Dictionary<string, string>, Task<GetAppsWithListingsResponse>> GetAppsWithListings;
-        public Func<Dictionary<string, string>, Task<GetAppIdsWithListingsResponse>> GetAppIdsWithListings;
-        */
     }
 
     public class AppsSafeDelegates {
@@ -334,7 +343,7 @@ namespace AssetLayer.SDK.Apps
         public delegate Task<BasicResult<(List<SlotWithExpressions>, List<string>)>> Slots(AppSlotsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<SlotWithExpressions>>> GetAppSlots(GetAppSlotsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<string>>> GetAppSlotIds(GetAppSlotsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicResult<(List<AppWithListingsCount>, List<AppIdOnly>)>> Listings(AppsWithListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<AppWithListingsCount>, List<AppIdOnly>)>> Listings(AppListingsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<AppWithListingsCount>>> GetAppsWithListings(Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<AppIdOnly>>> GetAppIdsWithListings(Dictionary<string, string> headers = null);
     }
