@@ -37,7 +37,7 @@ namespace AssetLayer.SDK.Core.Base
             if (this.appSecret != null && !head.ContainsKey("appsecret")) head.Add("appsecret", this.appSecret);
             if (this.didToken != null && !head.ContainsKey("didtoken")) head.Add("didtoken", this.didToken);
             
-            #if UNITY_WEBGL
+            #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
                 return await UnityNetworking.Request<T>(url, method, body, head);
             #else
                 return await BasicNetworking.Request<T>(url, method, body, head);

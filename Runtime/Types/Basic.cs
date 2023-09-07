@@ -1,6 +1,6 @@
 using System;
 using System.Runtime.Serialization;
-#if UNITY_WEBGL
+#if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
     using UnityEngine.Scripting;
 #endif
 
@@ -23,17 +23,17 @@ namespace AssetLayer.SDK.Basic
     [DataContract]
     public class BasicResponse<T> {
         public BasicResponse() { }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public int statusCode { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public bool success { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -43,12 +43,12 @@ namespace AssetLayer.SDK.Basic
     [DataContract]
     public class BasicSuccessResponse {
         public BasicSuccessResponse() { }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public int statusCode { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -58,7 +58,7 @@ namespace AssetLayer.SDK.Basic
     [DataContract]
     public class BasicUpdatedResponse : BasicSuccessResponse {
         public BasicUpdatedResponse() : base() { }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -68,7 +68,7 @@ namespace AssetLayer.SDK.Basic
     [DataContract]
     public class BasicUploadedResponse : BasicSuccessResponse {
         public BasicUploadedResponse() : base() { }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -78,57 +78,57 @@ namespace AssetLayer.SDK.Basic
     [DataContract]
     public class BasicErrorResponse {
         public BasicErrorResponse() { }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string error { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string message { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string errorMessage { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public int? status { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public int? statusCode { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string Error { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string Message { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string ReasonPhrase { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string ErrorMessage { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public int? Status { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]

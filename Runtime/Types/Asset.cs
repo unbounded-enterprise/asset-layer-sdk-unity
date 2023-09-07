@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AssetLayer.SDK.Basic;
 using AssetLayer.SDK.Expressions;
 using AssetLayer.SDK.Users;
-#if UNITY_WEBGL
+#if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
     using UnityEngine.Scripting;
 #endif
 
@@ -15,61 +15,61 @@ namespace AssetLayer.SDK.Assets
     public class Asset {
         public Asset() { }
         
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string assetId { get; set; }
         
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public long serial { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string collectionId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string collectionName { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public UserAlias user { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public long createdAt { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public long updatedAt { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public List<ExpressionValue> expressionValues { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public Dictionary<string, object> properties { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -87,61 +87,61 @@ namespace AssetLayer.SDK.Assets
     public class AssetHistoryRecord {
         public AssetHistoryRecord() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string type { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string assetId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public long createdAt { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public UserAlias sender { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public UserAlias receiver { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public UserAlias user { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public object properties { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public List<ExpressionValue> expressionValues { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string expressionValueId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -153,7 +153,7 @@ namespace AssetLayer.SDK.Assets
     public class GetAssetProps {
         public GetAssetProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -165,7 +165,7 @@ namespace AssetLayer.SDK.Assets
     public class GetAssetsProps {
         public GetAssetsProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -177,13 +177,13 @@ namespace AssetLayer.SDK.Assets
     public class AssetInfoProps {
         public AssetInfoProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string assetId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -195,7 +195,7 @@ namespace AssetLayer.SDK.Assets
     public class GetUserAssetsBaseProps {
         public GetUserAssetsBaseProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -207,13 +207,13 @@ namespace AssetLayer.SDK.Assets
     public class AssetUserProps : GetUserAssetsBaseProps {
         public AssetUserProps() : base() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public bool? idOnly { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -225,37 +225,37 @@ namespace AssetLayer.SDK.Assets
     public class GetUserCollectionAssetsProps {
         public GetUserCollectionAssetsProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string collectionId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string walletUserId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string serials { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string range { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public bool? idOnly { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -267,25 +267,25 @@ namespace AssetLayer.SDK.Assets
     public class GetUserCollectionsAssetsProps {
         public GetUserCollectionsAssetsProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public List<string> collectionIds { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string walletUserId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public bool? idOnly { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -297,25 +297,25 @@ namespace AssetLayer.SDK.Assets
     public class GetUserSlotAssetsProps {
         public GetUserSlotAssetsProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string slotId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string walletUserId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public bool? idOnly { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -327,31 +327,31 @@ namespace AssetLayer.SDK.Assets
     public class GetUserSlotsAssetsProps {
         public GetUserSlotsAssetsProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public List<string> slotIds { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string walletUserId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public bool? includeDeactivated { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public bool? idOnly { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -363,19 +363,19 @@ namespace AssetLayer.SDK.Assets
     public class GetAssetHistoryProps {
         public GetAssetHistoryProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string assetId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public int? limit { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -387,7 +387,7 @@ namespace AssetLayer.SDK.Assets
     public class GetAssetOwnershipHistoryProps : GetAssetHistoryProps {
         public GetAssetOwnershipHistoryProps() : base() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -399,25 +399,25 @@ namespace AssetLayer.SDK.Assets
     public class MintAssetsProps {
         public MintAssetsProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string collectionId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public int number { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string walletUserId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -429,13 +429,13 @@ namespace AssetLayer.SDK.Assets
     public class SendAssetBase {
         public SendAssetBase() : base() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string receiver { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -447,7 +447,7 @@ namespace AssetLayer.SDK.Assets
     public class SendAssetProps : SendAssetBase {
         public SendAssetProps() : base() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -459,7 +459,7 @@ namespace AssetLayer.SDK.Assets
     public class SendAssetsProps : SendAssetBase {
         public SendAssetsProps() : base() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -471,7 +471,7 @@ namespace AssetLayer.SDK.Assets
     public class SendCollectionAssetsProps : SendAssetBase {
         public SendCollectionAssetsProps() : base() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -483,19 +483,19 @@ namespace AssetLayer.SDK.Assets
     public class AssetSendProps : SendAssetBase {
         public AssetSendProps() : base() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string assetId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public List<string> assetIds { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -507,19 +507,19 @@ namespace AssetLayer.SDK.Assets
     public class SendLowestAssetProps {
         public SendLowestAssetProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string receiver { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string collectionId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -531,19 +531,19 @@ namespace AssetLayer.SDK.Assets
     public class SendRandomAssetProps {
         public SendRandomAssetProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string receiver { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string collectionId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -555,13 +555,13 @@ namespace AssetLayer.SDK.Assets
     public class UpdateAssetProps {
         public UpdateAssetProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string assetId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -573,13 +573,13 @@ namespace AssetLayer.SDK.Assets
     public class UpdateAssetsProps {
         public UpdateAssetsProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public List<string> assetIds { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -591,13 +591,13 @@ namespace AssetLayer.SDK.Assets
     public class UpdateCollectionAssetsProps {
         public UpdateCollectionAssetsProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string collectionId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -609,25 +609,25 @@ namespace AssetLayer.SDK.Assets
     public class AssetUpdateProps {
         public AssetUpdateProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public object properties { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string assetId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public List<string> assetIds { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -637,25 +637,25 @@ namespace AssetLayer.SDK.Assets
     public class UpdateExpressionValueBase {
         public UpdateExpressionValueBase() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string expressionAttributeName { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string value { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string expressionId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -665,19 +665,19 @@ namespace AssetLayer.SDK.Assets
     public class UpdateExpressionValuesProps : UpdateExpressionValueBase {
         public UpdateExpressionValuesProps() : base() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string assetId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public List<string> assetIds { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -687,7 +687,7 @@ namespace AssetLayer.SDK.Assets
     public class UpdateAssetExpressionValueProps : UpdateExpressionValueBase {
         public UpdateAssetExpressionValueProps() : base() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -697,7 +697,7 @@ namespace AssetLayer.SDK.Assets
     public class UpdateAssetsExpressionValueProps : UpdateExpressionValueBase {
         public UpdateAssetsExpressionValueProps() : base() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -707,7 +707,7 @@ namespace AssetLayer.SDK.Assets
     public class UpdateCollectionAssetsExpressionValueProps : UpdateExpressionValueBase {
         public UpdateCollectionAssetsExpressionValueProps() : base() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -717,13 +717,13 @@ namespace AssetLayer.SDK.Assets
     public class UpdateBulkExpressionValuesProps {
         public UpdateBulkExpressionValuesProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string collectionId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -741,7 +741,7 @@ namespace AssetLayer.SDK.Assets
     public class GetAssetsResponseBody {
         public GetAssetsResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -758,7 +758,7 @@ namespace AssetLayer.SDK.Assets
     public class GetAssetIdsResponseBody {
         public GetAssetIdsResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -775,7 +775,7 @@ namespace AssetLayer.SDK.Assets
     public class GetAssetCountsResponseBody {
         public GetAssetCountsResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -792,7 +792,7 @@ namespace AssetLayer.SDK.Assets
     public class GetCollectionsAssetsResponseBody {
         public GetCollectionsAssetsResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -809,7 +809,7 @@ namespace AssetLayer.SDK.Assets
     public class GetCollectionsAssetIdsResponseBody {
         public GetCollectionsAssetIdsResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -826,7 +826,7 @@ namespace AssetLayer.SDK.Assets
     public class GetCollectionsAssetCountsResponseBody {
         public GetCollectionsAssetCountsResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -843,7 +843,7 @@ namespace AssetLayer.SDK.Assets
     public class GetAssetHistoryResponseBody {
         public GetAssetHistoryResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -860,7 +860,7 @@ namespace AssetLayer.SDK.Assets
     public class GetAssetMarketHistoryResponseBody {
         public GetAssetMarketHistoryResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -877,7 +877,7 @@ namespace AssetLayer.SDK.Assets
     public class GetAssetOwnershipHistoryResponseBody {
         public GetAssetOwnershipHistoryResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -894,19 +894,19 @@ namespace AssetLayer.SDK.Assets
     public class SendAssetResponseBody {
         public SendAssetResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string to { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public long serial { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -923,13 +923,13 @@ namespace AssetLayer.SDK.Assets
     public class SendAssetsResponseBody {
         public SendAssetsResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string to { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -946,13 +946,13 @@ namespace AssetLayer.SDK.Assets
     public class UpdateAssetResponseBody {
         public UpdateAssetResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string assetId { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -969,7 +969,7 @@ namespace AssetLayer.SDK.Assets
     public class UpdateAssetsResponseBody {
         public UpdateAssetsResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -986,7 +986,7 @@ namespace AssetLayer.SDK.Assets
     public class UpdateCollectionAssetsResponseBody {
         public UpdateCollectionAssetsResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -1000,7 +1000,7 @@ namespace AssetLayer.SDK.Assets
     public class UpdateAssetExpressionValueResponseBody {
         public UpdateAssetExpressionValueResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -1014,7 +1014,7 @@ namespace AssetLayer.SDK.Assets
     public class UpdateAssetsExpressionValueResponseBody {
         public UpdateAssetsExpressionValueResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -1028,7 +1028,7 @@ namespace AssetLayer.SDK.Assets
     public class UpdateBulkExpressionValuesResponseBody {
         public UpdateBulkExpressionValuesResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -1038,13 +1038,13 @@ namespace AssetLayer.SDK.Assets
     public class BulkExpressionValueLog {
         public BulkExpressionValueLog() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string filename { get; set; }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]

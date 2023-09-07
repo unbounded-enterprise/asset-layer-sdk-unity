@@ -6,7 +6,7 @@ using AssetLayer.SDK.Basic;
 using AssetLayer.SDK.Collections;
 using AssetLayer.SDK.Expressions;
 using AssetLayer.SDK.Slots;
-#if UNITY_WEBGL
+#if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
     using UnityEngine.Scripting;
 #endif
 
@@ -16,73 +16,73 @@ namespace AssetLayer.SDK.Slots
     public class Slot { 
         public Slot() { }
         // [JsonPropertyName("slotId")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string slotId { get; set; }
         // [JsonPropertyName("slotName")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string slotName { get; set; }
         // [JsonPropertyName("slotImage")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string slotImage { get; set; }
         // [JsonPropertyName("description")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string description { get; set; }
         // [JsonPropertyName("appId")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string appId { get; set; }
         // [JsonPropertyName("acceptingCollections")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public bool acceptingCollections { get; set; }
         // [JsonPropertyName("isPublic")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public bool isPublic { get; set; }
         // [JsonPropertyName("collectionTypes")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string collectionTypes { get; set; }
         // [JsonPropertyName("createdAt")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public long createdAt { get; set; }
         // [JsonPropertyName("updatedAt")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public long updatedAt { get; set; }
         // [JsonPropertyName("collections")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public List<string> collections { get; set; }
         // [JsonPropertyName("expressions")]
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -92,7 +92,7 @@ namespace AssetLayer.SDK.Slots
     [DataContract]
     public class SlotWithExpressions : Slot { 
         public SlotWithExpressions() : base() { }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -103,7 +103,7 @@ namespace AssetLayer.SDK.Slots
     public class SlotWithCollections : Slot {
         public SlotWithCollections() : base() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -114,12 +114,12 @@ namespace AssetLayer.SDK.Slots
     public class SlotWithExpressionsAndCollections : Slot {
         public SlotWithExpressionsAndCollections() : base() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public new List<Expression> expressions { get; set; }
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -131,7 +131,7 @@ namespace AssetLayer.SDK.Slots
     public class GetSlotProps { 
         public GetSlotProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -143,12 +143,12 @@ namespace AssetLayer.SDK.Slots
     public class GetSlotCollectionsProps { 
         public GetSlotCollectionsProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string slotId { get; set; } 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -159,7 +159,7 @@ namespace AssetLayer.SDK.Slots
     public class GetSlotCollectionsAllProps : GetSlotCollectionsProps { 
         public GetSlotCollectionsAllProps() : base() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -169,7 +169,7 @@ namespace AssetLayer.SDK.Slots
     public class GetSlotExpressionsProps { 
         public GetSlotExpressionsProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -179,22 +179,22 @@ namespace AssetLayer.SDK.Slots
     public class CreateExpressionProps { 
         public CreateExpressionProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string slotId { get; set; } 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string expressionTypeId { get; set; } 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string expressionName { get; set; } 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -204,22 +204,22 @@ namespace AssetLayer.SDK.Slots
     public class UpdateExpressionProps { 
         public UpdateExpressionProps() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string expressionId { get; set; } 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string expressionTypeId { get; set; } 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public string expressionName { get; set; } 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -234,7 +234,7 @@ namespace AssetLayer.SDK.Slots
     public class GetSlotResponseBody { 
         public GetSlotResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -248,7 +248,7 @@ namespace AssetLayer.SDK.Slots
     public class GetSlotCollectionsResponseBody { 
         public GetSlotCollectionsResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -262,7 +262,7 @@ namespace AssetLayer.SDK.Slots
     public class GetSlotCollectionsIdsResponseBody { 
         public GetSlotCollectionsIdsResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -274,7 +274,7 @@ namespace AssetLayer.SDK.Slots
     public class GetExpressionTypesResponseBody { 
         public GetExpressionTypesResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -286,7 +286,7 @@ namespace AssetLayer.SDK.Slots
     public class GetSlotExpressionsResponseBody { 
         public GetSlotExpressionsResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
@@ -298,7 +298,7 @@ namespace AssetLayer.SDK.Slots
     public class CreateExpressionResponseBody { 
         public CreateExpressionResponseBody() { }
 
-        #if UNITY_WEBGL
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
