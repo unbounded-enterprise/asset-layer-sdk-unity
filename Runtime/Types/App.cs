@@ -178,48 +178,68 @@ namespace AssetLayer.SDK.Apps
     }
 
 
+    [DataContract]
     public class AppInfoProps { 
+        public AppInfoProps() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
+        [DataMember]
         public string appId { get; set; } 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
+        [DataMember]
         public string[] appIds { get; set; }
     }
+    [DataContract]
     public class GetAppProps { 
+        public GetAppProps() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
+        [DataMember]
         public string appId { get; set; } 
     }
+    [DataContract]
     public class GetAppsProps { 
+        public GetAppsProps() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
+        [DataMember]
         public string[] appIds { get; set; } 
     }
+    [DataContract]
     public class AppSlotsProps { 
+        public AppSlotsProps() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
+        [DataMember]
         public string appId { get; set; } 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
+        [DataMember]
         public bool? idOnly { get; set; }
     }
+    [DataContract]
     public class GetAppSlotsProps { 
+        public GetAppSlotsProps() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
+        [DataMember]
         public string appId { get; set; } 
     }
-    public class AppsWithListingsProps { 
+    [DataContract]
+    public class AppListingsProps { 
+        public AppListingsProps() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
+        [DataMember]
         public bool? idOnly { get; set; } 
     }
 
@@ -299,7 +319,7 @@ namespace AssetLayer.SDK.Apps
         public delegate Task<(GetAppSlotsResponse, GetAppSlotIdsResponse)> Slots(AppSlotsProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetAppSlotsResponse> GetAppSlots(GetAppSlotsProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetAppSlotIdsResponse> GetAppSlotIds(GetAppSlotsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<(GetAppsWithListingsResponse, GetAppIdsWithListingsResponse)> Listings(AppsWithListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetAppsWithListingsResponse, GetAppIdsWithListingsResponse)> Listings(AppListingsProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetAppsWithListingsResponse> GetAppsWithListings(Dictionary<string, string> headers = null);
         public delegate Task<GetAppIdsWithListingsResponse> GetAppIdsWithListings(Dictionary<string, string> headers = null);
     }
@@ -314,17 +334,6 @@ namespace AssetLayer.SDK.Apps
         public AppsRawDelegates.Listings Listings;
         public AppsRawDelegates.GetAppsWithListings GetAppsWithListings;
         public AppsRawDelegates.GetAppIdsWithListings GetAppIdsWithListings;
-        /*
-        public Func<AppInfoProps, Dictionary<string, string>, Task<(GetAppResponse, GetAppsResponse)>> Info;
-        public Func<GetAppProps, Dictionary<string, string>, Task<GetAppResponse>> GetApp;
-        public Func<GetAppsProps, Dictionary<string, string>, Task<GetAppsResponse>> GetApps;
-        public Func<AppSlotsProps, Dictionary<string, string>, Task<(GetAppSlotsResponse, GetAppSlotIdsResponse)>> Slots;
-        public Func<GetAppSlotsProps, Dictionary<string, string>, Task<GetAppSlotsResponse>> GetAppSlots;
-        public Func<GetAppSlotsProps, Dictionary<string, string>, Task<GetAppSlotIdsResponse>> GetAppSlotIds;
-        public Func<AppsWithListingsProps, Dictionary<string, string>, Task<(GetAppsWithListingsResponse, GetAppIdsWithListingsResponse)>> Listings;
-        public Func<Dictionary<string, string>, Task<GetAppsWithListingsResponse>> GetAppsWithListings;
-        public Func<Dictionary<string, string>, Task<GetAppIdsWithListingsResponse>> GetAppIdsWithListings;
-        */
     }
 
     public class AppsSafeDelegates {
@@ -334,7 +343,7 @@ namespace AssetLayer.SDK.Apps
         public delegate Task<BasicResult<(List<SlotWithExpressions>, List<string>)>> Slots(AppSlotsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<SlotWithExpressions>>> GetAppSlots(GetAppSlotsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<string>>> GetAppSlotIds(GetAppSlotsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicResult<(List<AppWithListingsCount>, List<AppIdOnly>)>> Listings(AppsWithListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<AppWithListingsCount>, List<AppIdOnly>)>> Listings(AppListingsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<AppWithListingsCount>>> GetAppsWithListings(Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<AppIdOnly>>> GetAppIdsWithListings(Dictionary<string, string> headers = null);
     }

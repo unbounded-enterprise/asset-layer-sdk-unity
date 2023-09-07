@@ -31,7 +31,7 @@ namespace AssetLayer.SDK.Core.Apps
             return (await this.Raw.GetAppSlots(props, headers)).body.app.slots; }
         public async Task<List<string>> GetAppSlotIds(GetAppSlotsProps props, Dictionary<string, string> headers = null) {
             return (await this.Raw.GetAppSlotIds(props, headers)).body.app.slots; }
-        public async Task<(List<AppWithListingsCount>, List<AppIdOnly>)> Listings(AppsWithListingsProps props, Dictionary<string, string> headers = null) {
+        public async Task<(List<AppWithListingsCount>, List<AppIdOnly>)> Listings(AppListingsProps props, Dictionary<string, string> headers = null) {
             if (props.idOnly == true) return (null, (await this.Raw.Listings(props, headers)).Item2.body.apps);
             else return ((await this.Raw.Listings(props, headers)).Item1.body.apps, null); }
         public async Task<List<AppWithListingsCount>> GetAppsWithListings(Dictionary<string, string> headers = null) {

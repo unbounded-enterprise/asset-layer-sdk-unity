@@ -156,8 +156,8 @@ namespace AssetLayer.SDK.Slots
     }
 
     [DataContract]
-    public class GetSlotCollectionsAllProps : GetSlotCollectionsProps { 
-        public GetSlotCollectionsAllProps() : base() { }
+    public class SlotCollectionsProps : GetSlotCollectionsProps { 
+        public SlotCollectionsProps() : base() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -308,7 +308,7 @@ namespace AssetLayer.SDK.Slots
 
     public class SlotsRawDelegates {
         public delegate Task<GetSlotResponse> GetSlot(GetSlotProps props, Dictionary<string, string> headers = null);
-        public delegate Task<(GetSlotCollectionsResponse, GetSlotCollectionsIdsResponse)> Collections(GetSlotCollectionsAllProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetSlotCollectionsResponse, GetSlotCollectionsIdsResponse)> Collections(SlotCollectionsProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetSlotCollectionsResponse> GetSlotCollections(GetSlotCollectionsProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetSlotCollectionsIdsResponse> GetSlotCollectionIds(GetSlotCollectionsProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetExpressionTypesResponse> GetExpressionTypes(Dictionary<string, string> headers = null);
@@ -330,7 +330,7 @@ namespace AssetLayer.SDK.Slots
 
     public class SlotsSafeDelegates {
         public delegate Task<BasicResult<Slot>> GetSlot(GetSlotProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicResult<(List<Collection>, List<string>)>> Collections(GetSlotCollectionsAllProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Collection>, List<string>)>> Collections(SlotCollectionsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<Collection>>> GetSlotCollections(GetSlotCollectionsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<string>>> GetSlotCollectionIds(GetSlotCollectionsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<ExpressionType>>> GetExpressionTypes(Dictionary<string, string> headers = null);

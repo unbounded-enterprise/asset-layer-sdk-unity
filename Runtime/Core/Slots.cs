@@ -20,7 +20,7 @@ namespace AssetLayer.SDK.Core.Slots
         
         public async Task<Slot> GetSlot(GetSlotProps props, Dictionary<string, string> headers = null) {
             return (await this.Raw.GetSlot(props, headers)).body.slot; }
-        public async Task<(List<Collection>, List<string>)> Collections(GetSlotCollectionsAllProps props, Dictionary<string, string> headers = null) {
+        public async Task<(List<Collection>, List<string>)> Collections(SlotCollectionsProps props, Dictionary<string, string> headers = null) {
             if (props.idOnly == true) return (null, (await this.Raw.Collections(props, headers)).Item2.body.slot.collections);
             else return ((await this.Raw.Collections(props, headers)).Item1.body.slot.collections, null); }
         public async Task<List<Collection>> GetSlotCollections(GetSlotCollectionsProps props, Dictionary<string, string> headers = null) {
