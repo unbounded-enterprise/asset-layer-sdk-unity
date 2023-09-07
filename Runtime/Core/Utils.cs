@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
-using System.Web;
 using UnityEngine;
 using AssetLayer.SDK.Basic;
 using AssetLayer.SDK.Core.Networking;
@@ -23,22 +22,20 @@ namespace AssetLayer.SDK.Utils
             return new BasicError(message, status);
         }
 
-        public static string PropsToQueryString(object props)
-        {
+        public static string PropsToQueryString(object props) {
             if (props == null) return "";
             var parameters = new List<string>();
             var properties = props.GetType().GetProperties();
-            foreach (PropertyInfo info in properties)
-            {
+            foreach (PropertyInfo info in properties) {
                 var key = info.Name;
                 var value = info.GetValue(props, null);
                 if (value == null) continue;
                 else if (value is string[]) {
                     foreach (var v in (string[])value) {
-                        if (!string.IsNullOrEmpty(v)) parameters.Add($"{key}[]={HttpUtility.UrlEncode(v)}");
+                        if (!string.IsNullOrEmpty(v)) parameters.Add($"{key}[]={Uri.EscapeDataString(v)}");
                     }
                 }
-                else parameters.Add($"{key}={HttpUtility.UrlEncode(value.ToString())}");
+                else parameters.Add($"{key}={Uri.EscapeDataString(value.ToString())}");
             }
             return "?" + string.Join("&", parameters);
         }
