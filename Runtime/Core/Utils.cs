@@ -43,9 +43,17 @@ namespace AssetLayer.SDK.Utils
             var value = info.GetValue(sourceObject, null);
 
             if (value == null) return;
-
-            else if (value is string[]) {
-                // Assuming string[] properties don't exist in both defaults and props
+            else if (value is List<string>) {
+                foreach (var v in (List<string>)value) {
+                    if (!string.IsNullOrEmpty(v))  {
+                        if(parameters.ContainsKey($"{key}[]")) {
+                            parameters[$"{key}[]"] += $"&{key}[]={Uri.EscapeDataString(v)}";
+                        } else {
+                            parameters.Add($"{key}[]", Uri.EscapeDataString(v));
+                        }
+                    }
+                }
+            } else if (value is string[]) {
                 foreach (var v in (string[])value) {
                     if (!string.IsNullOrEmpty(v))  {
                         if(parameters.ContainsKey($"{key}[]")) {
