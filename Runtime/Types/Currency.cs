@@ -121,6 +121,12 @@ namespace AssetLayer.SDK.Currencies
             [Preserve]
         #endif
         [DataMember]
+        public string userId { get; set; } 
+        public decimal amount { get; set; } 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
         public string walletUserId { get; set; } 
     }
     [DataContract]
@@ -137,6 +143,11 @@ namespace AssetLayer.SDK.Currencies
         #endif
         [DataMember]
         public decimal amount { get; set; } 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string userId { get; set; } 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
