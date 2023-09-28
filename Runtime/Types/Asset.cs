@@ -415,13 +415,13 @@ namespace AssetLayer.SDK.Assets
             [Preserve]
         #endif
         [DataMember]
-        public string walletUserId { get; set; }
+        public string mintTo { get; set; }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
-        public string mintTo { get; set; }
+        public string walletUserId { get; set; }
     }
 
     // For SendAssetBase
