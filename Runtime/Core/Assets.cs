@@ -24,8 +24,8 @@ namespace AssetLayer.SDK.Core.Assets
             return (await this.Raw.GetAsset(props, headers)).body.assets[0]; }
         public async Task<List<Asset>> GetAssets(GetAssetsProps props, Dictionary<string, string> headers = null) {
             return (await this.Raw.GetAssets(props, headers)).body.assets; }
-        public async Task<(List<Asset>, List<AssetIdOnly>, object)> User(AssetUserProps props, Dictionary<string, string> headers = null) {
-            if (props.countsOnly == true) return (null, null, (await this.Raw.User(props, headers)).Item3.body);
+        public async Task<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)> User(AssetUserProps props, Dictionary<string, string> headers = null) {
+            if (props.countsOnly == true) return (null, null, (await this.Raw.User(props, headers)).Item3.body.assets);
             else if (props.idOnly == true) return (null, (await this.Raw.User(props, headers)).Item2.body.assets, null);
             else return ((await this.Raw.User(props, headers)).Item1.body.assets, null, null);
         }
@@ -33,25 +33,25 @@ namespace AssetLayer.SDK.Core.Assets
             return (await this.Raw.GetUserAssets(props, headers)).body.assets; }
         public async Task<List<AssetIdOnly>> GetUserAssetIds(GetUserAssetsBaseProps props, Dictionary<string, string> headers = null) {
             return (await this.Raw.GetUserAssetIds(props, headers)).body.assets; }
-        public async Task<object> GetUserAssetCounts(GetUserAssetsBaseProps props, Dictionary<string, string> headers = null) {
-            return (await this.Raw.GetUserAssetCounts(props, headers)).body; }
-        public async Task<(List<Asset>, List<AssetIdOnly>, object)> GetUserCollectionAssets(GetUserCollectionAssetsProps props, Dictionary<string, string> headers = null) {
+        public async Task<Dictionary<string, long>> GetUserAssetCounts(GetUserAssetsBaseProps props, Dictionary<string, string> headers = null) {
+            return (await this.Raw.GetUserAssetCounts(props, headers)).body.assets; }
+        public async Task<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)> GetUserCollectionAssets(GetUserCollectionAssetsProps props, Dictionary<string, string> headers = null) {
             if (props.countsOnly == true) return (null, null, (await this.Raw.GetUserCollectionAssets(props, headers)).Item3.body.assets);
             else if (props.idOnly == true) return (null, (await this.Raw.GetUserCollectionAssets(props, headers)).Item2.body.assets, null);
             else return ((await this.Raw.GetUserCollectionAssets(props, headers)).Item1.body.assets, null, null);
         }
-        public async Task<(List<Asset>, List<AssetIdOnly>, object)> GetUserCollectionsAssets(GetUserCollectionsAssetsProps props, Dictionary<string, string> headers = null) {
+        public async Task<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)> GetUserCollectionsAssets(GetUserCollectionsAssetsProps props, Dictionary<string, string> headers = null) {
             if (props.countsOnly == true) return (null, null, (await this.Raw.GetUserCollectionsAssets(props, headers)).Item3.body.collections);
             else if (props.idOnly == true) return (null, (await this.Raw.GetUserCollectionsAssets(props, headers)).Item2.body.collections, null);
             else return ((await this.Raw.GetUserCollectionsAssets(props, headers)).Item1.body.collections, null, null);
         }
-        public async Task<(List<Asset>, List<AssetIdOnly>, object)> GetUserSlotAssets(GetUserSlotAssetsProps props, Dictionary<string, string> headers = null) {
-            if (props.countsOnly == true) return (null, null, (await this.Raw.GetUserSlotAssets(props, headers)).Item3.body);
+        public async Task<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)> GetUserSlotAssets(GetUserSlotAssetsProps props, Dictionary<string, string> headers = null) {
+            if (props.countsOnly == true) return (null, null, (await this.Raw.GetUserSlotAssets(props, headers)).Item3.body.assets);
             else if (props.idOnly == true) return (null, (await this.Raw.GetUserSlotAssets(props, headers)).Item2.body.assets, null);
             else return ((await this.Raw.GetUserSlotAssets(props, headers)).Item1.body.assets, null, null);
         }
-        public async Task<(List<Asset>, List<AssetIdOnly>, object)> GetUserSlotsAssets(GetUserSlotsAssetsProps props, Dictionary<string, string> headers = null) {
-            if (props.countsOnly == true) return (null, null, (await this.Raw.GetUserSlotsAssets(props, headers)).Item3.body);
+        public async Task<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)> GetUserSlotsAssets(GetUserSlotsAssetsProps props, Dictionary<string, string> headers = null) {
+            if (props.countsOnly == true) return (null, null, (await this.Raw.GetUserSlotsAssets(props, headers)).Item3.body.assets);
             else if (props.idOnly == true) return (null, (await this.Raw.GetUserSlotsAssets(props, headers)).Item2.body.assets, null);
             else return ((await this.Raw.GetUserSlotsAssets(props, headers)).Item1.body.assets, null, null);
         }
@@ -182,8 +182,8 @@ namespace AssetLayer.SDK.Core.Assets
                 try { return new BasicResult<List<Asset>> { Result = await _this.GetAssets(props, headers) }; }
                 catch (BasicError e) { return new BasicResult<List<Asset>> { Error = e }; } },
             User = async (props, headers) => {
-                try { return new BasicResult<(List<Asset>, List<AssetIdOnly>, object)> { Result = await _this.User(props, headers) }; }
-                catch (BasicError e) { return new BasicResult<(List<Asset>, List<AssetIdOnly>, object)> { Error = e }; } },
+                try { return new BasicResult<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)> { Result = await _this.User(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)> { Error = e }; } },
             GetUserAssets = async (props, headers) => {
                 try { return new BasicResult<List<Asset>> { Result = await _this.GetUserAssets(props, headers) }; }
                 catch (BasicError e) { return new BasicResult<List<Asset>> { Error = e }; } },
@@ -191,20 +191,20 @@ namespace AssetLayer.SDK.Core.Assets
                 try { return new BasicResult<List<AssetIdOnly>> { Result = await _this.GetUserAssetIds(props, headers) }; }
                 catch (BasicError e) { return new BasicResult<List<AssetIdOnly>> { Error = e }; } },
             GetUserAssetCounts = async (props, headers) => {
-                try { return new BasicResult<object> { Result = await _this.GetUserAssetCounts(props, headers) }; }
-                catch (BasicError e) { return new BasicResult<object> { Error = e }; } },
+                try { return new BasicResult<Dictionary<string, long>> { Result = await _this.GetUserAssetCounts(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<Dictionary<string, long>> { Error = e }; } },
             GetUserCollectionAssets = async (props, headers) => {
-                try { return new BasicResult<(List<Asset>, List<AssetIdOnly>, object)> { Result = await _this.GetUserCollectionAssets(props, headers) }; }
-                catch (BasicError e) { return new BasicResult<(List<Asset>, List<AssetIdOnly>, object)> { Error = e }; } },
+                try { return new BasicResult<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)> { Result = await _this.GetUserCollectionAssets(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)> { Error = e }; } },
             GetUserCollectionsAssets = async (props, headers) => {
-                try { return new BasicResult<(List<Asset>, List<AssetIdOnly>, object)> { Result = await _this.GetUserCollectionsAssets(props, headers) }; }
-                catch (BasicError e) { return new BasicResult<(List<Asset>, List<AssetIdOnly>, object)> { Error = e }; } },
+                try { return new BasicResult<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)> { Result = await _this.GetUserCollectionsAssets(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)> { Error = e }; } },
             GetUserSlotAssets = async (props, headers) => {
-                try { return new BasicResult<(List<Asset>, List<AssetIdOnly>, object)> { Result = await _this.GetUserSlotAssets(props, headers) }; }
-                catch (BasicError e) { return new BasicResult<(List<Asset>, List<AssetIdOnly>, object)> { Error = e }; } },
+                try { return new BasicResult<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)> { Result = await _this.GetUserSlotAssets(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)> { Error = e }; } },
             GetUserSlotsAssets = async (props, headers) => {
-                try { return new BasicResult<(List<Asset>, List<AssetIdOnly>, object)> { Result = await _this.GetUserSlotsAssets(props, headers) }; }
-                catch (BasicError e) { return new BasicResult<(List<Asset>, List<AssetIdOnly>, object)> { Error = e }; } },
+                try { return new BasicResult<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)> { Result = await _this.GetUserSlotsAssets(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)> { Error = e }; } },
             GetAssetHistory = async (props, headers) => {
                 try { return new BasicResult<List<AssetHistoryRecord>> { Result = await _this.GetAssetHistory(props, headers) }; }
                 catch (BasicError e) { return new BasicResult<List<AssetHistoryRecord>> { Error = e }; } },

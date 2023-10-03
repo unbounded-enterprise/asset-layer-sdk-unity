@@ -779,7 +779,7 @@ namespace AssetLayer.SDK.Assets
             [Preserve]
         #endif
         [DataMember]
-        public object assets { get; set; }
+        public Dictionary<string, long> assets { get; set; }
     }
 
     // For GetCollectionsAssetsResponse
@@ -830,7 +830,7 @@ namespace AssetLayer.SDK.Assets
             [Preserve]
         #endif
         [DataMember]
-        public object collections { get; set; }
+        public Dictionary<string, long> collections { get; set; }
     }
 
     // For GetAssetHistoryResponse
@@ -1121,14 +1121,14 @@ namespace AssetLayer.SDK.Assets
         public delegate Task<BasicResult<(Asset, List<Asset>)>> Info(AssetInfoProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<Asset>> GetAsset(GetAssetProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<Asset>>> GetAssets(GetAssetsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicResult<(List<Asset>, List<AssetIdOnly>, object)>> User(AssetUserProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)>> User(AssetUserProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<Asset>>> GetUserAssets(GetUserAssetsBaseProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<AssetIdOnly>>> GetUserAssetIds(GetUserAssetsBaseProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicResult<object>> GetUserAssetCounts(GetUserAssetsBaseProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicResult<(List<Asset>, List<AssetIdOnly>, object)>> GetUserCollectionAssets(GetUserCollectionAssetsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicResult<(List<Asset>, List<AssetIdOnly>, object)>> GetUserCollectionsAssets(GetUserCollectionsAssetsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicResult<(List<Asset>, List<AssetIdOnly>, object)>> GetUserSlotAssets(GetUserSlotAssetsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicResult<(List<Asset>, List<AssetIdOnly>, object)>> GetUserSlotsAssets(GetUserSlotsAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, long>>> GetUserAssetCounts(GetUserAssetsBaseProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)>> GetUserCollectionAssets(GetUserCollectionAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)>> GetUserCollectionsAssets(GetUserCollectionsAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)>> GetUserSlotAssets(GetUserSlotAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Asset>, List<AssetIdOnly>, Dictionary<string, long>)>> GetUserSlotsAssets(GetUserSlotsAssetsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<AssetHistoryRecord>>> GetAssetHistory(GetAssetHistoryProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<AssetHistoryRecord>>> GetAssetMarketHistory(GetAssetHistoryProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<(List<AssetHistoryRecord>, List<UserAlias>)>> GetAssetOwnershipHistory(GetAssetOwnershipHistoryProps props, Dictionary<string, string> headers = null);
