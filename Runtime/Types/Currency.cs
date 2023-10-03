@@ -122,7 +122,6 @@ namespace AssetLayer.SDK.Currencies
         #endif
         [DataMember]
         public string userId { get; set; } 
-        public decimal amount { get; set; } 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
