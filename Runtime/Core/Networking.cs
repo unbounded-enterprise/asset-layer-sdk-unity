@@ -21,7 +21,7 @@ namespace AssetLayer.SDK.Core.Networking
     public static class NetworkingUtils {
         public static T GetContentAsObject<T>(string jsonContent) {
             using (var memoryStream = new MemoryStream(Encoding.UTF8.GetBytes(jsonContent))) {
-                var serializer = new DataContractJsonSerializer(typeof(T));
+                var serializer = new DataContractJsonSerializer(typeof(T), new DataContractJsonSerializerSettings() { UseSimpleDictionaryFormat = true });
                 var obj = (T)serializer.ReadObject(memoryStream);
                 return obj;
             }
