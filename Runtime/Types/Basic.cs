@@ -22,6 +22,9 @@ namespace AssetLayer.SDK.Basic
 
     [DataContract]
     public class BasicResponse<T> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public BasicResponse() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -42,6 +45,9 @@ namespace AssetLayer.SDK.Basic
 
     [DataContract]
     public class BasicSuccessResponse {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public BasicSuccessResponse() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -57,6 +63,9 @@ namespace AssetLayer.SDK.Basic
 
     [DataContract]
     public class BasicUpdatedResponse : BasicSuccessResponse {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public BasicUpdatedResponse() : base() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -67,6 +76,9 @@ namespace AssetLayer.SDK.Basic
 
     [DataContract]
     public class BasicUploadedResponse : BasicSuccessResponse {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public BasicUploadedResponse() : base() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -77,6 +89,9 @@ namespace AssetLayer.SDK.Basic
 
     [DataContract]
     public class BasicErrorResponse {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public BasicErrorResponse() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]

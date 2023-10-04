@@ -14,6 +14,9 @@ namespace AssetLayer.SDK.Collections
 {
     [DataContract]
     public class Collection {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public Collection() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -105,6 +108,9 @@ namespace AssetLayer.SDK.Collections
 
     [DataContract]
     public class CollectionWithAssetIdOnlys : Collection {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public CollectionWithAssetIdOnlys() : base() { }
         
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -116,6 +122,9 @@ namespace AssetLayer.SDK.Collections
 
     [DataContract]
     public class CollectionWithAssets : Collection {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public CollectionWithAssets() : base() { }
         
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -324,9 +333,17 @@ namespace AssetLayer.SDK.Collections
     }
 
     [DataContract]
-    public class GetCollectionsResponse : BasicResponse<GetCollectionsResponseBody> { public GetCollectionsResponse() : base() { } }
+    public class GetCollectionsResponse : BasicResponse<GetCollectionsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetCollectionsResponse() : base() { }
+    }
     [DataContract]
     public class GetCollectionsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetCollectionsResponseBody() { }
         
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -336,9 +353,17 @@ namespace AssetLayer.SDK.Collections
         public List<Collection> collections { get; set; }
     }
     [DataContract]
-    public class GetCollectionAssetsResponse : BasicResponse<GetCollectionAssetsResponseBody> { public GetCollectionAssetsResponse() : base() { } }
+    public class GetCollectionAssetsResponse : BasicResponse<GetCollectionAssetsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetCollectionAssetsResponse() : base() { }
+    }
     [DataContract]
     public class GetCollectionAssetsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetCollectionAssetsResponseBody() { }
         
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -348,9 +373,17 @@ namespace AssetLayer.SDK.Collections
         public CollectionWithAssets collection { get; set; } 
     }
     [DataContract]
-    public class GetCollectionAssetIdsResponse : BasicResponse<GetCollectionAssetIdsResponseBody> { public GetCollectionAssetIdsResponse() : base() { } }
+    public class GetCollectionAssetIdsResponse : BasicResponse<GetCollectionAssetIdsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetCollectionAssetIdsResponse() : base() { }
+    }
     [DataContract]
     public class GetCollectionAssetIdsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetCollectionAssetIdsResponseBody() { }
         
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -360,9 +393,17 @@ namespace AssetLayer.SDK.Collections
         public CollectionWithAssetIdOnlys collection { get; set; }
     }
     [DataContract]
-    public class CreateCollectionResponse : BasicResponse<CreateCollectionResponseBody> { public CreateCollectionResponse() : base() { } }
+    public class CreateCollectionResponse : BasicResponse<CreateCollectionResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public CreateCollectionResponse() : base() { }
+    }
     [DataContract]
     public class CreateCollectionResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public CreateCollectionResponseBody() { }
         
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS

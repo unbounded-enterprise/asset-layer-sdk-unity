@@ -11,6 +11,9 @@ namespace AssetLayer.SDK.Equips
 {
     [DataContract]
     public class Equip {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public Equip() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -90,9 +93,17 @@ namespace AssetLayer.SDK.Equips
     }
 
     [DataContract]
-    public class GetEquipsResponse : BasicResponse<GetEquipsResponseBody> { public GetEquipsResponse() { } }
+    public class GetEquipsResponse : BasicResponse<GetEquipsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetEquipsResponse() { }
+    }
     [DataContract]
     public class GetEquipsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetEquipsResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS

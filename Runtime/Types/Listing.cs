@@ -12,6 +12,9 @@ namespace AssetLayer.SDK.Listings
 {
     [DataContract]
     public class ListingTXIDs {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public ListingTXIDs() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -31,6 +34,9 @@ namespace AssetLayer.SDK.Listings
     }
     [DataContract]
     public class Listing {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public Listing() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -127,6 +133,9 @@ namespace AssetLayer.SDK.Listings
     // public class ListingsCounts { [collectionId: string]: number };
     [DataContract]
     public class CollectionListingsStats {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public CollectionListingsStats() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -462,9 +471,17 @@ namespace AssetLayer.SDK.Listings
     }
 
     [DataContract]
-    public class GetListingResponse : BasicResponse<GetListingResponseBody> { public GetListingResponse() : base() { } }
+    public class GetListingResponse : BasicResponse<GetListingResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetListingResponse() : base() { }
+    }
     [DataContract]
     public class GetListingResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetListingResponseBody() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -473,9 +490,17 @@ namespace AssetLayer.SDK.Listings
         public Listing listing { get; set; }
     }
     [DataContract]
-    public class GetListingsResponse : BasicResponse<GetListingsResponseBody> { public GetListingsResponse() : base() { } }
+    public class GetListingsResponse : BasicResponse<GetListingsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetListingsResponse() : base() { }
+    }
     [DataContract]
     public class GetListingsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetListingsResponseBody() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -484,9 +509,17 @@ namespace AssetLayer.SDK.Listings
         public List<Listing> listing { get; set; }
     }
     [DataContract]
-    public class GetListingCountsResponse : BasicResponse<GetListingCountsResponseBody> { public GetListingCountsResponse() : base() { } }
+    public class GetListingCountsResponse : BasicResponse<GetListingCountsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetListingCountsResponse() : base() { }
+    }
     [DataContract]
     public class GetListingCountsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetListingCountsResponseBody() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -495,9 +528,17 @@ namespace AssetLayer.SDK.Listings
         public Dictionary<string, long> listing { get; set; }
     }
     [DataContract]
-    public class GetUserListingsResponse : BasicResponse<GetUserListingsResponseBody> { public GetUserListingsResponse() : base() { } }
+    public class GetUserListingsResponse : BasicResponse<GetUserListingsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetUserListingsResponse() : base() { }
+    }
     [DataContract]
     public class GetUserListingsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetUserListingsResponseBody() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -506,9 +547,17 @@ namespace AssetLayer.SDK.Listings
         public List<Listing> listings { get; set; }
     }
     [DataContract]
-    public class GetUserListingCountsResponse : BasicResponse<GetUserListingCountsResponseBody> { public GetUserListingCountsResponse() : base() { } }
+    public class GetUserListingCountsResponse : BasicResponse<GetUserListingCountsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetUserListingCountsResponse() : base() { }
+    }
     [DataContract]
     public class GetUserListingCountsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetUserListingCountsResponseBody() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -517,9 +566,17 @@ namespace AssetLayer.SDK.Listings
         public Dictionary<string, long> listings { get; set; }
     }
     [DataContract]
-    public class GetAppListingsStatsResponse : BasicResponse<GetAppListingsStatsResponseBody> { public GetAppListingsStatsResponse() : base() { } }
+    public class GetAppListingsStatsResponse : BasicResponse<GetAppListingsStatsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetAppListingsStatsResponse() : base() { }
+    }
     [DataContract]
     public class GetAppListingsStatsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAppListingsStatsResponseBody() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -529,6 +586,9 @@ namespace AssetLayer.SDK.Listings
     }
     [DataContract]
     public class ListAssetResponseBodyListing {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public ListAssetResponseBodyListing() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -563,9 +623,17 @@ namespace AssetLayer.SDK.Listings
     }
 
     [DataContract]
-    public class ListAssetResponse : BasicResponse<ListAssetResponseBody> { public ListAssetResponse() : base() { } }
+    public class ListAssetResponse : BasicResponse<ListAssetResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public ListAssetResponse() : base() { }
+    }
     [DataContract]
     public class ListAssetResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public ListAssetResponseBody() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -574,9 +642,17 @@ namespace AssetLayer.SDK.Listings
         public ListAssetResponseBodyListing listing { get; set; }
     }
     [DataContract]
-    public class ListAssetsResponse : BasicResponse<ListAssetsResponseBody> { public ListAssetsResponse() : base() { } }
+    public class ListAssetsResponse : BasicResponse<ListAssetsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public ListAssetsResponse() : base() { }
+    }
     [DataContract]
     public class ListAssetsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public ListAssetsResponseBody() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -585,9 +661,17 @@ namespace AssetLayer.SDK.Listings
         public List<string> assetIds { get; set; }
     }
     [DataContract]
-    public class BuyListingResponse : BasicResponse<BuyListingResponseBody> { public BuyListingResponse() : base() { } }
+    public class BuyListingResponse : BasicResponse<BuyListingResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public BuyListingResponse() : base() { }
+    }
     [DataContract]
     public class BuyListingResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public BuyListingResponseBody() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]

@@ -11,6 +11,9 @@ namespace AssetLayer.SDK.Currencies
 {
     [DataContract]
     public class Currency { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public Currency() { }
         
         // [JsonPropertyName("currencyId")]
@@ -44,6 +47,9 @@ namespace AssetLayer.SDK.Currencies
 
     [DataContract]
     public class CurrencySummary : Currency { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public CurrencySummary() : base() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -59,6 +65,9 @@ namespace AssetLayer.SDK.Currencies
     }
     [DataContract]
     public class CurrencyWithBalance : Currency { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public CurrencyWithBalance() : base() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -181,10 +190,16 @@ namespace AssetLayer.SDK.Currencies
 
     [DataContract]
     public class GetCurrencyResponse : BasicResponse<GetCurrencyResponseBody> { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetCurrencyResponse() : base() { }
     }
     [DataContract]
     public class GetCurrencyResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetCurrencyResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -195,14 +210,23 @@ namespace AssetLayer.SDK.Currencies
     }
     [DataContract]
     public class GetCurrencyBalanceResponse : BasicResponse<List<CurrencyWithBalance>> { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetCurrencyBalanceResponse() : base() { }
     }
     [DataContract]
     public class GetCurrencySummaryResponse : BasicResponse<GetCurrencySummaryResponseBody> { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetCurrencySummaryResponse() : base() { }
     }
     [DataContract]
     public class GetCurrencySummaryResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetCurrencySummaryResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -213,18 +237,30 @@ namespace AssetLayer.SDK.Currencies
     }
     [DataContract]
     public class IncreaseCurrencyBalanceResponse : BasicResponse<TransferCurrencyResponseBody> { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public IncreaseCurrencyBalanceResponse() : base() { }
     }
     [DataContract]
     public class DecreaseCurrencyBalanceResponse : BasicResponse<TransferCurrencyResponseBody> { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public DecreaseCurrencyBalanceResponse() : base() { }
     }
     [DataContract]
     public class TransferCurrencyResponse : BasicResponse<TransferCurrencyResponseBody> { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public TransferCurrencyResponse() : base() { }
     }
     [DataContract]
     public class TransferCurrencyResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public TransferCurrencyResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS

@@ -44,7 +44,7 @@ namespace AssetLayer.SDK.Core.Slots
                 else return (await _this.Request<GetSlotCollectionsResponse>("/slot/collections" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
             },
             GetSlotCollections = async (props, headers) => await _this.Request<GetSlotCollectionsResponse>("/slot/collections" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
-            GetSlotCollectionIds = async (props, headers) => await _this.Request<GetSlotCollectionsIdsResponse>("/slot/collections" + AssetLayerUtils.PropsToQueryString(props, new { idsOnly = true }), "GET", null, headers),
+            GetSlotCollectionIds = async (props, headers) => await _this.Request<GetSlotCollectionsIdsResponse>("/slot/collections" + AssetLayerUtils.PropsToQueryString(props, new SlotCollectionsProps { idOnly = true }), "GET", null, headers),
             GetExpressionTypes = async (headers) => await _this.Request<GetExpressionTypesResponse>("/slot/expressions/types", "GET", null, headers),
             GetSlotExpressions = async (props, headers) => await _this.Request<GetSlotExpressionsResponse>("/slot/expressions" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
             CreateExpression = async (props, headers) => await _this.Request<CreateExpressionResponse>("/slot/expressions/new", "POST", props, headers),

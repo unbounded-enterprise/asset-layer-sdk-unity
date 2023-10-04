@@ -81,30 +81,30 @@ namespace AssetLayer.SDK.Core.Listings
                 if (props.countsOnly == true) return (null, await _this.Request<GetUserListingCountsResponse>("/listing/user" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers));
                 else return (await _this.Request<GetUserListingsResponse>("/listing/user" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
             },
-            GetUserListings = async (props, headers) => await _this.Request<GetUserListingsResponse>("/listing/user" + AssetLayerUtils.PropsToQueryString(props, new { sellerOnly = true }, new { status = "active" }), "GET", null, headers),
-            GetUserListingsCounts = async (props, headers) => await _this.Request<GetUserListingCountsResponse>("/listing/user" + AssetLayerUtils.PropsToQueryString(props, new { sellerOnly = true, countsOnly = true }, new { status = "active" }), "GET", null, headers),
-            GetUserCollectionListings = async (props, headers) => await _this.Request<GetUserListingsResponse>("/listing/user" + AssetLayerUtils.PropsToQueryString(props, new { sellerOnly = true }, new { status = "active" }), "GET", null, headers),
-            GetUserCollectionListingsCounts = async (props, headers) => await _this.Request<GetUserListingCountsResponse>("/listing/user" + AssetLayerUtils.PropsToQueryString(props, new { sellerOnly = true, countsOnly = true }, new { status = "active" }), "GET", null, headers),
-            GetUserSales = async (props, headers) => await _this.Request<GetUserListingsResponse>("/listing/user" + AssetLayerUtils.PropsToQueryString(props, new { status = "sold", sellerOnly = true }), "GET", null, headers),
-            GetUserSalesCounts = async (props, headers) => await _this.Request<GetUserListingCountsResponse>("/listing/user" + AssetLayerUtils.PropsToQueryString(props, new { status = "sold", sellerOnly = true, countsOnly = true }), "GET", null, headers),
-            GetUserPurchases = async (props, headers) => await _this.Request<GetUserListingsResponse>("/listing/user" + AssetLayerUtils.PropsToQueryString(props, new { status = "sold", buyerOnly = true }), "GET", null, headers),
-            GetUserPurchasesCounts = async (props, headers) => await _this.Request<GetUserListingCountsResponse>("/listing/user" + AssetLayerUtils.PropsToQueryString(props, new { status = "sold", buyerOnly = true, countsOnly = true }), "GET", null, headers),
+            GetUserListings = async (props, headers) => await _this.Request<GetUserListingsResponse>("/listing/user" + AssetLayerUtils.PropsToQueryString(props, new ListingUserProps { sellerOnly = true }, new { status = "active" }), "GET", null, headers),
+            GetUserListingsCounts = async (props, headers) => await _this.Request<GetUserListingCountsResponse>("/listing/user" + AssetLayerUtils.PropsToQueryString(props, new ListingUserProps { sellerOnly = true, countsOnly = true }, new { status = "active" }), "GET", null, headers),
+            GetUserCollectionListings = async (props, headers) => await _this.Request<GetUserListingsResponse>("/listing/user" + AssetLayerUtils.PropsToQueryString(props, new ListingUserProps { sellerOnly = true }, new { status = "active" }), "GET", null, headers),
+            GetUserCollectionListingsCounts = async (props, headers) => await _this.Request<GetUserListingCountsResponse>("/listing/user" + AssetLayerUtils.PropsToQueryString(props, new ListingUserProps { sellerOnly = true, countsOnly = true }, new { status = "active" }), "GET", null, headers),
+            GetUserSales = async (props, headers) => await _this.Request<GetUserListingsResponse>("/listing/user" + AssetLayerUtils.PropsToQueryString(props, new ListingUserProps { status = "sold", sellerOnly = true }), "GET", null, headers),
+            GetUserSalesCounts = async (props, headers) => await _this.Request<GetUserListingCountsResponse>("/listing/user" + AssetLayerUtils.PropsToQueryString(props, new ListingUserProps { status = "sold", sellerOnly = true, countsOnly = true }), "GET", null, headers),
+            GetUserPurchases = async (props, headers) => await _this.Request<GetUserListingsResponse>("/listing/user" + AssetLayerUtils.PropsToQueryString(props, new ListingUserProps { status = "sold", buyerOnly = true }), "GET", null, headers),
+            GetUserPurchasesCounts = async (props, headers) => await _this.Request<GetUserListingCountsResponse>("/listing/user" + AssetLayerUtils.PropsToQueryString(props, new ListingUserProps { status = "sold", buyerOnly = true, countsOnly = true }), "GET", null, headers),
             Collection = async (props, headers) => {
                 if (props.countsOnly == true) return (null, await _this.Request<GetListingCountsResponse>("/listing/collection" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers));
                 else return (await _this.Request<GetListingsResponse>("/listing/collection" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
             },
             GetCollectionListings = async (props, headers) => await _this.Request<GetListingsResponse>("/listing/collection" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
             GetCollectionsListings = async (props, headers) => await _this.Request<GetListingsResponse>("/listing/collection" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
-            GetCollectionListingsCounts = async (props, headers) => await _this.Request<GetListingCountsResponse>("/listing/collection" + AssetLayerUtils.PropsToQueryString(props, new { countsOnly = true }), "GET", null, headers),
-            GetCollectionsListingsCounts = async (props, headers) => await _this.Request<GetListingCountsResponse>("/listing/collection" + AssetLayerUtils.PropsToQueryString(props, new { countsOnly = true }), "GET", null, headers),
+            GetCollectionListingsCounts = async (props, headers) => await _this.Request<GetListingCountsResponse>("/listing/collection" + AssetLayerUtils.PropsToQueryString(props, new ListingCollectionProps { countsOnly = true }), "GET", null, headers),
+            GetCollectionsListingsCounts = async (props, headers) => await _this.Request<GetListingCountsResponse>("/listing/collection" + AssetLayerUtils.PropsToQueryString(props, new ListingCollectionProps { countsOnly = true }), "GET", null, headers),
             App = async (props, headers) => {
                 if (props.collectionStats == true && props.countsOnly == true) return (null, null, await _this.Request<GetAppListingsStatsResponse>("/listing/app" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers));
                 else if (props.countsOnly == true) return (null, await _this.Request<GetListingCountsResponse>("/listing/app" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
                 else return (await _this.Request<GetListingsResponse>("/listing/app" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null, null);
             },
             GetAppListings = async (props, headers) => await _this.Request<GetListingsResponse>("/listing/app" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
-            GetAppListingsCounts = async (props, headers) => await _this.Request<GetListingCountsResponse>("/listing/app" + AssetLayerUtils.PropsToQueryString(props, new { countsOnly = true }), "GET", null, headers),
-            GetAppListingsStats = async (props, headers) => await _this.Request<GetAppListingsStatsResponse>("/listing/app" + AssetLayerUtils.PropsToQueryString(props, new { countsOnly = true, collectionStats = true }), "GET", null, headers),
+            GetAppListingsCounts = async (props, headers) => await _this.Request<GetListingCountsResponse>("/listing/app" + AssetLayerUtils.PropsToQueryString(props, new ListingAppProps { countsOnly = true }), "GET", null, headers),
+            GetAppListingsStats = async (props, headers) => await _this.Request<GetAppListingsStatsResponse>("/listing/app" + AssetLayerUtils.PropsToQueryString(props, new ListingAppProps { countsOnly = true, collectionStats = true }), "GET", null, headers),
             New = async (props, headers) => {
                 if (props.collectionId != null || props.assetIds != null) return (null, await _this.Request<ListAssetsResponse>("/listing/new", "POST", props, headers));
                 else return (await _this.Request<ListAssetResponse>("/listing/new", "POST", props, headers), null);

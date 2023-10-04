@@ -11,6 +11,9 @@ namespace AssetLayer.SDK.Users
 {
     [DataContract]
     public class UserRole {   
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public UserRole() { }
 
         // [JsonPropertyName("teamId")]
@@ -29,6 +32,9 @@ namespace AssetLayer.SDK.Users
 
     [DataContract]
     public class UserAlias { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public UserAlias() { }
 
         // [JsonPropertyName("userId")]
@@ -46,6 +52,9 @@ namespace AssetLayer.SDK.Users
     }
     [DataContract]
     public class User {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public User() { }
 
         // [JsonPropertyName("userId")]
@@ -136,9 +145,17 @@ namespace AssetLayer.SDK.Users
 
 
     [DataContract]
-    public class GetUserResponse : BasicResponse<GetUserResponseBody> { public GetUserResponse() : base() { } }
+    public class GetUserResponse : BasicResponse<GetUserResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetUserResponse() : base() { }
+    }
     [DataContract]
     public class GetUserResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetUserResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -148,9 +165,17 @@ namespace AssetLayer.SDK.Users
         public User user { get; set; } 
     }
     [DataContract]
-    public class GetOTPResponse : BasicResponse<GetOTPResponseBody> { public GetOTPResponse() : base() { } }
+    public class GetOTPResponse : BasicResponse<GetOTPResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetOTPResponse() : base() { }
+    }
     [DataContract]
     public class GetOTPResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetOTPResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -160,9 +185,17 @@ namespace AssetLayer.SDK.Users
         public string otp { get; set; } 
     }
     [DataContract]
-    public class RegisterUserResponse : BasicResponse<RegisterUserResponseBody> { public RegisterUserResponse() : base() { } }
+    public class RegisterUserResponse : BasicResponse<RegisterUserResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public RegisterUserResponse() : base() { }
+    }
     [DataContract]
     public class RegisterUserResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public RegisterUserResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS

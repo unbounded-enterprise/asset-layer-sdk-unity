@@ -11,6 +11,9 @@ namespace AssetLayer.SDK.Expressions
 {
     [DataContract]
     public class Expression {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public Expression() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -41,6 +44,9 @@ namespace AssetLayer.SDK.Expressions
 
     [DataContract]
     public class ExpressionValue {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public ExpressionValue() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -66,6 +72,9 @@ namespace AssetLayer.SDK.Expressions
 
     [DataContract]
     public class ExpressionInfo {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public ExpressionInfo() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -81,6 +90,9 @@ namespace AssetLayer.SDK.Expressions
 
     [DataContract]
     public class ExpressionType {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public ExpressionType() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -101,6 +113,9 @@ namespace AssetLayer.SDK.Expressions
 
     [DataContract]
     public class ExpressionAttribute {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public ExpressionAttribute() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]

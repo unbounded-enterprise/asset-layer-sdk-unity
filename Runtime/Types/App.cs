@@ -14,6 +14,9 @@ namespace AssetLayer.SDK.Apps
 {
     [DataContract]
     public class AppCore {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public AppCore() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -63,6 +66,9 @@ namespace AssetLayer.SDK.Apps
     }
     [DataContract]
     public class AppBase : AppCore {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public AppBase() : base() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -72,6 +78,9 @@ namespace AssetLayer.SDK.Apps
     }
     [DataContract]
     public class AppExtendedCore : AppCore { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public AppExtendedCore() : base() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -106,6 +115,9 @@ namespace AssetLayer.SDK.Apps
     }
     [DataContract]
     public class App : AppExtendedCore {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public App() : base() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -115,6 +127,9 @@ namespace AssetLayer.SDK.Apps
     }
     [DataContract]
     public class AppIdOnly { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public AppIdOnly() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -124,6 +139,9 @@ namespace AssetLayer.SDK.Apps
     }
     [DataContract]
     public class AppWithSlotsWithExpressions : AppExtendedCore { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public AppWithSlotsWithExpressions() : base() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -133,6 +151,9 @@ namespace AssetLayer.SDK.Apps
     }
     [DataContract]
     public class AppWithListingsCount : AppBase { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public AppWithListingsCount() : base() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -209,9 +230,17 @@ namespace AssetLayer.SDK.Apps
 
 
     [DataContract]
-    public class GetAppResponse : BasicResponse<GetAppResponseBody> { public GetAppResponse() : base() { } }
+    public class GetAppResponse : BasicResponse<GetAppResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetAppResponse() : base() { } 
+    }
     [DataContract]
     public class GetAppResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAppResponseBody() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -220,9 +249,17 @@ namespace AssetLayer.SDK.Apps
         public App app { get; set; } 
     }
     [DataContract]
-    public class GetAppsResponse : BasicResponse<GetAppsResponseBody> { public GetAppsResponse() : base() { } }
+    public class GetAppsResponse : BasicResponse<GetAppsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetAppsResponse() : base() { }
+    }
     [DataContract]
     public class GetAppsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAppsResponseBody() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -231,9 +268,17 @@ namespace AssetLayer.SDK.Apps
         public List<App> app { get; set; } 
     }
     [DataContract]
-    public class GetAppSlotsResponse : BasicResponse<GetAppSlotsResponseBody> { public GetAppSlotsResponse() : base() { } }
+    public class GetAppSlotsResponse : BasicResponse<GetAppSlotsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetAppSlotsResponse() : base() { }
+    }
     [DataContract]
     public class GetAppSlotsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAppSlotsResponseBody() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -242,9 +287,17 @@ namespace AssetLayer.SDK.Apps
         public AppWithSlotsWithExpressions app { get; set; } 
     }
     [DataContract]
-    public class GetAppSlotIdsResponse : BasicResponse<GetAppSlotIdsResponseBody> { public GetAppSlotIdsResponse() : base() { } }
+    public class GetAppSlotIdsResponse : BasicResponse<GetAppSlotIdsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetAppSlotIdsResponse() : base() { }
+    }
     [DataContract]
     public class GetAppSlotIdsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAppSlotIdsResponseBody() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -253,9 +306,17 @@ namespace AssetLayer.SDK.Apps
         public App app { get; set; } 
     }
     [DataContract]
-    public class GetAppsWithListingsResponse : BasicResponse<GetAppsWithListingsResponseBody> { public GetAppsWithListingsResponse() : base() { } }
+    public class GetAppsWithListingsResponse : BasicResponse<GetAppsWithListingsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetAppsWithListingsResponse() : base() { }
+    }
     [DataContract]
     public class GetAppsWithListingsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAppsWithListingsResponseBody() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -264,9 +325,17 @@ namespace AssetLayer.SDK.Apps
         public List<AppWithListingsCount> apps { get; set; } 
     }
     [DataContract]
-    public class GetAppIdsWithListingsResponse : BasicResponse<GetAppIdsWithListingsResponseBody> { public GetAppIdsWithListingsResponse() : base() { } }
+    public class GetAppIdsWithListingsResponse : BasicResponse<GetAppIdsWithListingsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetAppIdsWithListingsResponse() : base() { }
+    }
     [DataContract]
     public class GetAppIdsWithListingsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAppIdsWithListingsResponseBody() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]

@@ -13,6 +13,9 @@ namespace AssetLayer.SDK.Assets
 {
     [DataContract]
     public class Asset {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public Asset() { }
         
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -77,6 +80,9 @@ namespace AssetLayer.SDK.Assets
     }
 
     public class AssetIdOnly { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public AssetIdOnly() { }
 
         public string assetId { get; set; } 
@@ -85,6 +91,9 @@ namespace AssetLayer.SDK.Assets
     
     [DataContract]
     public class AssetHistoryRecord {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public AssetHistoryRecord() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -734,11 +743,17 @@ namespace AssetLayer.SDK.Assets
 
     [DataContract]
     public class GetAssetsResponse : BasicResponse<GetAssetsResponseBody> { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAssetsResponse() : base() { } 
     }
 
     [DataContract]
     public class GetAssetsResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAssetsResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -751,11 +766,17 @@ namespace AssetLayer.SDK.Assets
     // For GetAssetIdsResponse
     [DataContract]
     public class GetAssetIdsResponse : BasicResponse<GetAssetIdsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAssetIdsResponse() : base() { }
     }
 
     [DataContract]
     public class GetAssetIdsResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAssetIdsResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -768,11 +789,17 @@ namespace AssetLayer.SDK.Assets
     // For GetAssetCountsResponse
     [DataContract]
     public class GetAssetCountsResponse : BasicResponse<GetAssetCountsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAssetCountsResponse() : base() { }
     }
 
     [DataContract]
     public class GetAssetCountsResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAssetCountsResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -785,11 +812,17 @@ namespace AssetLayer.SDK.Assets
     // For GetCollectionsAssetsResponse
     [DataContract]
     public class GetCollectionsAssetsResponse : BasicResponse<GetCollectionsAssetsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetCollectionsAssetsResponse() : base() { }
     }
 
     [DataContract]
     public class GetCollectionsAssetsResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetCollectionsAssetsResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -802,11 +835,17 @@ namespace AssetLayer.SDK.Assets
     // For GetCollectionsAssetIdsResponse
     [DataContract]
     public class GetCollectionsAssetIdsResponse : BasicResponse<GetCollectionsAssetIdsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetCollectionsAssetIdsResponse() : base() { }
     }
 
     [DataContract]
     public class GetCollectionsAssetIdsResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetCollectionsAssetIdsResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -819,11 +858,17 @@ namespace AssetLayer.SDK.Assets
     // For GetCollectionsAssetCountsResponse
     [DataContract]
     public class GetCollectionsAssetCountsResponse : BasicResponse<GetCollectionsAssetCountsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetCollectionsAssetCountsResponse() : base() { }
     }
 
     [DataContract]
     public class GetCollectionsAssetCountsResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetCollectionsAssetCountsResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -836,11 +881,17 @@ namespace AssetLayer.SDK.Assets
     // For GetAssetHistoryResponse
     [DataContract]
     public class GetAssetHistoryResponse : BasicResponse<GetAssetHistoryResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAssetHistoryResponse() : base() { }
     }
 
     [DataContract]
     public class GetAssetHistoryResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAssetHistoryResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -853,11 +904,17 @@ namespace AssetLayer.SDK.Assets
     // For GetAssetMarketHistoryResponse
     [DataContract]
     public class GetAssetMarketHistoryResponse : BasicResponse<GetAssetMarketHistoryResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAssetMarketHistoryResponse() : base() { }
     }
 
     [DataContract]
     public class GetAssetMarketHistoryResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAssetMarketHistoryResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -870,11 +927,17 @@ namespace AssetLayer.SDK.Assets
     // For GetAssetOwnershipHistoryResponse
     [DataContract]
     public class GetAssetOwnershipHistoryResponse : BasicResponse<GetAssetOwnershipHistoryResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAssetOwnershipHistoryResponse() : base() { }
     }
 
     [DataContract]
     public class GetAssetOwnershipHistoryResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetAssetOwnershipHistoryResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -887,11 +950,17 @@ namespace AssetLayer.SDK.Assets
     // For SendAssetResponse
     [DataContract]
     public class SendAssetResponse : BasicResponse<SendAssetResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public SendAssetResponse() : base() { }
     }
 
     [DataContract]
     public class SendAssetResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public SendAssetResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -916,11 +985,17 @@ namespace AssetLayer.SDK.Assets
     // For SendAssetsResponse
     [DataContract]
     public class SendAssetsResponse : BasicResponse<SendAssetsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public SendAssetsResponse() : base() { }
     }
 
     [DataContract]
     public class SendAssetsResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public SendAssetsResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -939,11 +1014,17 @@ namespace AssetLayer.SDK.Assets
     // For UpdateAssetResponse
     [DataContract]
     public class UpdateAssetResponse : BasicResponse<UpdateAssetResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public UpdateAssetResponse() : base() { }
     }
 
     [DataContract]
     public class UpdateAssetResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public UpdateAssetResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -962,11 +1043,17 @@ namespace AssetLayer.SDK.Assets
     // For UpdateAssetsResponse
     [DataContract]
     public class UpdateAssetsResponse : BasicResponse<UpdateAssetsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public UpdateAssetsResponse() : base() { }
     }
 
     [DataContract]
     public class UpdateAssetsResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public UpdateAssetsResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -979,11 +1066,17 @@ namespace AssetLayer.SDK.Assets
     // For UpdateCollectionAssetsResponse
     [DataContract]
     public class UpdateCollectionAssetsResponse : BasicResponse<UpdateCollectionAssetsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public UpdateCollectionAssetsResponse() : base() { }
     }
 
     [DataContract]
     public class UpdateCollectionAssetsResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public UpdateCollectionAssetsResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -994,10 +1087,16 @@ namespace AssetLayer.SDK.Assets
     }
     [DataContract]
     public class UpdateAssetExpressionValueResponse : BasicResponse<UpdateAssetExpressionValueResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public UpdateAssetExpressionValueResponse() : base() { }
     }
     [DataContract]
     public class UpdateAssetExpressionValueResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public UpdateAssetExpressionValueResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -1008,10 +1107,16 @@ namespace AssetLayer.SDK.Assets
     }
     [DataContract]
     public class UpdateAssetsExpressionValueResponse : BasicResponse<UpdateAssetsExpressionValueResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public UpdateAssetsExpressionValueResponse() : base() { }
     }
     [DataContract]
     public class UpdateAssetsExpressionValueResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public UpdateAssetsExpressionValueResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -1022,10 +1127,16 @@ namespace AssetLayer.SDK.Assets
     }
     [DataContract]
     public class UpdateBulkExpressionValuesResponse : BasicResponse<UpdateBulkExpressionValuesResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public UpdateBulkExpressionValuesResponse() : base() { }
     }
     [DataContract]
     public class UpdateBulkExpressionValuesResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public UpdateBulkExpressionValuesResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -1036,6 +1147,9 @@ namespace AssetLayer.SDK.Assets
     }
     [DataContract]
     public class BulkExpressionValueLog {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public BulkExpressionValueLog() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS

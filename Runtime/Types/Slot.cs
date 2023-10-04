@@ -13,8 +13,11 @@ using AssetLayer.SDK.Slots;
 namespace AssetLayer.SDK.Slots 
 {
     [DataContract]
-    public class SlotCore { 
-        public SlotCore() { }
+    public class SlotBase { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public SlotBase() { }
         // [JsonPropertyName("slotId")]
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -77,7 +80,10 @@ namespace AssetLayer.SDK.Slots
         public long updatedAt { get; set; }
     }
     [DataContract]
-    public class Slot : SlotCore { 
+    public class Slot : SlotBase { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public Slot() : base() { }
         // [JsonPropertyName("collections")]
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -93,7 +99,10 @@ namespace AssetLayer.SDK.Slots
         public List<string> expressions { get; set; }
     }
     [DataContract]
-    public class SlotWithExpressions : SlotCore { 
+    public class SlotWithExpressions : SlotBase { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public SlotWithExpressions() : base() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -108,7 +117,10 @@ namespace AssetLayer.SDK.Slots
     }
 
     [DataContract]
-    public class SlotWithCollections : SlotCore {
+    public class SlotWithCollections : SlotBase {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public SlotWithCollections() : base() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -124,7 +136,10 @@ namespace AssetLayer.SDK.Slots
     }
 
     [DataContract]
-    public class SlotWithCollectionsAndExpressions : SlotCore {
+    public class SlotWithCollectionsAndExpressions : SlotBase {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public SlotWithCollectionsAndExpressions() : base() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -240,10 +255,18 @@ namespace AssetLayer.SDK.Slots
 
 
     [DataContract]
-    public class GetSlotResponse : BasicResponse<GetSlotResponseBody> { public GetSlotResponse() : base() { } }
+    public class GetSlotResponse : BasicResponse<GetSlotResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetSlotResponse() : base() { }
+    }
 
     [DataContract]
     public class GetSlotResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetSlotResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -254,10 +277,18 @@ namespace AssetLayer.SDK.Slots
     }
 
     [DataContract]
-    public class GetSlotCollectionsResponse : BasicResponse<GetSlotCollectionsResponseBody> { public GetSlotCollectionsResponse() : base() { } }
+    public class GetSlotCollectionsResponse : BasicResponse<GetSlotCollectionsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetSlotCollectionsResponse() : base() { }
+    }
 
     [DataContract]
     public class GetSlotCollectionsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetSlotCollectionsResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -268,10 +299,18 @@ namespace AssetLayer.SDK.Slots
     }
 
     [DataContract]
-    public class GetSlotCollectionsIdsResponse : BasicResponse<GetSlotCollectionsIdsResponseBody> { public GetSlotCollectionsIdsResponse() : base() { } }
+    public class GetSlotCollectionsIdsResponse : BasicResponse<GetSlotCollectionsIdsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetSlotCollectionsIdsResponse() : base() { }
+    }
 
     [DataContract]
     public class GetSlotCollectionsIdsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetSlotCollectionsIdsResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -281,9 +320,17 @@ namespace AssetLayer.SDK.Slots
         public Slot slot { get; set; } 
     }
     [DataContract]
-    public class GetExpressionTypesResponse : BasicResponse<GetExpressionTypesResponseBody> { public GetExpressionTypesResponse() : base() { } }
+    public class GetExpressionTypesResponse : BasicResponse<GetExpressionTypesResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetExpressionTypesResponse() : base() { }
+    }
     [DataContract]
     public class GetExpressionTypesResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetExpressionTypesResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -293,9 +340,17 @@ namespace AssetLayer.SDK.Slots
         public List<ExpressionType> expressionTypes { get; set; } 
     }
     [DataContract]
-    public class GetSlotExpressionsResponse : BasicResponse<GetSlotExpressionsResponseBody> { public GetSlotExpressionsResponse() : base() { } }
+    public class GetSlotExpressionsResponse : BasicResponse<GetSlotExpressionsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetSlotExpressionsResponse() : base() { }
+    }
     [DataContract]
     public class GetSlotExpressionsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public GetSlotExpressionsResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -305,9 +360,17 @@ namespace AssetLayer.SDK.Slots
         public List<Expression> expressions { get; set; } 
     }
     [DataContract]
-    public class CreateExpressionResponse : BasicResponse<CreateExpressionResponseBody> { public CreateExpressionResponse() : base() { } }
+    public class CreateExpressionResponse : BasicResponse<CreateExpressionResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public CreateExpressionResponse() : base() { }
+    }
     [DataContract]
     public class CreateExpressionResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
         public CreateExpressionResponseBody() { }
 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS

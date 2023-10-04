@@ -51,7 +51,7 @@ namespace AssetLayer.SDK.Core.Apps
                 else return (await _this.Request<GetAppSlotsResponse>("/app/slots" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
             },
             GetAppSlots = async (props, headers) => await _this.Request<GetAppSlotsResponse>("/app/slots" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
-            GetAppSlotIds = async (props, headers) => await _this.Request<GetAppSlotIdsResponse>("/app/slots" + AssetLayerUtils.PropsToQueryString(props, new { idOnly = true }), "GET", null, headers),
+            GetAppSlotIds = async (props, headers) => await _this.Request<GetAppSlotIdsResponse>("/app/slots" + AssetLayerUtils.PropsToQueryString(props, new AppSlotsProps { idOnly = true }), "GET", null, headers),
             Listings = async (props, headers) => {
                 if (props.idOnly == true) return (null, await _this.Request<GetAppIdsWithListingsResponse>("/app/listings" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers));
                 else return (await _this.Request<GetAppsWithListingsResponse>("/app/listings" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
