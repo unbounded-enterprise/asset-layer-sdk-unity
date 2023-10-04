@@ -6,6 +6,6 @@
     "author": "Asset Layer",
     "documentationUrl": "https://github.com/unbounded-enterprise/asset-layer-sdk-unity/blob/main/README.md",
     "dependencies": {
-        "com.unity.nuget.newtonsoft-json": "*"
+        "com.unity.nuget.newtonsoft-json": "3.2.1"
     }
 }
