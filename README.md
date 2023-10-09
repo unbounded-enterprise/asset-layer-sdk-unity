@@ -24,7 +24,7 @@ These instructions will help getting started managing your digital assets with [
 ## Installation
 
 This repo can be installed via the Unity Package Manager.
-Installing with UPM requires adding an assembly reference from this package to your project.
+Installing with UPM may require adding an assembly reference for this package to your project.
 
 You can also install this package by copying the repo and adding it to your Assets folder.
 
@@ -48,6 +48,7 @@ using AssetLayer.SDK.Collections;
 using AssetLayer.SDK.Currencies;
 using AssetLayer.SDK.Equips;
 using AssetLayer.SDK.Listings;
+using AssetLayer.SDK.Shop;
 using AssetLayer.SDK.Slots;
 using AssetLayer.SDK.Users;
 ```
@@ -116,8 +117,6 @@ App[] apps = (await AssetLayerSDK.Apps.Info(new AppInfoProps { appIds = new stri
 
 These all call the same core endpoint (https://api-v2.assetlayer.com/api/v1/app/info),
 but getApp & getApps offer stricter type security when passing props and returning values.
-Typescript is highly recommended and the sdk includes extensive typings,
-useful for referencing & importing, allowing for turn-key type-safe app development.
 
 
 ### Login a User
