@@ -8,6 +8,7 @@ using AssetLayer.SDK.Core.Collections;
 using AssetLayer.SDK.Core.Currencies;
 using AssetLayer.SDK.Core.Equips;
 using AssetLayer.SDK.Core.Listings;
+using AssetLayer.SDK.Core.Shop;
 using AssetLayer.SDK.Core.Slots;
 using AssetLayer.SDK.Core.Users;
 
@@ -27,6 +28,7 @@ namespace AssetLayer.SDK
         public static CurrenciesHandler Currencies;
         public static EquipsHandler Equips;
         public static ListingsHandler Listings;
+        public static ShopHandler Shop;
         public static SlotsHandler Slots;
         public static UsersHandler Users;
 
@@ -44,6 +46,7 @@ namespace AssetLayer.SDK
             Currencies = new CurrenciesHandler(config);
             Equips = new EquipsHandler(config);
             Listings = new ListingsHandler(config);
+            Shop = new ShopHandler(config);
             Slots = new SlotsHandler(config);
             Users = new UsersHandler(config);
 
@@ -59,6 +62,7 @@ namespace AssetLayer.SDK
             Currencies.SetDidToken(didToken);
             Equips.SetDidToken(didToken);
             Listings.SetDidToken(didToken);
+            Shop.SetDidToken(didToken);
             Slots.SetDidToken(didToken);
             Users.SetDidToken(didToken);
 

@@ -6,6 +6,7 @@ using AssetLayer.SDK.Basic;
 using AssetLayer.SDK.Currencies;
 using AssetLayer.SDK.Slots;
 using AssetLayer.SDK.Users;
+
 #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
     using UnityEngine.Scripting;
 #endif

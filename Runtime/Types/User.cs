@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using AssetLayer.SDK.Basic;
+
 #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
     using UnityEngine.Scripting;
 #endif
