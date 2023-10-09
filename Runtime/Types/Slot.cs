@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AssetLayer.SDK.Basic;
 using AssetLayer.SDK.Collections;
 using AssetLayer.SDK.Expressions;
-using AssetLayer.SDK.Slots;
+
 #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
     using UnityEngine.Scripting;
 #endif

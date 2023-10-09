@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using AssetLayer.SDK.Basic;
 using AssetLayer.SDK.Users;
+
 #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
     using UnityEngine.Scripting;
 #endif
@@ -92,11 +93,6 @@ namespace AssetLayer.SDK.Listings
             [Preserve]
         #endif
         [DataMember]
-        public string currency { get; set; }
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
         public UserAlias seller { get; set; }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -108,6 +104,16 @@ namespace AssetLayer.SDK.Listings
         #endif
         [DataMember]
         public long updatedAt { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string currencyId { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string currency { get; set; }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
@@ -362,6 +368,16 @@ namespace AssetLayer.SDK.Listings
         #endif
         [DataMember]
         public string walletUserId { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string currencyId { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string currency { get; set; }
     }
     [DataContract]
     public class ListAssetProps : ListAssetBase { 
@@ -438,6 +454,16 @@ namespace AssetLayer.SDK.Listings
         #endif
         [DataMember]
         public string walletUserId { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string currencyId { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string currency { get; set; }
     }
 
     [DataContract]

@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.Serialization;
+
 #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
     using UnityEngine.Scripting;
 #endif
