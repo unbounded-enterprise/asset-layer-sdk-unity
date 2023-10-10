@@ -479,6 +479,16 @@ namespace AssetLayer.SDK.Listings
         #endif
         [DataMember]
         public decimal price { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string currencyId { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string currency { get; set; }
     }
 
     [DataContract]
