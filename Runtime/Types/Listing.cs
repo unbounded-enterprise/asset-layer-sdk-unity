@@ -179,7 +179,7 @@ namespace AssetLayer.SDK.Listings
         [DataMember]
         public long oldestDate { get; set; }
     }
-    // public class AppListingsStats { [collectionId: string]: CollectionListingsStats; };
+    // public class ListingsStats { [collectionId: string]: CollectionListingsStats; };
 
 
 
@@ -329,6 +329,11 @@ namespace AssetLayer.SDK.Listings
         #endif
         [DataMember]
         public long lastUpdatedAt { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public bool? includeForeignSlots { get; set; }
     }
     [DataContract]
     public class ListingAppProps : GetAppListingsProps { 
@@ -545,23 +550,42 @@ namespace AssetLayer.SDK.Listings
         public List<Listing> listing { get; set; }
     }
     [DataContract]
-    public class GetListingCountsResponse : BasicResponse<GetListingCountsResponseBody> {
+    public class GetListingsCountsResponse : BasicResponse<GetListingsCountsResponseBody> {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
-        public GetListingCountsResponse() : base() { }
+        public GetListingsCountsResponse() : base() { }
     }
     [DataContract]
-    public class GetListingCountsResponseBody { 
+    public class GetListingsCountsResponseBody { 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
-        public GetListingCountsResponseBody() { }
+        public GetListingsCountsResponseBody() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public Dictionary<string, long> listing { get; set; }
+    }
+    [DataContract]
+    public class GetListingsStatsResponse : BasicResponse<GetListingsStatsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetListingsStatsResponse() : base() { }
+    }
+    [DataContract]
+    public class GetListingsStatsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetListingsStatsResponseBody() { }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public Dictionary<string, CollectionListingsStats> listing { get; set; }
     }
     [DataContract]
     public class GetUserListingsResponse : BasicResponse<GetUserListingsResponseBody> {
@@ -583,42 +607,23 @@ namespace AssetLayer.SDK.Listings
         public List<Listing> listings { get; set; }
     }
     [DataContract]
-    public class GetUserListingCountsResponse : BasicResponse<GetUserListingCountsResponseBody> {
+    public class GetUserListingsCountsResponse : BasicResponse<GetUserListingsCountsResponseBody> {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
-        public GetUserListingCountsResponse() : base() { }
+        public GetUserListingsCountsResponse() : base() { }
     }
     [DataContract]
-    public class GetUserListingCountsResponseBody { 
+    public class GetUserListingsCountsResponseBody { 
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
-        public GetUserListingCountsResponseBody() { }
+        public GetUserListingsCountsResponseBody() { }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public Dictionary<string, long> listings { get; set; }
-    }
-    [DataContract]
-    public class GetAppListingsStatsResponse : BasicResponse<GetAppListingsStatsResponseBody> {
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        public GetAppListingsStatsResponse() : base() { }
-    }
-    [DataContract]
-    public class GetAppListingsStatsResponseBody { 
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        public GetAppListingsStatsResponseBody() { }
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
-        public Dictionary<string, CollectionListingsStats> listing { get; set; }
     }
     [DataContract]
     public class ListAssetResponseBodyListing {
@@ -719,24 +724,26 @@ namespace AssetLayer.SDK.Listings
 
     public class ListingsRawDelegates {
         public delegate Task<GetListingResponse> GetListing(GetListingProps props, Dictionary<string, string> headers = null);
-        public delegate Task<(GetUserListingsResponse, GetUserListingCountsResponse)> User(ListingUserProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetUserListingsResponse, GetUserListingsCountsResponse)> User(ListingUserProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetUserListingsResponse> GetUserListings(GetUserListingsMinProps props, Dictionary<string, string> headers = null);
-        public delegate Task<GetUserListingCountsResponse> GetUserListingsCounts(GetUserListingsMinProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetUserListingsCountsResponse> GetUserListingsCounts(GetUserListingsMinProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetUserListingsResponse> GetUserCollectionListings(GetUserCollectionListingsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<GetUserListingCountsResponse> GetUserCollectionListingsCounts(GetUserCollectionListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetUserListingsCountsResponse> GetUserCollectionListingsCounts(GetUserCollectionListingsProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetUserListingsResponse> GetUserSales(GetUserHistoryProps props, Dictionary<string, string> headers = null);
-        public delegate Task<GetUserListingCountsResponse> GetUserSalesCounts(GetUserHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetUserListingsCountsResponse> GetUserSalesCounts(GetUserHistoryProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetUserListingsResponse> GetUserPurchases(GetUserHistoryProps props, Dictionary<string, string> headers = null);
-        public delegate Task<GetUserListingCountsResponse> GetUserPurchasesCounts(GetUserHistoryProps props, Dictionary<string, string> headers = null);
-        public delegate Task<(GetListingsResponse, GetListingCountsResponse)> Collection(ListingCollectionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetUserListingsCountsResponse> GetUserPurchasesCounts(GetUserHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetListingsResponse, GetListingsCountsResponse, GetListingsStatsResponse)> Collection(ListingCollectionProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetListingsResponse> GetCollectionListings(GetCollectionListingsProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetListingsResponse> GetCollectionsListings(GetCollectionsListingsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<GetListingCountsResponse> GetCollectionListingsCounts(GetCollectionListingsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<GetListingCountsResponse> GetCollectionsListingsCounts(GetCollectionsListingsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<(GetListingsResponse, GetListingCountsResponse, GetAppListingsStatsResponse)> App(ListingAppProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetListingsCountsResponse> GetCollectionListingsCounts(GetCollectionListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetListingsCountsResponse> GetCollectionsListingsCounts(GetCollectionsListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetListingsStatsResponse> GetCollectionListingsStats(GetCollectionListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetListingsStatsResponse> GetCollectionsListingsStats(GetCollectionsListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetListingsResponse, GetListingsCountsResponse, GetListingsStatsResponse)> App(ListingAppProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetListingsResponse> GetAppListings(GetAppListingsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<GetListingCountsResponse> GetAppListingsCounts(GetAppListingsProps props, Dictionary<string, string> headers = null);
-        public delegate Task<GetAppListingsStatsResponse> GetAppListingsStats(GetAppListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetListingsCountsResponse> GetAppListingsCounts(GetAppListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetListingsStatsResponse> GetAppListingsStats(GetAppListingsProps props, Dictionary<string, string> headers = null);
         public delegate Task<(ListAssetResponse, ListAssetsResponse)> New(ListingNewProps props, Dictionary<string, string> headers = null);
         public delegate Task<ListAssetResponse> ListAsset(ListAssetProps props, Dictionary<string, string> headers = null);
         public delegate Task<ListAssetsResponse> ListAssets(ListAssetsProps props, Dictionary<string, string> headers = null);
@@ -762,6 +769,8 @@ namespace AssetLayer.SDK.Listings
         public ListingsRawDelegates.GetCollectionsListings GetCollectionsListings;
         public ListingsRawDelegates.GetCollectionListingsCounts GetCollectionListingsCounts;
         public ListingsRawDelegates.GetCollectionsListingsCounts GetCollectionsListingsCounts;
+        public ListingsRawDelegates.GetCollectionListingsStats GetCollectionListingsStats;
+        public ListingsRawDelegates.GetCollectionsListingsStats GetCollectionsListingsStats;
         public ListingsRawDelegates.App App;
         public ListingsRawDelegates.GetAppListings GetAppListings;
         public ListingsRawDelegates.GetAppListingsCounts GetAppListingsCounts;
@@ -786,11 +795,13 @@ namespace AssetLayer.SDK.Listings
         public delegate Task<BasicResult<Dictionary<string, long>>> GetUserSalesCounts(GetUserHistoryProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<Listing>>> GetUserPurchases(GetUserHistoryProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<Dictionary<string, long>>> GetUserPurchasesCounts(GetUserHistoryProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicResult<(List<Listing>, Dictionary<string, long>)>> Collection(ListingCollectionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Listing>, Dictionary<string, long>, Dictionary<string, CollectionListingsStats>)>> Collection(ListingCollectionProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<Listing>>> GetCollectionListings(GetCollectionListingsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<Listing>>> GetCollectionsListings(GetCollectionsListingsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<Dictionary<string, long>>> GetCollectionListingsCounts(GetCollectionListingsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<Dictionary<string, long>>> GetCollectionsListingsCounts(GetCollectionsListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, CollectionListingsStats>>> GetCollectionListingsStats(GetCollectionListingsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<Dictionary<string, CollectionListingsStats>>> GetCollectionsListingsStats(GetCollectionsListingsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<(List<Listing>, Dictionary<string, long>, Dictionary<string, CollectionListingsStats>)>> App(ListingAppProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<Listing>>> GetAppListings(GetAppListingsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<Dictionary<string, long>>> GetAppListingsCounts(GetAppListingsProps props, Dictionary<string, string> headers = null);
@@ -820,6 +831,8 @@ namespace AssetLayer.SDK.Listings
         public ListingsSafeDelegates.GetCollectionsListings GetCollectionsListings;
         public ListingsSafeDelegates.GetCollectionListingsCounts GetCollectionListingsCounts;
         public ListingsSafeDelegates.GetCollectionsListingsCounts GetCollectionsListingsCounts;
+        public ListingsSafeDelegates.GetCollectionListingsStats GetCollectionListingsStats;
+        public ListingsSafeDelegates.GetCollectionsListingsStats GetCollectionsListingsStats;
         public ListingsSafeDelegates.App App;
         public ListingsSafeDelegates.GetAppListings GetAppListings;
         public ListingsSafeDelegates.GetAppListingsCounts GetAppListingsCounts;
