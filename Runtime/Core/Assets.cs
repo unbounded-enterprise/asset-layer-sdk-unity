@@ -63,8 +63,14 @@ namespace AssetLayer.SDK.Core.Assets
             if (props.ownersOnly == true) return (null, (await this.Raw.GetAssetOwnershipHistory(props, headers)).Item2.body.history);
             else return ((await this.Raw.GetAssetOwnershipHistory(props, headers)).Item1.body.history, null);
         }
+        public async Task<(bool?, List<string>)> Mint(AssetMintProps props, Dictionary<string, string> headers = null) {
+            if (props.includeAssetIds == true) return (null, (await this.Raw.Mint(props, headers)).Item2.body.assetIds);
+            else return ((await this.Raw.Mint(props, headers)).Item1.success, null);
+        }
         public async Task<bool> MintAssets(MintAssetsProps props, Dictionary<string, string> headers = null) {
             return (await this.Raw.MintAssets(props, headers)).success; }
+        public async Task<List<string>> MintAssetsWithIds(MintAssetsProps props, Dictionary<string, string> headers = null) {
+            return (await this.Raw.MintAssetsWithIds(props, headers)).body.assetIds; }
         public async Task<(SendAssetResponseBody, SendAssetsResponseBody)> Send(AssetSendProps props, Dictionary<string, string> headers = null) {
             if (props.collectionId != null || props.assetIds != null) return (null, (await this.Raw.Send(props, headers)).Item2.body);
             else return ((await this.Raw.Send(props, headers)).Item1.body, null);
@@ -142,7 +148,12 @@ namespace AssetLayer.SDK.Core.Assets
                 if (props.ownersOnly == true) return (null, await _this.Request<GetAssetOwnershipHistoryResponse>("/asset/history" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers));
                 else return (await _this.Request<GetAssetMarketHistoryResponse>("/asset/history" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers), null);
             },
+            Mint = async (props, headers) => {
+                if (props.includeAssetIds == true) return (null, await _this.Request<MintAssetsWithIdsResponse>("/asset/mint", "POST", props, headers));
+                else return (await _this.Request<BasicSuccessResponse>("/asset/mint", "POST", props, headers), null);
+            },
             MintAssets = async (props, headers) => await _this.Request<BasicSuccessResponse>("/asset/mint", "POST", props, headers),
+            MintAssetsWithIds = async (props, headers) => await _this.Request<MintAssetsWithIdsResponse>("/asset/mint", "POST", AssetLayerUtils.MergeIntoClass<AssetMintProps>(props, new AssetMintProps { includeAssetIds = true }), headers),
             Send = async (props, headers) => {
                 if (props.collectionId != null || props.assetIds != null) return (null, await _this.Request<SendAssetsResponse>("/asset/send", "POST", props, headers));
                 else return (await _this.Request<SendAssetResponse>("/asset/send", "POST", props, headers), null);
@@ -214,9 +225,15 @@ namespace AssetLayer.SDK.Core.Assets
             GetAssetOwnershipHistory = async (props, headers) => {
                 try { return new BasicResult<(List<AssetHistoryRecord>, List<UserAlias>)> { Result = await _this.GetAssetOwnershipHistory(props, headers) }; }
                 catch (BasicError e) { return new BasicResult<(List<AssetHistoryRecord>, List<UserAlias>)> { Error = e }; } },
+            Mint = async (props, headers) => {
+                try { return new BasicResult<(bool?, List<string>)> { Result = await _this.Mint(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<(bool?, List<string>)> { Error = e }; } },
             MintAssets = async (props, headers) => {
                 try { return new BasicResult<bool> { Result = await _this.MintAssets(props, headers) }; }
                 catch (BasicError e) { return new BasicResult<bool> { Error = e }; } },
+            MintAssetsWithIds = async (props, headers) => {
+                try { return new BasicResult<List<string>> { Result = await _this.MintAssetsWithIds(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<List<string>> { Error = e }; } },
             Send = async (props, headers) => {
                 try { return new BasicResult<(SendAssetResponseBody, SendAssetsResponseBody)> { Result = await _this.Send(props, headers) }; }
                 catch (BasicError e) { return new BasicResult<(SendAssetResponseBody, SendAssetsResponseBody)> { Error = e }; } },

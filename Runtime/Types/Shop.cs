@@ -102,6 +102,21 @@ namespace AssetLayer.SDK.Shop
         #endif
         [DataMember]
         public string itemId { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public long price { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string currencyId { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string currency { get; set; }
     }
 
     [DataContract]
@@ -175,16 +190,31 @@ namespace AssetLayer.SDK.Shop
 
 
     [DataContract]
-    public class BuyItemResponse : BasicSuccessResponse {
+    public class BuyItemResponse : BasicResponse<BuyItemResponseBody> {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         public BuyItemResponse() : base() { }
+    }
+
+    [DataContract]
+    public class BuyItemResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public BuyItemResponseBody() { }
+
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
-        public bool buy { get; set; }
+        public bool buy { get; set; } 
+
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string assetId { get; set; }
     }
 
     [DataContract]
@@ -226,7 +256,7 @@ namespace AssetLayer.SDK.Shop
 
     public class ShopSafeDelegates {
         // public delegate Task<BasicResult<NewItemResponseData>> NewItem(NewItemProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicResult<bool>> BuyItem(BuyItemProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<string>> BuyItem(BuyItemProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<ShopItemSummary>> Summary(Dictionary<string, string> headers = null);
         // public delegate Task<BasicResult<bool>> RemoveItem(RemoveItemProps props, Dictionary<string, string> headers = null);
     }

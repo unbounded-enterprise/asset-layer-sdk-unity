@@ -158,7 +158,6 @@ namespace AssetLayer.SDK.Assets
         public string expressionValue { get; set; }
     }
     
-    // For GetAssetProps
     [DataContract]
     public class GetAssetProps {
         public GetAssetProps() { }
@@ -170,7 +169,6 @@ namespace AssetLayer.SDK.Assets
         public string assetId { get; set; }
     }
 
-    // For GetAssetsProps
     [DataContract]
     public class GetAssetsProps {
         public GetAssetsProps() { }
@@ -182,7 +180,6 @@ namespace AssetLayer.SDK.Assets
         public List<string> assetIds { get; set; }
     }
 
-    // For GetAssetsAllProps
     [DataContract]
     public class AssetInfoProps {
         public AssetInfoProps() { }
@@ -200,7 +197,6 @@ namespace AssetLayer.SDK.Assets
         public List<string> assetIds { get; set; }
     }
 
-    // For GetUserAssetsBaseProps
     [DataContract]
     public class GetUserAssetsBaseProps {
         public GetUserAssetsBaseProps() { }
@@ -212,7 +208,6 @@ namespace AssetLayer.SDK.Assets
         public string walletUserId { get; set; }
     }
 
-    // For GetUserAssetsAllProps
     [DataContract]
     public class AssetUserProps : GetUserAssetsBaseProps {
         public AssetUserProps() : base() { }
@@ -230,7 +225,6 @@ namespace AssetLayer.SDK.Assets
         public bool? countsOnly { get; set; }
     }
 
-    // For GetUserCollectionAssetsProps
     [DataContract]
     public class GetUserCollectionAssetsProps {
         public GetUserCollectionAssetsProps() { }
@@ -272,7 +266,6 @@ namespace AssetLayer.SDK.Assets
         public bool? countsOnly { get; set; }
     }
 
-    // For GetUserCollectionsAssetsProps
     [DataContract]
     public class GetUserCollectionsAssetsProps {
         public GetUserCollectionsAssetsProps() { }
@@ -302,7 +295,6 @@ namespace AssetLayer.SDK.Assets
         public bool? countsOnly { get; set; }
     }
 
-    // For GetUserSlotAssetsProps
     [DataContract]
     public class GetUserSlotAssetsProps {
         public GetUserSlotAssetsProps() { }
@@ -332,7 +324,6 @@ namespace AssetLayer.SDK.Assets
         public bool? countsOnly { get; set; }
     }
 
-    // For GetUserSlotsAssetsProps
     [DataContract]
     public class GetUserSlotsAssetsProps {
         public GetUserSlotsAssetsProps() { }
@@ -368,7 +359,6 @@ namespace AssetLayer.SDK.Assets
         public bool? countsOnly { get; set; }
     }
 
-    // For GetAssetHistoryProps
     [DataContract]
     public class GetAssetHistoryProps {
         public GetAssetHistoryProps() { }
@@ -392,7 +382,6 @@ namespace AssetLayer.SDK.Assets
         public int? start { get; set; }
     }
 
-    // For GetAssetOwnershipHistoryProps
     [DataContract]
     public class GetAssetOwnershipHistoryProps : GetAssetHistoryProps {
         public GetAssetOwnershipHistoryProps() : base() { }
@@ -404,7 +393,6 @@ namespace AssetLayer.SDK.Assets
         public bool? ownersOnly { get; set; }
     }
 
-    // For MintAssetsProps
     [DataContract]
     public class MintAssetsProps {
         public MintAssetsProps() { }
@@ -434,7 +422,17 @@ namespace AssetLayer.SDK.Assets
         public string walletUserId { get; set; }
     }
 
-    // For SendAssetBase
+    [DataContract]
+    public class AssetMintProps : MintAssetsProps {
+        public AssetMintProps() : base() { }
+
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public bool? includeAssetIds { get; set; }
+    }
+
     [DataContract]
     public class SendAssetBase {
         public SendAssetBase() : base() { }
@@ -452,7 +450,6 @@ namespace AssetLayer.SDK.Assets
         public string walletUserId { get; set; }
     }
 
-    // For SendAssetProps
     [DataContract]
     public class SendAssetProps : SendAssetBase {
         public SendAssetProps() : base() { }
@@ -464,7 +461,6 @@ namespace AssetLayer.SDK.Assets
         public string assetId { get; set; }
     }
 
-    // For SendAssetsProps
     [DataContract]
     public class SendAssetsProps : SendAssetBase {
         public SendAssetsProps() : base() { }
@@ -476,7 +472,6 @@ namespace AssetLayer.SDK.Assets
         public List<string> assetIds { get; set; }
     }
 
-    // For SendCollectionAssetsProps
     [DataContract]
     public class SendCollectionAssetsProps : SendAssetBase {
         public SendCollectionAssetsProps() : base() { }
@@ -488,7 +483,6 @@ namespace AssetLayer.SDK.Assets
         public string collectionId { get; set; }
     }
 
-    // For SendAssetAllProps
     [DataContract]
     public class AssetSendProps : SendAssetBase {
         public AssetSendProps() : base() { }
@@ -512,7 +506,6 @@ namespace AssetLayer.SDK.Assets
         public string collectionId { get; set; }
     }
 
-    // For SendLowestAssetProps
     [DataContract]
     public class SendLowestAssetProps {
         public SendLowestAssetProps() { }
@@ -536,7 +529,6 @@ namespace AssetLayer.SDK.Assets
         public string walletUserId { get; set; }
     }
 
-    // For SendRandomAssetProps
     [DataContract]
     public class SendRandomAssetProps {
         public SendRandomAssetProps() { }
@@ -560,7 +552,6 @@ namespace AssetLayer.SDK.Assets
         public string walletUserId { get; set; }
     }
 
-    // For UpdateAssetProps
     [DataContract]
     public class UpdateAssetProps {
         public UpdateAssetProps() { }
@@ -578,7 +569,6 @@ namespace AssetLayer.SDK.Assets
         public object properties { get; set; }
     }
 
-    // For UpdateAssetsProps
     [DataContract]
     public class UpdateAssetsProps {
         public UpdateAssetsProps() { }
@@ -596,7 +586,6 @@ namespace AssetLayer.SDK.Assets
         public object properties { get; set; }
     }
 
-    // For UpdateCollectionAssetsProps
     [DataContract]
     public class UpdateCollectionAssetsProps {
         public UpdateCollectionAssetsProps() { }
@@ -614,7 +603,6 @@ namespace AssetLayer.SDK.Assets
         public object properties { get; set; }
     }
 
-    // For UpdateAssetsAllProps
     [DataContract]
     public class AssetUpdateProps {
         public AssetUpdateProps() { }
@@ -764,7 +752,6 @@ namespace AssetLayer.SDK.Assets
         public List<Asset> assets { get; set; } 
     }
 
-    // For GetAssetIdsResponse
     [DataContract]
     public class GetAssetIdsResponse : BasicResponse<GetAssetIdsResponseBody> {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -787,7 +774,6 @@ namespace AssetLayer.SDK.Assets
         public List<AssetIdOnly> assets { get; set; }
     }
 
-    // For GetAssetCountsResponse
     [DataContract]
     public class GetAssetCountsResponse : BasicResponse<GetAssetCountsResponseBody> {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -810,7 +796,6 @@ namespace AssetLayer.SDK.Assets
         public Dictionary<string, long> assets { get; set; }
     }
 
-    // For GetCollectionsAssetsResponse
     [DataContract]
     public class GetCollectionsAssetsResponse : BasicResponse<GetCollectionsAssetsResponseBody> {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -833,7 +818,6 @@ namespace AssetLayer.SDK.Assets
         public List<Asset> collections { get; set; }
     }
 
-    // For GetCollectionsAssetIdsResponse
     [DataContract]
     public class GetCollectionsAssetIdsResponse : BasicResponse<GetCollectionsAssetIdsResponseBody> {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -856,7 +840,6 @@ namespace AssetLayer.SDK.Assets
         public List<AssetIdOnly> collections { get; set; }
     }
 
-    // For GetCollectionsAssetCountsResponse
     [DataContract]
     public class GetCollectionsAssetCountsResponse : BasicResponse<GetCollectionsAssetCountsResponseBody> {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -879,7 +862,6 @@ namespace AssetLayer.SDK.Assets
         public Dictionary<string, long> collections { get; set; }
     }
 
-    // For GetAssetHistoryResponse
     [DataContract]
     public class GetAssetHistoryResponse : BasicResponse<GetAssetHistoryResponseBody> {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -902,7 +884,6 @@ namespace AssetLayer.SDK.Assets
         public List<AssetHistoryRecord> history { get; set; }
     }
 
-    // For GetAssetMarketHistoryResponse
     [DataContract]
     public class GetAssetMarketHistoryResponse : BasicResponse<GetAssetMarketHistoryResponseBody> {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -925,7 +906,6 @@ namespace AssetLayer.SDK.Assets
         public List<AssetHistoryRecord> history { get; set; }
     }
 
-    // For GetAssetOwnershipHistoryResponse
     [DataContract]
     public class GetAssetOwnershipHistoryResponse : BasicResponse<GetAssetOwnershipHistoryResponseBody> {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -948,7 +928,28 @@ namespace AssetLayer.SDK.Assets
         public List<UserAlias> history { get; set; }
     }
 
-    // For SendAssetResponse
+    [DataContract]
+    public class MintAssetsWithIdsResponse : BasicResponse<MintAssetsWithIdsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public MintAssetsWithIdsResponse() : base() { }
+    }
+
+    [DataContract]
+    public class MintAssetsWithIdsResponseBody {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public MintAssetsWithIdsResponseBody() { }
+
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<string> assetIds { get; set; }
+    }
+
     [DataContract]
     public class SendAssetResponse : BasicResponse<SendAssetResponseBody> {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -983,7 +984,6 @@ namespace AssetLayer.SDK.Assets
         public string assetId { get; set; }
     }
 
-    // For SendAssetsResponse
     [DataContract]
     public class SendAssetsResponse : BasicResponse<SendAssetsResponseBody> {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -1012,7 +1012,6 @@ namespace AssetLayer.SDK.Assets
         public List<string> assetIds { get; set; }
     }
 
-    // For UpdateAssetResponse
     [DataContract]
     public class UpdateAssetResponse : BasicResponse<UpdateAssetResponseBody> {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -1041,7 +1040,6 @@ namespace AssetLayer.SDK.Assets
         public int serial { get; set; }
     }
 
-    // For UpdateAssetsResponse
     [DataContract]
     public class UpdateAssetsResponse : BasicResponse<UpdateAssetsResponseBody> {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -1064,7 +1062,6 @@ namespace AssetLayer.SDK.Assets
         public List<string> assetIds { get; set; }
     }
 
-    // For UpdateCollectionAssetsResponse
     [DataContract]
     public class UpdateCollectionAssetsResponse : BasicResponse<UpdateCollectionAssetsResponseBody> {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -1181,7 +1178,9 @@ namespace AssetLayer.SDK.Assets
         public delegate Task<GetAssetHistoryResponse> GetAssetHistory(GetAssetHistoryProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetAssetMarketHistoryResponse> GetAssetMarketHistory(GetAssetHistoryProps props, Dictionary<string, string> headers = null);
         public delegate Task<(GetAssetMarketHistoryResponse, GetAssetOwnershipHistoryResponse)> GetAssetOwnershipHistory(GetAssetOwnershipHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(BasicSuccessResponse, MintAssetsWithIdsResponse)> Mint(AssetMintProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicSuccessResponse> MintAssets(MintAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<MintAssetsWithIdsResponse> MintAssetsWithIds(MintAssetsProps props, Dictionary<string, string> headers = null);
         public delegate Task<(SendAssetResponse, SendAssetsResponse)> Send(AssetSendProps props, Dictionary<string, string> headers = null);
         public delegate Task<SendAssetResponse> SendAsset(SendAssetProps props, Dictionary<string, string> headers = null);
         public delegate Task<SendAssetsResponse> SendAssets(SendAssetsProps props, Dictionary<string, string> headers = null);
@@ -1214,7 +1213,9 @@ namespace AssetLayer.SDK.Assets
         public AssetsRawDelegates.GetAssetHistory GetAssetHistory;
         public AssetsRawDelegates.GetAssetMarketHistory GetAssetMarketHistory;
         public AssetsRawDelegates.GetAssetOwnershipHistory GetAssetOwnershipHistory;
+        public AssetsRawDelegates.Mint Mint;
         public AssetsRawDelegates.MintAssets MintAssets;
+        public AssetsRawDelegates.MintAssetsWithIds MintAssetsWithIds;
         public AssetsRawDelegates.Send Send;
         public AssetsRawDelegates.SendAsset SendAsset;
         public AssetsRawDelegates.SendAssets SendAssets;
@@ -1247,7 +1248,9 @@ namespace AssetLayer.SDK.Assets
         public delegate Task<BasicResult<List<AssetHistoryRecord>>> GetAssetHistory(GetAssetHistoryProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<AssetHistoryRecord>>> GetAssetMarketHistory(GetAssetHistoryProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<(List<AssetHistoryRecord>, List<UserAlias>)>> GetAssetOwnershipHistory(GetAssetOwnershipHistoryProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(bool?, List<string>)>> Mint(AssetMintProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<bool>> MintAssets(MintAssetsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<string>>> MintAssetsWithIds(MintAssetsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<(SendAssetResponseBody, SendAssetsResponseBody)>> Send(AssetSendProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<SendAssetResponseBody>> SendAsset(SendAssetProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<SendAssetsResponseBody>> SendAssets(SendAssetsProps props, Dictionary<string, string> headers = null);
@@ -1281,7 +1284,9 @@ namespace AssetLayer.SDK.Assets
         public AssetsSafeDelegates.GetAssetHistory GetAssetHistory;
         public AssetsSafeDelegates.GetAssetMarketHistory GetAssetMarketHistory;
         public AssetsSafeDelegates.GetAssetOwnershipHistory GetAssetOwnershipHistory;
+        public AssetsSafeDelegates.Mint Mint;
         public AssetsSafeDelegates.MintAssets MintAssets;
+        public AssetsSafeDelegates.MintAssetsWithIds MintAssetsWithIds;
         public AssetsSafeDelegates.Send Send;
         public AssetsSafeDelegates.SendAsset SendAsset;
         public AssetsSafeDelegates.SendAssets SendAssets;

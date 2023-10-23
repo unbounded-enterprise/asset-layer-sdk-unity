@@ -22,6 +22,20 @@ namespace AssetLayer.SDK.Utils
             return new BasicError(message, status);
         }
 
+        public static T MergeIntoClass<T>(object props, T target) where T : class
+        {
+            foreach (PropertyInfo prop in props.GetType().GetProperties())
+            {
+                if (prop.CanRead && target.GetType().GetProperty(prop.Name)?.CanWrite == true)
+                {
+                    var value = prop.GetValue(props);
+                    target.GetType().GetProperty(prop.Name).SetValue(target, value);
+                }
+            }
+
+            return target;
+        }
+
         public static string PropsToQueryString(object props, object forced = null, object defaults = null) {
             var parameters = new Dictionary<string, string>();
 

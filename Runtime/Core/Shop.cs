@@ -18,8 +18,8 @@ namespace AssetLayer.SDK.Core.Shop
         
         // public async Task<NewItemResponseData> NewItem(NewItemProps props, Dictionary<string, string> headers = null) {
         //     return (await this.Raw.NewItem(props, headers)).body.newItem; }
-        public async Task<bool> BuyItem(BuyItemProps props, Dictionary<string, string> headers = null) {
-            return (await this.Raw.BuyItem(props, headers)).buy; }
+        public async Task<string> BuyItem(BuyItemProps props, Dictionary<string, string> headers = null) {
+            return (await this.Raw.BuyItem(props, headers)).body.assetId; }
         public async Task<ShopItemSummary> Summary(Dictionary<string, string> headers = null) {
             return (await this.Raw.Summary(headers)).body.summary; }
         // public async Task<bool> RemoveItem(RemoveItemProps props, Dictionary<string, string> headers = null) {
@@ -37,8 +37,8 @@ namespace AssetLayer.SDK.Core.Shop
             //     try { return new BasicResult<NewItemResponseData> { Result = await _this.NewItem(props, headers) }; }
             //     catch (BasicError e) { return new BasicResult<NewItemResponseData> { Error = e }; }},
             BuyItem = async (props, headers) => {
-                try { return new BasicResult<bool> { Result = await _this.BuyItem(props, headers) }; }
-                catch (BasicError e) { return new BasicResult<bool> { Error = e }; }},
+                try { return new BasicResult<string> { Result = await _this.BuyItem(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<string> { Error = e }; }},
             Summary = async (headers) => {
                 try { return new BasicResult<ShopItemSummary> { Result = await _this.Summary(headers) }; }
                 catch (BasicError e) { return new BasicResult<ShopItemSummary> { Error = e }; }},
