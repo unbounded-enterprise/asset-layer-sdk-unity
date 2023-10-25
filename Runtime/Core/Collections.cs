@@ -33,10 +33,12 @@ namespace AssetLayer.SDK.Core.Collections
             return (await this.Raw.GetCollectionAssetIds(props, headers)).body.collection.assets; }
         public async Task<string> CreateCollection(CreateCollectionProps props, Dictionary<string, string> headers = null) {
             return (await this.Raw.CreateCollection(props, headers)).body.collectionId; }
-        public async Task<bool> UpdateCollectionImage(UpdateCollectionImageProps props, Dictionary<string, string> headers = null) {
-            return (await this.Raw.UpdateCollectionImage(props, headers)).uploaded; }
         public async Task<bool> UpdateCollection(UpdateCollectionProps props, Dictionary<string, string> headers = null) {
             return (await this.Raw.UpdateCollection(props, headers)).updated; }
+        public async Task<bool> UpdateCollectionImage(UpdateCollectionImageProps props, Dictionary<string, string> headers = null) {
+            return (await this.Raw.UpdateCollectionImage(props, headers)).uploaded; }
+        public async Task<bool> UpdateDefaultProperties(UpdateDefaultPropertiesProps props, Dictionary<string, string> headers = null) {
+            return (await this.Raw.UpdateDefaultProperties(props, headers)).success; }
         public async Task<bool> ActivateCollection(ActivateCollectionProps props, Dictionary<string, string> headers = null) {
             return (await this.Raw.ActivateCollection(props, headers)).updated; }
         public async Task<bool> DeactivateCollection(ActivateCollectionProps props, Dictionary<string, string> headers = null) {
@@ -53,8 +55,9 @@ namespace AssetLayer.SDK.Core.Collections
             GetCollectionAssets = async (props, headers) => await _this.Request<GetCollectionAssetsResponse>("/collection/assets" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
             GetCollectionAssetIds = async (props, headers) => await _this.Request<GetCollectionAssetIdsResponse>("/collection/assets" + AssetLayerUtils.PropsToQueryString(props, new CollectionAssetsProps { idOnly = true }), "GET", null, headers),
             CreateCollection = async (props, headers) => await _this.Request<CreateCollectionResponse>("/collection/new", "POST", props, headers),
-            UpdateCollectionImage = async (props, headers) => await _this.Request<BasicUploadedResponse>("/collection/image", "POST", props, headers),
             UpdateCollection = async (props, headers) => await _this.Request<BasicUpdatedResponse>("/collection/update", "PUT", props, headers),
+            UpdateCollectionImage = async (props, headers) => await _this.Request<BasicUploadedResponse>("/collection/image", "POST", props, headers),
+            UpdateDefaultProperties = async (props, headers) => await _this.Request<BasicSuccessResponse>("/collection/defaultProperties", "PUT", props, headers),
             ActivateCollection = async (props, headers) => await _this.Request<BasicUpdatedResponse>("/collection/activate", "PUT", props, headers),
             DeactivateCollection = async (props, headers) => await _this.Request<BasicUpdatedResponse>("/collection/deactivate", "PUT", props, headers),
         };
@@ -81,11 +84,14 @@ namespace AssetLayer.SDK.Core.Collections
             CreateCollection = async (props, headers) => {
                 try { return new BasicResult<string> { Result = await _this.CreateCollection(props, headers) }; }
                 catch (BasicError e) { return new BasicResult<string> { Error = e }; } },
+            UpdateCollection = async (props, headers) => {
+                try { return new BasicResult<bool> { Result = await _this.UpdateCollection(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<bool> { Error = e }; } },
             UpdateCollectionImage = async (props, headers) => {
                 try { return new BasicResult<bool> { Result = await _this.UpdateCollectionImage(props, headers) }; }
                 catch (BasicError e) { return new BasicResult<bool> { Error = e }; } },
-            UpdateCollection = async (props, headers) => {
-                try { return new BasicResult<bool> { Result = await _this.UpdateCollection(props, headers) }; }
+            UpdateDefaultProperties = async (props, headers) => {
+                try { return new BasicResult<bool> { Result = await _this.UpdateDefaultProperties(props, headers) }; }
                 catch (BasicError e) { return new BasicResult<bool> { Error = e }; } },
             ActivateCollection = async (props, headers) => {
                 try { return new BasicResult<bool> { Result = await _this.ActivateCollection(props, headers) }; }
