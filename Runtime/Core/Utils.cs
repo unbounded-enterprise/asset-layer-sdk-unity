@@ -57,7 +57,9 @@ namespace AssetLayer.SDK.Utils
             var value = info.GetValue(sourceObject, null);
 
             if (value == null) return;
-            else if (value is List<string>) {
+            else if (value is bool) {
+                parameters[key] = value.ToString().ToLowerInvariant();
+            } else if (value is List<string>) {
                 foreach (var v in (List<string>)value) {
                     if (!string.IsNullOrEmpty(v))  {
                         if(parameters.ContainsKey($"{key}[]")) {
