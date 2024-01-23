@@ -1,6 +1,10 @@
 {
     "name": "com.assetlayer.sdk.unity",
+<<<<<<< HEAD
     "version": "0.0.1-beta.1.2.0",
+=======
+    "version": "0.0.1-beta.1.1.3",
+>>>>>>> main
     "displayName": "Asset Layer SDK",
     "description": "Manage your assets client-side with the Asset Layer SDK / API",
     "author": "Asset Layer",
