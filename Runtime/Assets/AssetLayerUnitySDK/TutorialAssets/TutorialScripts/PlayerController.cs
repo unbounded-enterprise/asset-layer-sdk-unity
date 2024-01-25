@@ -183,7 +183,6 @@ namespace AssetLayer.Unity
             {
                 if (animator != null)
                 {
-                    Debug.Log("Triggering Landing");
                     animator.SetTrigger("LandingTrigger");
                 }
                 wasInAir = false;
@@ -191,7 +190,6 @@ namespace AssetLayer.Unity
 
             if (!wasInAir && !IsGrounded())
             {
-                Debug.Log("was in air");
                 wasInAir = true;
             }
 
@@ -313,8 +311,6 @@ namespace AssetLayer.Unity
             float extraHeight = 0.000001f; // Add extra height to the check
 
             bool isGrounded = Physics.CheckSphere(position, colliderRadius, groundLayer);
-
-            Debug.Log("ISGROUNDED: " + isGrounded);
             return isGrounded;
         }
 
