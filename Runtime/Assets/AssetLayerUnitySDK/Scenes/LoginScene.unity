@@ -454,6 +454,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 325202653057789197, guid: dd60ecb6faf53494e9b83c5fc194aa32, type: 3}
+      propertyPath: SceneToLoadOnLogin
+      value: TUTORIAL
+      objectReference: {fileID: 0}
     - target: {fileID: 586022131270949956, guid: dd60ecb6faf53494e9b83c5fc194aa32, type: 3}
       propertyPath: m_IsActive
       value: 0

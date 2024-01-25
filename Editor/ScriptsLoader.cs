@@ -30,7 +30,7 @@ namespace AssetLayer.Unity
             LoadAllScripts();
         }
 
-        [MenuItem("Assets/AssetLayer/Sync/Download Required Slot Scripts")]
+        [MenuItem("Assets/Asset Layer/Sync/Download Required Slot Scripts")]
         public static async void LoadAllScripts()
         {
             List<ScriptObject> scriptObjects = await FetchScriptPaths();

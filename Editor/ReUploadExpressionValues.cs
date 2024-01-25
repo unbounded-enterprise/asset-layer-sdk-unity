@@ -22,7 +22,7 @@ namespace AssetLayer.Unity
 
         private bool isUploadingExpression = false;
 
-        [MenuItem("Assets/AssetLayer/Update/Re-upload Expression Values")]
+        [MenuItem("Assets/Asset Layer/Update/Upload New Expression Values")]
         static void ShowWindow()
         {
             // Show existing window instance. If one doesn't exist, make one.

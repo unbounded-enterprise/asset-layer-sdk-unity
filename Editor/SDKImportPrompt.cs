@@ -26,7 +26,7 @@ namespace AssetLayer.Unity
         } */ 
 
 
-        [MenuItem("Assets/AssetLayer/Import Essentials")]
+        [MenuItem("Assets/Asset Layer/Import Essentials")]
         private static void ImportSDKMenu()
         {
             string packageCheckPath = "Packages/com.assetlayer.sdk.unity/Runtime";

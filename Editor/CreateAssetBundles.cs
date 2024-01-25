@@ -9,7 +9,7 @@ namespace AssetLayer.Unity
 
     public class CreateAssetBundlesFromSelection
     {
-        [MenuItem("Assets/AssetLayer/Create Assetlayer Collection")]
+        [MenuItem("Assets/Asset Layer/Create New Collection")]
 
         static void ShowWindow()
         {

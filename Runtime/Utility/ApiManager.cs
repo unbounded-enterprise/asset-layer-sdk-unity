@@ -104,7 +104,6 @@ namespace AssetLayer.Unity
 
         private void InitSDKCheck()
         {
-            Debug.Log("InitSDKCHECK: " + AssetLayerSDK.Initialized + " did token: " + DID_TOKEN);
             if (!AssetLayerSDK.Initialized && !string.IsNullOrEmpty(DID_TOKEN))
             {
 
@@ -118,11 +117,11 @@ namespace AssetLayer.Unity
             {
                 if (AssetLayerSDK.Initialized)
                 {
-                    Debug.Log("sdk already initialized" + DID_TOKEN);
+                    Debug.Log("sdk already initialized");
                 }
                 else
                 {
-                    Debug.Log("did token null or emtpy: " + DID_TOKEN);
+                    Debug.Log("did token null or emtpy: ");
                 }
             }
         }
