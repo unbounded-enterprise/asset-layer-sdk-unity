@@ -28,7 +28,6 @@ namespace AssetLayer.Unity
 
         private static AppConfig _appConfig;
 
-#if UNITY_EDITOR
         private static AppConfig appConfig
         {
             get
@@ -44,7 +43,6 @@ namespace AssetLayer.Unity
                 return _appConfig;
             }
         }
-#endif
 
         public string apiBase
         {
@@ -53,8 +51,8 @@ namespace AssetLayer.Unity
 #if UNITY_EDITOR
                 return AssetLayerSDK.APIURL;
 #else
-            Debug.Log("APIURL read: " + _appConfig != null ? _appConfig.AssetLayerProxyServerUrl : "http://localhost:3000");
-            return _appConfig != null ? _appConfig.AssetLayerProxyServerUrl : "http://localhost:3000"; // "https://asset-layer-proxy-express-0eab8c53bc1d.herokuapp.com/api"
+            Debug.Log("APIURL read: " + appConfig != null ? appConfig.AssetLayerProxyServerUrl : "http://localhost:3000");
+            return appConfig != null ? appConfig.AssetLayerProxyServerUrl : "http://localhost:3000"; // "https://asset-layer-proxy-express-0eab8c53bc1d.herokuapp.com/api"
 #endif
             }
         }
@@ -92,7 +90,7 @@ namespace AssetLayer.Unity
 #if UNITY_EDITOR
                 return appConfig != null ? appConfig.AssetLayerAppId : "your app id";
 #else
-            return _appConfig != null ? _appConfig.AssetLayerAppId : "your app id"; 
+            return appConfig != null ? appConfig.AssetLayerAppId : "your app id"; 
 #endif
             }
         }
