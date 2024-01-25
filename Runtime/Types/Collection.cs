@@ -105,11 +105,6 @@ namespace AssetLayer.SDK.Collections
         #endif
         [DataMember]
         public object properties { get; set; }
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
-        public object defaultProperties { get; set; }
     }
 
     [DataContract]
@@ -326,22 +321,6 @@ namespace AssetLayer.SDK.Collections
         [DataMember]
         public string value { get; set; }
     }
-    [DataContract]
-    public class UpdateDefaultPropertiesProps { 
-        public UpdateDefaultPropertiesProps() { }
-        
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
-        public string collectionId { get; set; }
-        
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
-        public object defaultProperties { get; set; }
-    }
 
     [DataContract]
     public class ActivateCollectionProps { 
@@ -443,9 +422,8 @@ namespace AssetLayer.SDK.Collections
         public delegate Task<GetCollectionAssetsResponse> GetCollectionAssets(GetCollectionAssetsProps props, Dictionary<string, string> headers = null);
         public delegate Task<GetCollectionAssetIdsResponse> GetCollectionAssetIds(GetCollectionAssetsProps props, Dictionary<string, string> headers = null);
         public delegate Task<CreateCollectionResponse> CreateCollection(CreateCollectionProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicUpdatedResponse> UpdateCollection(UpdateCollectionProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicUploadedResponse> UpdateCollectionImage(UpdateCollectionImageProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicSuccessResponse> UpdateDefaultProperties(UpdateDefaultPropertiesProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicUpdatedResponse> UpdateCollection(UpdateCollectionProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicUpdatedResponse> ActivateCollection(ActivateCollectionProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicUpdatedResponse> DeactivateCollection(ActivateCollectionProps props, Dictionary<string, string> headers = null);
     }
@@ -458,9 +436,8 @@ namespace AssetLayer.SDK.Collections
         public CollectionsRawDelegates.GetCollectionAssets GetCollectionAssets;
         public CollectionsRawDelegates.GetCollectionAssetIds GetCollectionAssetIds;
         public CollectionsRawDelegates.CreateCollection CreateCollection;
-        public CollectionsRawDelegates.UpdateCollection UpdateCollection;
         public CollectionsRawDelegates.UpdateCollectionImage UpdateCollectionImage;
-        public CollectionsRawDelegates.UpdateDefaultProperties UpdateDefaultProperties;
+        public CollectionsRawDelegates.UpdateCollection UpdateCollection;
         public CollectionsRawDelegates.ActivateCollection ActivateCollection;
         public CollectionsRawDelegates.DeactivateCollection DeactivateCollection;
     }
@@ -473,9 +450,8 @@ namespace AssetLayer.SDK.Collections
         public delegate Task<BasicResult<List<Asset>>> GetCollectionAssets(GetCollectionAssetsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<List<AssetIdOnly>>> GetCollectionAssetIds(GetCollectionAssetsProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<string>> CreateCollection(CreateCollectionProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicResult<bool>> UpdateCollection(UpdateCollectionProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<bool>> UpdateCollectionImage(UpdateCollectionImageProps props, Dictionary<string, string> headers = null);
-        public delegate Task<BasicResult<bool>> UpdateDefaultProperties(UpdateDefaultPropertiesProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> UpdateCollection(UpdateCollectionProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<bool>> ActivateCollection(ActivateCollectionProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<bool>> DeactivateCollection(ActivateCollectionProps props, Dictionary<string, string> headers = null);
     }
@@ -488,9 +464,8 @@ namespace AssetLayer.SDK.Collections
         public CollectionsSafeDelegates.GetCollectionAssets GetCollectionAssets;
         public CollectionsSafeDelegates.GetCollectionAssetIds GetCollectionAssetIds;
         public CollectionsSafeDelegates.CreateCollection CreateCollection;
-        public CollectionsSafeDelegates.UpdateCollection UpdateCollection;
         public CollectionsSafeDelegates.UpdateCollectionImage UpdateCollectionImage;
-        public CollectionsSafeDelegates.UpdateDefaultProperties UpdateDefaultProperties;
+        public CollectionsSafeDelegates.UpdateCollection UpdateCollection;
         public CollectionsSafeDelegates.ActivateCollection ActivateCollection;
         public CollectionsSafeDelegates.DeactivateCollection DeactivateCollection;
     }

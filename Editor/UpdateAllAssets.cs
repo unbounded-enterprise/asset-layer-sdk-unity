@@ -15,7 +15,7 @@ namespace AssetLayer.Unity
         private bool isProcessing = false; // Variable to track the process state
 
 
-        [MenuItem("Assets/AssetLayer/Update/UpdateAllAssets")]
+        [MenuItem("Assets/Asset Layer/Update/Push All Changes to Asset Layer")]
         static void ShowWindow()
         {
             // Show existing window instance. If one doesn't exist, make one.

@@ -17,7 +17,7 @@ namespace AssetLayer.Unity
 
         private static bool isFinished = false;
 
-        [MenuItem("Assets/AssetLayer/Sync/Download Your Asset Layer Asset Unity Packages")]
+        [MenuItem("Assets/Asset Layer/Sync/Download Packages for All Collections")]
         public static void SyncAssetsMenuOption()
         {
             ImportAssetBundles(false);

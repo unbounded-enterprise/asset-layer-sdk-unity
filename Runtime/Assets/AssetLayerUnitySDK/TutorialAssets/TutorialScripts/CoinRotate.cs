@@ -6,7 +6,7 @@ namespace AssetLayer.Unity
     public class RotateCoin : MonoBehaviour
     {
         // Rotation speed
-        public float rotationSpeed = 100f;
+        public float rotationSpeed = 99f;
 
         // Update is called once per frame
         void Update()
