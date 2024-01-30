@@ -14,7 +14,6 @@ using AssetLayer.SDK.Slots;
 using AssetLayer.SDK.Users;
 using AssetLayer.SDK.Utils;
 using AssetLayer.SDK.Apps;
-using Unity.VisualScripting;
 using Newtonsoft.Json;
 using System.Text;
 using UnityEditor;
