@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AssetLayer.SDK.Assets;
 using AssetLayer.SDK.Basic;
 using AssetLayer.SDK.Expressions;
+using AssetLayer.SDK.Shop;
 using AssetLayer.SDK.Users;
 
 #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -13,6 +14,24 @@ using AssetLayer.SDK.Users;
 
 namespace AssetLayer.SDK.Collections 
 {
+    [DataContract]
+    public class CollectionRevShare {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public CollectionRevShare() { }
+
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public int appShare { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public int creatorShare { get; set; }
+    }
     [DataContract]
     public class Collection {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -44,6 +63,11 @@ namespace AssetLayer.SDK.Collections
             [Preserve]
         #endif
         [DataMember]
+        public string type { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
         public string description { get; set; }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -59,17 +83,12 @@ namespace AssetLayer.SDK.Collections
             [Preserve]
         #endif
         [DataMember]
-        public long maximum { get; set; }
+        public long? maximum { get; set; }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
         public long minted { get; set; }
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
-        public List<string> tags { get; set; }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
@@ -94,12 +113,7 @@ namespace AssetLayer.SDK.Collections
             [Preserve]
         #endif
         [DataMember]
-        public List<ExpressionValue> exampleExpressionValues { get; set; }
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
-        public string type { get; set; }
+        public List<string> tags { get; set; }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
@@ -110,6 +124,21 @@ namespace AssetLayer.SDK.Collections
         #endif
         [DataMember]
         public object defaultProperties { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string submissionId { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public CollectionSubmission submissionData { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<ExpressionValue> exampleExpressionValues { get; set; }
     }
 
     [DataContract]
@@ -140,6 +169,129 @@ namespace AssetLayer.SDK.Collections
         public List<Asset> assets { get; set; } 
     }
 
+    [DataContract]
+    public class CollectionSubmission {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public CollectionSubmission() { }
+        
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string submissionId { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string collectionId { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string status { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string mintRights { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<ShopPrice> prices { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public CollectionRevShare revShare { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string submissionMessage { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string denialMessage { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public CollectionChangeProposal changeProposal { get; set; }
+    }
+
+    [DataContract]
+    public class CollectionChangeProposal {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public CollectionChangeProposal() { }
+        
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string status { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string collectionName { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string collectionImage { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string collectionBanner { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string description { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<string> tags { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<ExpressionValue> expressionValues { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string mintRights { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<ShopPrice> prices { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public CollectionRevShare revShare { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string submissionMessage { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string denialMessage { get; set; }
+    }
+
 
 
     [DataContract]
@@ -152,6 +304,11 @@ namespace AssetLayer.SDK.Collections
         #endif
         [DataMember]
         public string collectionId { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public bool? includeSubmissionData { get; set; }
     }
 
     [DataContract]
@@ -164,6 +321,11 @@ namespace AssetLayer.SDK.Collections
         #endif
         [DataMember]
         public List<string> collectionIds { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public bool? includeSubmissionData { get; set; }
     }
 
     [DataContract]
@@ -180,6 +342,11 @@ namespace AssetLayer.SDK.Collections
         #endif
         [DataMember]
         public List<string> collectionIds { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public bool? includeSubmissionData { get; set; }
     }
 
     [DataContract]
@@ -210,8 +377,8 @@ namespace AssetLayer.SDK.Collections
     }
 
     [DataContract]
-    public class CreateCollectionProps {
-        public CreateCollectionProps() { }
+    public class CreateCollectionCoreProps {
+        public CreateCollectionCoreProps() { }
         
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -232,7 +399,7 @@ namespace AssetLayer.SDK.Collections
             [Preserve]
         #endif
         [DataMember]
-        public long maximum { get; set; }
+        public long? maximum { get; set; }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
@@ -267,7 +434,23 @@ namespace AssetLayer.SDK.Collections
             [Preserve]
         #endif
         [DataMember]
+        public object defaultProperties { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
         public string walletUserId { get; set; }
+    }
+
+    [DataContract]
+    public class CreateCollectionProps : CreateCollectionCoreProps {
+        public CreateCollectionProps() : base() { }
+
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public bool? draft { get; set; }
     }
 
     [DataContract]
@@ -309,6 +492,11 @@ namespace AssetLayer.SDK.Collections
         #endif
         [DataMember]
         public object properties { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public object defaultProperties { get; set; }
     }
 
     [DataContract]
@@ -335,7 +523,6 @@ namespace AssetLayer.SDK.Collections
         #endif
         [DataMember]
         public string collectionId { get; set; }
-        
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
@@ -344,7 +531,7 @@ namespace AssetLayer.SDK.Collections
     }
 
     [DataContract]
-    public class ActivateCollectionProps { 
+    public class ActivateCollectionProps {
         public ActivateCollectionProps() { }
         
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -353,6 +540,65 @@ namespace AssetLayer.SDK.Collections
         [DataMember]
         public string collectionId { get; set; }
     }
+
+    [DataContract]
+    public class CreateCollectionSubmissionProps : CreateCollectionCoreProps { 
+        public CreateCollectionSubmissionProps() : base() { }
+
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string mintRights { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<ShopPrice> prices { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string submissionMessage { get; set; }
+    }
+
+    [DataContract]
+    public class UpdateCollectionSubmissionProps  { 
+        public UpdateCollectionSubmissionProps () { }
+        
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string collectionId { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string mintRights { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<ShopPrice> prices { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string submissionMessage { get; set; }
+    }
+    [DataContract]
+    public class CollectionSubmissionRequestProps  { 
+        public CollectionSubmissionRequestProps () { }
+        
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string collectionId { get; set; }
+    }
+
+
 
     [DataContract]
     public class GetCollectionsResponse : BasicResponse<GetCollectionsResponseBody> {
@@ -434,6 +680,31 @@ namespace AssetLayer.SDK.Collections
         [DataMember]
         public string collectionId { get; set; }
     }
+    [DataContract]
+    public class CreateCollectionSubmissionResponse : BasicResponse<CreateCollectionSubmissionResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public CreateCollectionSubmissionResponse() : base() { }
+    }
+    [DataContract]
+    public class CreateCollectionSubmissionResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public CreateCollectionSubmissionResponseBody() { }
+        
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string collectionId { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string submissionId { get; set; }
+    }
 
     public class CollectionsRawDelegates {
         public delegate Task<GetCollectionsResponse> Info(CollectionInfoProps props, Dictionary<string, string> headers = null);
@@ -448,6 +719,9 @@ namespace AssetLayer.SDK.Collections
         public delegate Task<BasicSuccessResponse> UpdateDefaultProperties(UpdateDefaultPropertiesProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicUpdatedResponse> ActivateCollection(ActivateCollectionProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicUpdatedResponse> DeactivateCollection(ActivateCollectionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<CreateCollectionSubmissionResponse> CreateCollectionSubmission(CreateCollectionSubmissionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicSuccessResponse> UpdateCollectionSubmission(UpdateCollectionSubmissionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicSuccessResponse> CollectionSubmissionRequest(CollectionSubmissionRequestProps props, Dictionary<string, string> headers = null);
     }
 
     public class CollectionsRawHandlers {
@@ -463,6 +737,9 @@ namespace AssetLayer.SDK.Collections
         public CollectionsRawDelegates.UpdateDefaultProperties UpdateDefaultProperties;
         public CollectionsRawDelegates.ActivateCollection ActivateCollection;
         public CollectionsRawDelegates.DeactivateCollection DeactivateCollection;
+        public CollectionsRawDelegates.CreateCollectionSubmission CreateCollectionSubmission;
+        public CollectionsRawDelegates.UpdateCollectionSubmission UpdateCollectionSubmission;
+        public CollectionsRawDelegates.CollectionSubmissionRequest CollectionSubmissionRequest;
     }
 
     public class CollectionsSafeDelegates {
@@ -478,6 +755,9 @@ namespace AssetLayer.SDK.Collections
         public delegate Task<BasicResult<bool>> UpdateDefaultProperties(UpdateDefaultPropertiesProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<bool>> ActivateCollection(ActivateCollectionProps props, Dictionary<string, string> headers = null);
         public delegate Task<BasicResult<bool>> DeactivateCollection(ActivateCollectionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<CreateCollectionSubmissionResponseBody>> CreateCollectionSubmission(CreateCollectionSubmissionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> UpdateCollectionSubmission(UpdateCollectionSubmissionProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<bool>> CollectionSubmissionRequest(CollectionSubmissionRequestProps props, Dictionary<string, string> headers = null);
     }
 
     public class CollectionsSafeHandlers {
@@ -493,5 +773,8 @@ namespace AssetLayer.SDK.Collections
         public CollectionsSafeDelegates.UpdateDefaultProperties UpdateDefaultProperties;
         public CollectionsSafeDelegates.ActivateCollection ActivateCollection;
         public CollectionsSafeDelegates.DeactivateCollection DeactivateCollection;
+        public CollectionsSafeDelegates.CreateCollectionSubmission CreateCollectionSubmission;
+        public CollectionsSafeDelegates.UpdateCollectionSubmission UpdateCollectionSubmission;
+        public CollectionsSafeDelegates.CollectionSubmissionRequest CollectionSubmissionRequest;
     }
 }

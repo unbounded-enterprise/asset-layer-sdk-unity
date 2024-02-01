@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using AssetLayer.SDK.Basic;
 using AssetLayer.SDK.Currencies;
+using AssetLayer.SDK.Collections;
 using AssetLayer.SDK.Slots;
 using AssetLayer.SDK.Users;
 
@@ -87,16 +88,6 @@ namespace AssetLayer.SDK.Apps
             [Preserve]
         #endif
         [DataMember]
-        public List<UserAlias> appWallets { get; set; }
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
-        public List<Currency> appCurrencies { get; set; }
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
         public bool? autoGrantRead { get; set; }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -108,6 +99,21 @@ namespace AssetLayer.SDK.Apps
         #endif
         [DataMember]
         public string url { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public CollectionRevShare revShare { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<UserAlias> appWallets { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<Currency> appCurrencies { get; set; }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
