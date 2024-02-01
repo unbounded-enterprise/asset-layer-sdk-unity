@@ -279,28 +279,71 @@ namespace AssetLayer.Unity
             public string description;
         }
 
+        public class CollectionDataWithoutMax
+        {
+            public string collectionName;
+            public string collectionImage;
+            public string collectionBanner;
+            public List<string> tags;
+            public Dictionary<string, string> properties;
+            public string type;
+            public string slotId;
+            public string royaltyRecipient;
+            public string description;
+        }
 
-        public async Task<string> CreateCollection(string slotId, string collectionName, int maxSupply, string dataUrl)
+
+        public async Task<string> CreateCollection(string slotId, string collectionName, int? maxSupply, string dataUrl)
         {
             string url = apiBase + "/collection/new";
-
-            var newCollectionData = new CollectionData
+            /* var withoutMax = new CollectionDataWithoutMax
             {
                 collectionName = collectionName,
-                collectionImage = dataUrl,
                 description = "",
                 type = "Identical",
                 slotId = slotId,
-                maximum = maxSupply,
                 tags = new List<string>(),
                 properties = new Dictionary<string, string>(),
                 collectionBanner = "",
+                collectionImage = dataUrl,
                 // royaltyRecipient = HANDLE
             };
+            CollectionData newCollectionData; 
+            if (maxSupply != null)
+            {
+                newCollectionData = new CollectionData
+                {
+                    collectionName = collectionName,
+                    maximum = (int)maxSupply,
+                    description = "",
+                    type = "Identical",
+                    slotId = slotId,
+                    tags = new List<string>(),
+                    properties = new Dictionary<string, string>(),
+                    collectionBanner = "",
+                    collectionImage = dataUrl,
+                    // royaltyRecipient = HANDLE
+                };
+            } */
+            string jsonBodyBase = $"{{" +
+        $"\"collectionName\":\"{collectionName}\"," +
+        $"\"description\":\"\",\"type\":\"Identical\"," +
+        $"\"slotId\":\"{slotId}\"," +
+        $"\"tags\":[]," + // Manually inserting an empty array for tags
+        $"\"properties\":{JsonUtility.ToJson(new Dictionary<string, string>())}," +
+        $"\"collectionBanner\":\"\",\"collectionImage\":\"{dataUrl}\"" +
+        // Add other fields as necessary
+        $"}}";
 
-            string jsonBody = JsonUtility.ToJson(newCollectionData);
-            // Debug.Log(jsonBody);
+            if (maxSupply != null)
+            {
+                jsonBodyBase = jsonBodyBase.Insert(jsonBodyBase.Length - 1, $",\"maximum\":{maxSupply}");
+            }
 
+            Debug.Log("creation body: " + jsonBodyBase);
+
+            string jsonBody = jsonBodyBase; // JsonUtility.ToJson(maxSupply != null ? newCollectionData : withoutMax);
+            Debug.Log("creation body: " + jsonBody);
             byte[] bodyRaw = new System.Text.UTF8Encoding().GetBytes(jsonBody);
             UnityWebRequest request = new UnityWebRequest(url, "POST");
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
@@ -351,6 +394,7 @@ namespace AssetLayer.Unity
         {
             public string expressionAttributeName;
             public string expressionName;
+            public string expressionId;
             public string collectionId;
             public string value;
         }
@@ -362,14 +406,20 @@ namespace AssetLayer.Unity
             public bool success;
         }
 
-        public async Task<bool> UploadBundleExpression(string collectionId, string dataUrl, string expressionAttributeName = "AssetBundle", string expressionName = "AssetBundle")
+        public async Task<bool> UploadBundleExpression(string collectionId, string dataUrl, string expressionAttributeName = "AssetBundle", string expressionName = "AssetBundle", string expressionId = "")
         {
             string url = apiBase + "/asset/expressionValues";
 
-            var expressionValueData = new ExpressionValueData
+            var expressionValueData = string.IsNullOrEmpty(expressionId) ? new ExpressionValueData
             {
                 expressionAttributeName = expressionAttributeName,
                 expressionName = expressionName,
+                collectionId = collectionId,
+                value = dataUrl
+            } : 
+            new ExpressionValueData {
+                expressionAttributeName = expressionAttributeName,
+                expressionId = expressionId,
                 collectionId = collectionId,
                 value = dataUrl
             };
@@ -598,7 +648,7 @@ namespace AssetLayer.Unity
                 {
                     foreach (var expression in response.body.expressions)
                     {
-                        if (expression.expressionType.expressionTypeName == "AssetBundle")
+                        if (expression.expressionType.expressionTypeId == "64b1ce76716b83c3de7df84e")
                         {
                             Debug.Log("Expression found: " + expression.expressionId);
                             return expression.expressionId;
@@ -630,7 +680,7 @@ namespace AssetLayer.Unity
 
             foreach (var expression in expressions)
             {
-                if (expression.expressionType.expressionTypeName == "AssetBundle")
+                if (expression.expressionType.expressionTypeId == "64b1ce76716b83c3de7df84e")
                 {
                     Debug.Log("Expression found: " + expression.expressionId);
                     return expression.expressionId;
@@ -639,6 +689,40 @@ namespace AssetLayer.Unity
 
             Debug.LogError("No AssetBundle expression found");
             return null;
+        }
+
+
+        public async Task<List<string>> GetAssetExpressions(string slotId)
+        {
+            Debug.Log("GetAssetExpression");
+            InitSDKCheck();
+
+            GetSlotExpressionsProps props = new GetSlotExpressionsProps
+            {
+                slotId = slotId
+            };
+
+            Task<List<SDK.Expressions.Expression>> getSlotExpressionTask = AssetLayerSDK.Slots.GetSlotExpressions(props);
+            await getSlotExpressionTask;
+
+            // Extract the result.
+            List<SDK.Expressions.Expression> expressions = getSlotExpressionTask.Result;
+            List<string> expressionIds = new List<string>();
+
+            foreach (var expression in expressions)
+            {
+                if (expression.expressionType.expressionTypeId == "64b1ce76716b83c3de7df84e")
+                {
+                    Debug.Log("Expression found: " + expression.expressionId);
+                    expressionIds.Add(expression.expressionId);
+                }
+            }
+            if (expressionIds.Count == 0) {
+                Debug.LogError("No AssetBundle expression found");
+                return null;
+            }
+            return expressionIds;
+            
         }
 
 

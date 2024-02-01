@@ -1,0 +1,24 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="UploadExpressionValuesStyles.uss" />
+    <ui:VisualElement class="main-container">
+        <ui:VisualElement class="content-container">
+            <ui:Label text="Upload Expression Assets" class="heading" />
+            <ui:VisualElement class="form-field">
+                <ui:VisualElement class="field-label-container">
+                    <ui:Label text="Collection ID:" class="bold-label" />
+                    <ui:Label text="Used to identify your collection, can be found via" class="description-label" />
+                    <ui:Button name="myPendingCollectionsLink" text="My Pending Collections" class="link-button" />
+                </ui:VisualElement>
+                <ui:TextField name="collectionID" value="Enter Collection ID" class="text-field" />
+            </ui:VisualElement>
+            <ui:VisualElement class="form-field">
+                <ui:VisualElement class="field-label-container">
+                    <ui:Label text="Expression ID:" class="bold-label" />
+                    <ui:Label text="Used to identify the collection you are uploading assets for. Can be found in your Collection Drafts." class="description-label" />
+                </ui:VisualElement>
+                <ui:TextField name="expressionID" value="Enter Expression ID" class="text-field" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Button text="Submit" name="SubmitButton" class="submit-button" />
+    </ui:VisualElement>
+</ui:UXML>

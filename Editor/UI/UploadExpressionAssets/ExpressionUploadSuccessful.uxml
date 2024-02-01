@@ -1,0 +1,24 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="UploadExpressionValuesStyles.uss" />
+    <ui:VisualElement class="main-container">
+        <ui:VisualElement class="content-container">
+            <ui:Label text="Expression Upload Successfull!" class="heading" />
+            <ui:VisualElement class="form-field">
+<ui:VisualElement class="field-label-container">
+                <ui:Label text="To continue with creating your collection, please follow the collection creation process within the" class="description-label" />
+                <ui:Button name="AssetLayerApp" text="Asset Layer App" class="link-button" />
+		</ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="form-field">
+                <ui:Label text="You’ll be able to find your collection saved as a draft within the My Pending Collections menu." class="description-label" />
+            </ui:VisualElement>
+            <ui:VisualElement class="form-field">
+<ui:VisualElement class="field-label-container">
+                <ui:Label text="Need help? Check out our " class="description-label" />
+                <ui:Button name="UnityCollectionCreationGuide" text="Unity Collection Creation Guide." class="link-button" />
+</ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Button text="Close" name="CloseButton" class="submit-button" />
+    </ui:VisualElement>
+</ui:UXML>

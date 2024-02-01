@@ -1,0 +1,143 @@
+.main-container {
+    flex-direction: column;
+    padding: 15px;
+    gap: 10px;
+}
+
+.header {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.normalText {
+    font-size: 12px;
+}
+
+.section {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+.with-button {
+    justify-content: space-between;
+}
+
+.sub-header {
+    font-size: 16px;
+    flex-grow: 0;
+    font-weight: bold;
+}
+
+.flexible-space {
+    flex-grow: 8;
+}
+
+.input-field {
+    flex-grow: 0;
+    width: 223px;
+    height: 34px;
+    flex-shrink: 0;
+    font-size: 14px;
+    -unity-font-style: normal;
+}
+
+.text-button {
+    background-color: transparent;
+    border: none;
+    color: rgb(170, 170, 170);
+    text-decoration: underline;
+    padding: 0;
+    margin-left: 2px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.toggle {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.button {
+    width: 100%;
+    margin-top: 5px;
+}
+
+.submit-button {
+    text-align: center;
+    width: 318px;
+    height: 34px;
+    align-self: center;
+    margin-top: 80px;
+    margin-bottom: 10px;
+}
+
+.upload-label {
+    flex-grow: 4;
+    text-align: right;
+}
+
+.dropdown {
+    width: 223px;
+    height: 34px;
+}
+
+.texture-selector {
+    width: 223px;
+    height: 25px;
+    align-items: center;
+}
+
+.link-button {
+    background-color: transparent;
+    border: none;
+    color: rgb(170, 170, 170);
+    text-decoration: underline;
+    padding: 0;
+    margin-left: 2px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.link-button:hover {
+    text-decoration: none;
+}
+
+.bold-label {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.description-label {
+    margin-right: 5px;
+}
+
+.heading {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+    width: 100%;
+    -unity-font-style: bold;
+}
+
+.form-field {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.field-label-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    align-items: baseline;
+}
+
+
+
+
+
