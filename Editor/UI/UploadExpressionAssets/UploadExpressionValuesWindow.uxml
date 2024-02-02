@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="UploadExpressionValuesStyles.uss" />
+    <Style src="project://database/Assets/Packages/com.assetlayer/Editor/UI/UploadExpressionAssets/UploadExpressionValuesStyles.uss?fileID=7433441132597879392&amp;guid=20946631caffbe84bb29cc6e1b988ade&amp;type=3#UploadExpressionValuesStyles" />
     <ui:VisualElement class="main-container">
         <ui:VisualElement class="content-container">
             <ui:Label text="Upload Expression Assets" class="heading" />
@@ -13,9 +13,10 @@
             </ui:VisualElement>
             <ui:VisualElement class="form-field">
                 <ui:VisualElement class="field-label-container">
-                    <ui:Label text="Expression ID:" class="bold-label" />
-                    <ui:Label text="Used to identify the collection you are uploading assets for. Can be found in your Collection Drafts." class="description-label" />
+                    <ui:Label text="Expression ID:" class="bold-label" style="justify-content: flex-start; align-items: auto;" />
+                    <ui:Label text="Used to identify the collection you are uploading assets for. Can be found in your &quot;pending collections&quot; if working " class="description-label" />
                 </ui:VisualElement>
+                <ui:Label text="on a new collection or in &quot;live collections&quot; if updating an already published collection." style="margin-top: -8px; padding-top: 0; padding-bottom: 8px; margin-bottom: 8px;" />
                 <ui:TextField name="expressionID" value="Enter Expression ID" class="text-field" />
             </ui:VisualElement>
         </ui:VisualElement>

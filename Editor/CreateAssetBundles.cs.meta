@@ -8,6 +8,8 @@ MonoImporter:
   - visualTreeAsset: {fileID: 9197481963319205126, guid: dbe871babf75dd34a97ee613f76d9a3d, type: 3}
   - successTree: {fileID: 9197481963319205126, guid: fe95ac24977516a47b0bf7f7fb1206e9, type: 3}
   - warningTree: {instanceID: 0}
+  - loginPromptTree: {fileID: 9197481963319205126, guid: fdd3e01913b05b04fbe6d08a83ee3520, type: 3}
+  - creatorTree: {fileID: 9197481963319205126, guid: d2f035e53b3d24b4685ccd81d5bc2147, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

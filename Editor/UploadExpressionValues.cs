@@ -25,6 +25,9 @@ namespace AssetLayer.Unity
         [SerializeField]
         private VisualTreeAsset warningTree = default;
 
+        [SerializeField]
+        private VisualTreeAsset loginPromptTree = default;
+
         string successMessage = "";
         const string BUNDLEPATH = "AssetlayerUnitySDK/AssetBundles";
         float fieldOfView = 120f;
@@ -33,7 +36,7 @@ namespace AssetLayer.Unity
 
         private bool isUploadingExpression = false;
 
-        [MenuItem("Assets/Asset Layer/Upload Expression Assets")]
+        [MenuItem("Assets/Asset Layer/Update/Upload Expression Assets")]
         static void ShowWindow()
         {
             // Show existing window instance. If one doesn't exist, make one.
@@ -43,6 +46,30 @@ namespace AssetLayer.Unity
             editorWin.maxSize = editorWin.minSize;
 
             
+        }
+
+        void ShowLoginPromptUI()
+        {
+            // Clear the current UI
+            rootVisualElement.Clear();
+
+            // Clone and add the success UI to the root
+            VisualElement loginRoot = loginPromptTree.CloneTree();
+            rootVisualElement.Add(loginRoot);
+
+
+            // Optionally, you can set up a close button in your success UXML
+            var closeButton = loginRoot.Q<Button>("CloseButton"); // Adjust the name as necessary
+            if (closeButton != null)
+            {
+                closeButton.clickable.clicked += () => this.Close(); // Close the window when the close button is clicked
+            }
+
+            var linkButton2 = loginRoot.Q<Button>("AssetLayerApp");
+            linkButton2.clickable.clicked += () => Application.OpenURL("https://www.assetlayer.com");
+
+            var linkButton3 = loginRoot.Q<Button>("UnityCollectionCreationGuide");
+            linkButton3.clickable.clicked += () => Application.OpenURL("https://docs.assetlayer.com/create-assets/create-assets-without-code/submit-a-collection-for-a-3rd-party-app-coming-soon");
         }
 
         void ShowSuccessUI()
@@ -90,6 +117,14 @@ namespace AssetLayer.Unity
 
         public void CreateGUI()
         {
+
+            ApiManager manager = new ApiManager();
+            if (string.IsNullOrEmpty(manager.DID_TOKEN))
+            {
+                ShowLoginPromptUI();
+                return;
+            }
+
             rootVisualElement.style.flexDirection = FlexDirection.Column;
             rootVisualElement.style.justifyContent = Justify.SpaceBetween;
             rootVisualElement.style.height = Length.Percent(100);

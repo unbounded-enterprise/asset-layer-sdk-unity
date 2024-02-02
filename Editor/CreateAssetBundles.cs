@@ -33,6 +33,13 @@ namespace AssetLayer.Unity
 
         [SerializeField]
         private VisualTreeAsset warningTree = default;
+
+        [SerializeField]
+        private VisualTreeAsset loginPromptTree = default;
+
+        [SerializeField]
+        private VisualTreeAsset creatorTree = default;
+
         string slotId = "";
         string collectionName = "MyPrefabCollection";
         string[] slotNames;
@@ -110,6 +117,17 @@ namespace AssetLayer.Unity
 
         void CreateGUI()
         {
+            ApiManager manager = new ApiManager();
+            if (string.IsNullOrEmpty(manager.DID_TOKEN))
+            {
+                ShowLoginPromptUI();
+                return;
+            }
+            if (string.IsNullOrEmpty(manager.APP_SECRET))
+            {
+                ShowCreatorUI();
+                return;
+            }
             // Clear existing content
             rootVisualElement.Clear();
             // Load and clone the main UI template
@@ -236,6 +254,54 @@ namespace AssetLayer.Unity
             linkButton2.clickable.clicked += () => Application.OpenURL("https://www.assetlayer.com");
 
             var linkButton3 = successRoot.Q<Button>("UnityCollectionCreationGuide");
+            linkButton3.clickable.clicked += () => Application.OpenURL("https://docs.assetlayer.com/create-assets/create-assets-without-code/submit-a-collection-for-a-3rd-party-app-coming-soon");
+        }
+
+        void ShowLoginPromptUI()
+        {
+            // Clear the current UI
+            rootVisualElement.Clear();
+
+            // Clone and add the success UI to the root
+            VisualElement loginRoot = loginPromptTree.CloneTree();
+            rootVisualElement.Add(loginRoot);
+
+
+            // Optionally, you can set up a close button in your success UXML
+            var closeButton = loginRoot.Q<Button>("CloseButton"); // Adjust the name as necessary
+            if (closeButton != null)
+            {
+                closeButton.clickable.clicked += () => this.Close(); // Close the window when the close button is clicked
+            }
+
+            var linkButton2 = loginRoot.Q<Button>("AssetLayerApp");
+            linkButton2.clickable.clicked += () => Application.OpenURL("https://www.assetlayer.com");
+
+            var linkButton3 = loginRoot.Q<Button>("UnityCollectionCreationGuide");
+            linkButton3.clickable.clicked += () => Application.OpenURL("https://docs.assetlayer.com/create-assets/create-assets-without-code/submit-a-collection-for-a-3rd-party-app-coming-soon");
+        }
+
+        void ShowCreatorUI()
+        {
+            // Clear the current UI
+            rootVisualElement.Clear();
+
+            // Clone and add the success UI to the root
+            VisualElement creatorRoot = creatorTree.CloneTree();
+            rootVisualElement.Add(creatorRoot);
+
+
+            // Optionally, you can set up a close button in your success UXML
+            var closeButton = creatorRoot.Q<Button>("CloseButton"); // Adjust the name as necessary
+            if (closeButton != null)
+            {
+                closeButton.clickable.clicked += () => this.Close(); // Close the window when the close button is clicked
+            }
+
+            var linkButton2 = creatorRoot.Q<Button>("AssetLayerApp");
+            linkButton2.clickable.clicked += () => Application.OpenURL("https://www.assetlayer.com");
+
+            var linkButton3 = creatorRoot.Q<Button>("UnityCollectionCreationGuide");
             linkButton3.clickable.clicked += () => Application.OpenURL("https://docs.assetlayer.com/create-assets/create-assets-without-code/submit-a-collection-for-a-3rd-party-app-coming-soon");
         }
 
