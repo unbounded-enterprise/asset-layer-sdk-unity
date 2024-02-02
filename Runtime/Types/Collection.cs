@@ -133,7 +133,7 @@ namespace AssetLayer.SDK.Collections
             [Preserve]
         #endif
         [DataMember]
-        public CollectionSubmission submissionData { get; set; }
+        public CollectionSubmission submission { get; set; }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif

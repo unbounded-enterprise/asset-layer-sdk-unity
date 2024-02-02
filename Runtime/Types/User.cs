@@ -120,12 +120,12 @@ namespace AssetLayer.SDK.Users
             [Preserve]
         #endif
         [DataMember]
-        public bool? includeDeactivated { get; set; } 
+        public bool? includeDrafts { get; set; }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
-        public bool? includeDrafts { get; set; }
+        public bool? includeSubmissionData { get; set; }
     }
     [DataContract]
     public class UserCollectionsProps : GetUserCollectionsProps { 
