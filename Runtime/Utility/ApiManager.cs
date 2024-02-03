@@ -380,10 +380,13 @@ namespace AssetLayer.Unity
             UpdateCollectionAssetsExpressionValueProps props = new UpdateCollectionAssetsExpressionValueProps()
             {   collectionId = collectionId,
                 expressionAttributeName = expressionAttributeName,
-                expressionName = expressionName,
-                expressionId = expressionId,
                 value = dataUrl
             };
+            if (string.IsNullOrEmpty(expressionId)) {
+                props.expressionName = expressionName;
+            } else {
+                props.expressionId = expressionId;
+            }
             bool result = await AssetLayerSDK.Assets.UpdateCollectionAssetsExpressionValue(props);
             Debug.Log("success updating: " + result);
             return result;
