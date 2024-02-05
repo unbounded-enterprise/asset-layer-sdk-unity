@@ -100,8 +100,6 @@ namespace AssetLayer.SDK.Core.Networking
                     if (method != "GET" && BasicNetworkingUtils.HttpMethodMap.TryGetValue(method, out HttpMethod httpMethod)) { request.Method = httpMethod; }
                     if (body != null) {
                         request.Content = new StringContent(NetworkingUtils.GetObjectAsJSON2(body), Encoding.UTF8, "application/json");
-                        if (!client.DefaultRequestHeaders.Contains("Content-Type")) 
-                            client.DefaultRequestHeaders.Add("Content-Type", "application/json");
                     }
 
                     HttpResponseMessage response = await client.SendAsync(request);
