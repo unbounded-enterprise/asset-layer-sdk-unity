@@ -88,6 +88,19 @@ namespace AssetLayer.Unity
             }
         }
 
+        void UpdateDropdownWithExpressionNames(List<string> expressionNames)
+        {
+            var expressionDropdown = rootVisualElement.Q<DropdownField>("ExpressionDropdown");
+            if (expressionDropdown != null)
+            {
+                expressionDropdown.choices = expressionNames;
+                if (expressionNames.Count > 0)
+                {
+                    expressionDropdown.value = expressionNames[0]; // Set the first expression name as the selected value
+                }
+            }
+        }
+
         void UpdateDropdownWithSlotNames()
         {
             // Assuming dropdownField is the DropdownField in your UI
@@ -217,20 +230,51 @@ namespace AssetLayer.Unity
 
         async void UpdateExpressionDropdown(DropdownField expressionDropdown, string selectedSlotId)
         {
-            List<string> expressions;
+            List<SDK.Expressions.Expression> expressions;
+            Dictionary<string, string> expressionNameToIdMap = new Dictionary<string, string>();
             try
             {
                 ApiManager manager = new ApiManager();
                 expressions = await manager.GetAssetExpressions(selectedSlotId);
-                expressions.Add("Create New Expression");
-                expressionDropdown.choices = expressions;
-                expressionDropdown.value = expressions.FirstOrDefault(); // Set the first item as selected by default
-            } catch(Exception ex)
+
+                // Add an option for creating a new expression
+                expressions.Add(new SDK.Expressions.Expression { expressionName = "Create New Expression", expressionId = null });
+
+                // Prepare the dropdown choices and the mapping from names to IDs
+                List<string> expressionNames = new List<string>();
+                foreach (var expression in expressions)
+                {
+                    expressionNames.Add(expression.expressionName);
+                    expressionNameToIdMap[expression.expressionName] = expression.expressionId;
+                }
+
+                // Update the dropdown with expression names
+                expressionDropdown.choices = expressionNames;
+                expressionDropdown.value = expressionNames.FirstOrDefault(); // Set the first item as selected by default
+
+                // Set the initial expressionId
+                if (expressionNameToIdMap.ContainsKey(expressionDropdown.value))
+                {
+                    expressionId = expressionNameToIdMap[expressionDropdown.value];
+                }
+            }
+            catch (Exception ex)
             {
-                Debug.Log("failure reading expression Ids of slot: " + ex.Message);
+                Debug.Log($"Failure reading expression Ids of slot: {ex.Message}");
             }
 
-            expressionId = expressionDropdown.value; // Update class variable
+            // Update the expressionId when a new expression is selected from the dropdown
+            expressionDropdown.RegisterValueChangedCallback(evt =>
+            {
+                if (expressionNameToIdMap.TryGetValue(evt.newValue, out var id))
+                {
+                    expressionId = id; // Update the expressionId with the ID corresponding to the selected name
+                }
+                else
+                {
+                    expressionId = null; // Handle "Create New Expression" or any fallback scenario
+                }
+            });
         }
 
         void ShowSuccessUI()

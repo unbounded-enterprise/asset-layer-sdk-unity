@@ -678,37 +678,43 @@ namespace AssetLayer.Unity
         }
 
 
-        public async Task<List<string>> GetAssetExpressions(string slotId)
+        public async Task<List<SDK.Expressions.Expression>> GetAssetExpressions(string slotId)
         {
-            Debug.Log("GetAssetExpression");
-            InitSDKCheck();
+            Debug.Log("GetAssetExpressions called");
+            InitSDKCheck(); 
 
-            GetSlotExpressionsProps props = new GetSlotExpressionsProps
+            var props = new GetSlotExpressionsProps
             {
                 slotId = slotId
             };
 
-            Task<List<SDK.Expressions.Expression>> getSlotExpressionTask = AssetLayerSDK.Slots.GetSlotExpressions(props);
-            await getSlotExpressionTask;
-
-            // Extract the result.
-            List<SDK.Expressions.Expression> expressions = getSlotExpressionTask.Result;
-            List<string> expressionIds = new List<string>();
-
-            foreach (var expression in expressions)
+            try
             {
-                if (expression.expressionType.expressionTypeId == "64b1ce76716b83c3de7df84e")
+                var expressions = await AssetLayerSDK.Slots.GetSlotExpressions(props);
+
+                var bundleExpressions = expressions
+                                        .Where(expression => expression.expressionType.expressionTypeId == "64b1ce76716b83c3de7df84e")
+                                        .ToList();
+
+                if (bundleExpressions.Any())
                 {
-                    Debug.Log("Expression found: " + expression.expressionId);
-                    expressionIds.Add(expression.expressionId);
+                    foreach (var expression in bundleExpressions)
+                    {
+                        Debug.Log("Expression found: " + expression.expressionId);
+                    }
+                    return bundleExpressions;
+                }
+                else
+                {
+                    Debug.LogError("No AssetBundle expression found");
+                    return null; 
                 }
             }
-            if (expressionIds.Count == 0) {
-                Debug.LogError("No AssetBundle expression found");
-                return null;
+            catch (Exception ex)
+            {
+                Debug.LogError($"Error fetching slot expressions: {ex.Message}");
+                return null; 
             }
-            return expressionIds;
-            
         }
 
 
