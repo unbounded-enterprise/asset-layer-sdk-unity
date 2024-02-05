@@ -1014,6 +1014,10 @@ namespace AssetLayer.Unity
             };
 
             List<string> collectionIds = await AssetLayerSDK.Slots.GetSlotCollectionIds(props);
+            if (collectionIds == null || !collectionIds.Any())
+            {
+                return new List<Collection>();
+            }
 
             GetCollectionsProps collectionProps = new GetCollectionsProps
             {
