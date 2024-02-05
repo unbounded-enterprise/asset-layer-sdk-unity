@@ -210,8 +210,7 @@ namespace AssetLayer.Unity
             currentDisplayType = DisplayType.Collections;
             Task<IEnumerable<Collection>> fetchTask = FetchCollections(selectedSlot.collections);
             yield return WaitForTask(fetchTask);
-            loadedCollections = fetchTask.Result;
-
+            loadedCollections = fetchTask.Result ?? Enumerable.Empty<Collection>(); // Handle potential null
 
             List<UIAsset> convertedUICollections = new List<UIAsset>();
 
@@ -219,7 +218,7 @@ namespace AssetLayer.Unity
             {
                 long collectionBalanceCount = 0;
                 Slot collectionSlot = loadedSlots.FirstOrDefault(s => s.slotId == collection.slotId);
-                if (collectionSlot.balanceCounts == null)
+                if (collectionSlot == null || collectionSlot.balanceCounts == null)
                 {
                     continue;
                 }
@@ -227,13 +226,13 @@ namespace AssetLayer.Unity
                 {
                     convertedUICollections.Add(UIAsset.ConvertToUIAsset(collection, assetExpressionId, (int)collectionBalanceCount));
                 }
-
             }
 
             IEnumerable<UIAsset> filteredCollections = FilterBySearch(convertedUICollections, currentSearchString);
 
             uiManager.DisplayUIAssets(filteredCollections);
         }
+
 
 
 
