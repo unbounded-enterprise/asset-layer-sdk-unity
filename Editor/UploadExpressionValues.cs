@@ -164,7 +164,7 @@ namespace AssetLayer.Unity
             var submitButton = rootVisualElement.Q<Button>("FinalSubmitButton");
             submitButton.style.display = DisplayStyle.None;
 
-            await CreateBundleAndUploadExpression(collectionId, expressionId);
+            await CreateBundleAndUploadExpression(collectionId.Trim(), expressionId.Trim());
 
             isUploadingExpression = false;
           
