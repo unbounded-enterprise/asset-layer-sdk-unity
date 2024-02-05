@@ -3,17 +3,31 @@ using UnityEngine;
 using System.IO;
 using System;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using System.Collections.Generic;
 using AssetLayer.SDK.Collections;
+using UnityEngine.UIElements;
+using Nethereum.Contracts.Standards.ERC20.TokenList;
 
 namespace AssetLayer.Unity
 {
 
-    public class ReUploadExpressionValues : EditorWindow
+    public class UploadExpressionAssets : EditorWindow
     {
         string collectionId = "";
-        Texture2D image;
+        string expressionId = "";
+        public GUISkin AssetLayerGUISkin;
+        [SerializeField]
+        private VisualTreeAsset m_VisualTreeAsset = default;
+
+        [SerializeField]
+        private VisualTreeAsset successTree = default;
+
+        [SerializeField]
+        private VisualTreeAsset warningTree = default;
+
+        [SerializeField]
+        private VisualTreeAsset loginPromptTree = default;
+
         string successMessage = "";
         const string BUNDLEPATH = "AssetlayerUnitySDK/AssetBundles";
         float fieldOfView = 120f;
@@ -22,15 +36,156 @@ namespace AssetLayer.Unity
 
         private bool isUploadingExpression = false;
 
-        [MenuItem("Assets/Asset Layer/Update/Upload New Expression Values")]
+        [MenuItem("Assets/Asset Layer/Update/Upload Expression Assets")]
         static void ShowWindow()
         {
             // Show existing window instance. If one doesn't exist, make one.
-            EditorWindow.GetWindow(typeof(ReUploadExpressionValues));
+            UploadExpressionAssets editorWin = EditorWindow.GetWindow<UploadExpressionAssets>(); // (typeof(UploadExpressionAssets), true, "Upload Expression Assets");
+            editorWin.titleContent = new GUIContent("UploadExpressionAssets");
+            editorWin.minSize = new Vector2(778, 444);
+            editorWin.maxSize = editorWin.minSize;
+
+            
         }
+
+        void ShowLoginPromptUI()
+        {
+            // Clear the current UI
+            rootVisualElement.Clear();
+
+            // Clone and add the success UI to the root
+            VisualElement loginRoot = loginPromptTree.CloneTree();
+            rootVisualElement.Add(loginRoot);
+
+
+            // Optionally, you can set up a close button in your success UXML
+            var closeButton = loginRoot.Q<Button>("CloseButton"); // Adjust the name as necessary
+            if (closeButton != null)
+            {
+                closeButton.clickable.clicked += () => this.Close(); // Close the window when the close button is clicked
+            }
+
+            var linkButton2 = loginRoot.Q<Button>("AssetLayerApp");
+            linkButton2.clickable.clicked += () => Application.OpenURL("https://www.assetlayer.com");
+
+            var linkButton3 = loginRoot.Q<Button>("UnityCollectionCreationGuide");
+            linkButton3.clickable.clicked += () => Application.OpenURL("https://docs.assetlayer.com/create-assets/create-assets-without-code/submit-a-collection-for-a-3rd-party-app-coming-soon");
+        }
+
+        void ShowSuccessUI()
+        {
+            // Clear the current UI
+            rootVisualElement.Clear();
+
+            // Clone and add the success UI to the root
+            VisualElement successRoot = successTree.CloneTree();
+            rootVisualElement.Add(successRoot);
+
+
+            // Optionally, you can set up a close button in your success UXML
+            var closeButton = successRoot.Q<Button>("CloseButton"); // Adjust the name as necessary
+            if (closeButton != null)
+            {
+                closeButton.clickable.clicked += () => this.Close(); // Close the window when the close button is clicked
+            }
+
+            var linkButton2 = successRoot.Q<Button>("AssetLayerApp");
+            linkButton2.clickable.clicked += () => Application.OpenURL("https://www.assetlayer.com");
+
+            var linkButton3 = successRoot.Q<Button>("UnityCollectionCreationGuide");
+            linkButton3.clickable.clicked += () => Application.OpenURL("https://docs.assetlayer.com/create-assets/create-assets-without-code/submit-a-collection-for-a-3rd-party-app-coming-soon");
+        }
+
+        void ShowWarningUI()
+        {
+            // Clear the current UI
+            rootVisualElement.Clear();
+
+            // Clone and add the success UI to the root
+            VisualElement warningRoot = warningTree.CloneTree();
+            rootVisualElement.Add(warningRoot);
+
+
+            // Optionally, you can set up a close button in your success UXML
+            var finalSubmitButton = warningRoot.Q<Button>("FinalSubmitButton"); // Adjust the name as necessary
+            if (finalSubmitButton != null)
+            {
+                finalSubmitButton.clickable.clicked += SubmitClicked; // Close the window when the close button is clicked
+            }
+
+        }
+
+        public void CreateGUI()
+        {
+
+            ApiManager manager = new ApiManager();
+            if (string.IsNullOrEmpty(manager.DID_TOKEN))
+            {
+                ShowLoginPromptUI();
+                return;
+            }
+
+            rootVisualElement.style.flexDirection = FlexDirection.Column;
+            rootVisualElement.style.justifyContent = Justify.SpaceBetween;
+            rootVisualElement.style.height = Length.Percent(100);
+            VisualElement root = m_VisualTreeAsset.CloneTree();
+            rootVisualElement.Add(root);
+            // Set up the link button
+            var linkButton = root.Q<Button>("myPendingCollectionsLink");
+            linkButton.clickable.clicked += () => Application.OpenURL("https://www.assetlayer.com");
+
+
+            var submitButton = root.Q<Button>("SubmitButton");
+            submitButton.clickable.clicked += SubmitOneClicked;
+
+            /* // Optionally, load USS file
+            StyleSheet styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>("path/to/your.uss");
+            rootVisualElement.styleSheets.Add(styleSheet); */
+        }
+
+        void SubmitOneClicked()
+        {
+            collectionId = rootVisualElement.Q<TextField>("collectionID").value;
+            expressionId = rootVisualElement.Q<TextField>("expressionID").value;
+            if (expressionId == "Enter Expression ID")
+            {
+                expressionId = "";
+            }
+            if (collectionId == "Enter Collection ID")
+            {
+                collectionId = "";
+            }
+            ShowWarningUI();
+        }
+
+        async void SubmitClicked()
+        {
+            isUploadingExpression = true;
+            var submitButton = rootVisualElement.Q<Button>("FinalSubmitButton");
+            submitButton.style.display = DisplayStyle.None;
+
+            await CreateBundleAndUploadExpression(collectionId.Trim(), expressionId.Trim());
+
+            isUploadingExpression = false;
+          
+
+            if (true)
+            {
+                Debug.Log("AssetBundle uploaded successfully!");
+                successMessage = "AssetBundle created and uploaded successfully!";
+                ShowSuccessUI(); // Call method to show success UI
+            }
+            else
+            {
+                Debug.Log("Failed to upload AssetBundle.");
+            }
+
+        }
+
 
         void OnGUI()
         {
+            /* GUI.skin = this.AssetLayerGUISkin;
             if (isUploadingExpression || !string.IsNullOrEmpty(successMessage))
             {
                 if (!string.IsNullOrEmpty(successMessage))
@@ -44,19 +199,64 @@ namespace AssetLayer.Unity
             }
             else
             {
-                GUILayout.Label("Re-upload Expression Values", EditorStyles.boldLabel);
-                collectionId = EditorGUILayout.TextField("Collection ID", collectionId);
-                image = (Texture2D)EditorGUILayout.ObjectField("Image", image, typeof(Texture2D), false);
+                GUIStyle customButtonStyle = new GUIStyle(GUI.skin.button)
+                {
+                    fontSize = 12,
+                    fontStyle = FontStyle.Bold
+                };
 
-                if (GUILayout.Button("Re-upload"))
+                GUILayout.Label("Upload Expression Assets", EditorStyles.boldLabel);
+
+                EditorGUILayout.LabelField("Collection ID: Used to identify your collection.");
+                GUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField("Can be found in ", GUILayout.Width(110));
+                GUIStyle linkStyle = new GUIStyle(EditorStyles.linkLabel)
+                {
+                    wordWrap = true
+                };
+                if (GUILayout.Button("My Pending Collections", linkStyle))
+                {
+                    Application.OpenURL("https://www.assetlayer.com");
+                }
+                GUILayout.EndHorizontal();
+
+                // Placeholder for Collection ID
+                GUI.SetNextControlName("CollectionIDField");
+                collectionId = EditorGUILayout.TextField(string.IsNullOrEmpty(collectionId) || collectionId == "Enter Collection ID" ? "" : collectionId);
+                if (GUI.GetNameOfFocusedControl() != "CollectionIDField" && string.IsNullOrEmpty(collectionId))
+                {
+                    collectionId = "Enter Collection ID";
+                }
+
+                EditorGUILayout.LabelField("Expression ID: Used to identify the collection you are uploading assets for.");
+
+                // Placeholder for Expression ID
+                GUI.SetNextControlName("ExpressionIDField");
+                expressionId = EditorGUILayout.TextField(string.IsNullOrEmpty(expressionId) || expressionId == "Enter Expression ID" ? "" : expressionId);
+                if (GUI.GetNameOfFocusedControl() != "ExpressionIDField" && string.IsNullOrEmpty(expressionId))
+                {
+                    expressionId = "Enter Expression ID";
+                }
+                GUILayout.BeginHorizontal();
+                Rect windowRect = new Rect(0, 0, 1000, 1000);
+
+                GUILayout.BeginArea(windowRect);
+                
+                GUILayout.FlexibleSpace();
+                if (GUILayout.Button("Submit", GUILayout.Width(150), GUILayout.Height(34)))
                 {
                     isUploadingExpression = true;
-                    CreateBundleAndUploadExpression(collectionId);
                 }
-            }
+                GUILayout.FlexibleSpace();
+                // Your GUI code here
+                GUILayout.EndArea();
+                GUILayout.EndHorizontal();
+               
+            } */ 
         }
 
-        async Task CreateBundleAndUploadExpression(string collectionId)
+
+        async Task CreateBundleAndUploadExpression(string collectionId, string expressionId = "")
         {
             // get collection info
             ApiManager manager = new ApiManager();
@@ -66,8 +266,6 @@ namespace AssetLayer.Unity
             string collectionName = collectionInfo[0].collectionName;
             string slotId = collectionInfo[0].slotId;
 
-            bool wasScene = Selection.activeObject is SceneAsset;
-            bool wasPrefab = Selection.activeObject is GameObject;
             UnityEngine.Object selectedObject = Selection.activeObject;
 
 
@@ -93,45 +291,6 @@ namespace AssetLayer.Unity
             string fullPath = Path.Combine(Application.dataPath, BUNDLEPATH);
             EnsureDirectoryExists(fullPath);
 
-            string imageUrl = "";
-
-            // If no image is selected and the first selected asset is a scene or a prefab, capture a preview image
-            if (image == null && (wasScene || wasPrefab))
-            {
-                string assetPath = AssetDatabase.GetAssetPath(selectedObject);
-                string imagePath = "";
-
-                if (wasScene)
-                {
-                    imagePath = ScenePreviewCapturer.CaptureScenePreview(assetPath, fieldOfView);
-                }
-                else if (wasPrefab)
-                {
-                    imagePath = await PrefabPreviewCapturer.CapturePrefabPreview(assetPath, fieldOfViewPrefab);
-                }
-
-                if (!string.IsNullOrEmpty(imagePath))
-                {
-                    byte[] bytes = File.ReadAllBytes(imagePath);
-                    Texture2D tex = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-                    if (tex.LoadImage(bytes))
-                    {
-                        tex.filterMode = FilterMode.Bilinear;
-                        tex.wrapMode = TextureWrapMode.Clamp;
-                        image = tex;
-                    }
-                    else
-                    {
-                        Debug.LogError("Failed to load image data into texture");
-                    }
-                }
-            }
-            if (image != null)
-            {
-                Texture2D readableImage = MakeTextureReadable(image);
-                imageUrl = ImageToDataUrlResized(readableImage);
-            }
-
 
             bool uploadSuccess = false;
             try
@@ -156,7 +315,7 @@ namespace AssetLayer.Unity
                     string dataUrl = BundleToDataUrl(bundlePath);
 
                     // Upload the AssetBundle for the current platform using the SDK.
-                    uploadSuccess = await manager.UploadBundleExpression(collectionId, dataUrl, "AssetBundle" + platform.ToString(), "AssetBundle");
+                    uploadSuccess = await manager.UploadBundleExpression(collectionId, dataUrl, "AssetBundle" + platform.ToString(), "AssetBundle", expressionId);
 
                     if (!uploadSuccess)
                     {
@@ -171,7 +330,7 @@ namespace AssetLayer.Unity
                         string location = PrefabPacker.PackagePrefab((GameObject)selectedObject, slotId);
                         string unityPackageDataUrl = BundleToDataUrl(location);
 
-                        await manager.UploadBundleExpression(collectionId, unityPackageDataUrl, "UnityPackage", "AssetBundle");
+                        await manager.UploadBundleExpression(collectionId, unityPackageDataUrl, "UnityPackage", "AssetBundle", expressionId);
                     }
                     catch (Exception ex)
                     {
@@ -183,8 +342,6 @@ namespace AssetLayer.Unity
             {
                 Debug.LogError("Exception caught: " + e.ToString());
             }
-
-            bool uploadSuccessMenuView = await manager.UploadBundleExpression(collectionId, imageUrl, "Image", "Menu View");
 
             if (uploadSuccess && selectedObject is GameObject)
             {
@@ -205,6 +362,10 @@ namespace AssetLayer.Unity
 
             foreach (var asset in selectedAssets)
             {
+                if (asset == null)
+                {
+                    continue;
+                }
                 string assetPath = AssetDatabase.GetAssetPath(asset);
                 AssetImporter.GetAtPath(assetPath).SetAssetBundleNameAndVariant("", "");
             }

@@ -1,0 +1,76 @@
+.main-container {
+    display: flex; /* This enables flexbox properties */
+    flex-direction: column;
+    justify-content: space-between; /* This pushes the content-container and submit-button apart */
+    padding: 10px;
+    align-items: flex-start;
+    height: 100%;
+}
+
+.content-container {
+    display: flex; /* Make sure this is set to enable flex properties for children */
+    flex-direction: column; /* Stack children vertically */
+    flex-grow: 1;
+}
+
+.heading {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+    width: 100%;
+    -unity-font-style: bold;
+}
+
+.form-field {
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.field-label-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    align-items: baseline;
+}
+
+.bold-label {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.description-label {
+    margin-right: 5px;
+}
+
+.link-button {
+    background-color: transparent;
+    border: none;
+    color: rgb(170, 170, 170);
+    text-decoration: underline;
+    padding: 0;
+    margin-left: 2px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.link-button:hover {
+    text-decoration: none;
+}
+
+.text-field {
+    min-height: 26px;
+    font-size: 12px;
+    padding: 2px 4px;
+    width: 223px;
+}
+
+.submit-button {
+    text-align: center;
+    width: 318px;
+    height: 34px;
+    margin-top: 10px;
+    margin-bottom: 40px;
+    align-self: center;
+}

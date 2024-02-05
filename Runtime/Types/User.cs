@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using AssetLayer.SDK.Basic;
+using AssetLayer.SDK.Collections;
 
 #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
     using UnityEngine.Scripting;
@@ -108,6 +109,34 @@ namespace AssetLayer.SDK.Users
         public string status { get; set; }
     }
 
+
+
+
+    [DataContract]
+    public class GetUserCollectionsProps { 
+        public GetUserCollectionsProps() { }
+
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public bool? includeDrafts { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public bool? includeSubmissionData { get; set; }
+    }
+    [DataContract]
+    public class UserCollectionsProps : GetUserCollectionsProps { 
+        public UserCollectionsProps() : base() { }
+
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public bool? idOnly { get; set; } 
+    }
     [DataContract]
     public class UserLoginProps { 
         public UserLoginProps() { }
@@ -145,6 +174,7 @@ namespace AssetLayer.SDK.Users
     }
 
 
+
     [DataContract]
     public class GetUserResponse : BasicResponse<GetUserResponseBody> {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
@@ -164,6 +194,46 @@ namespace AssetLayer.SDK.Users
         #endif
         [DataMember]
         public User user { get; set; } 
+    }
+    [DataContract]
+    public class GetUserCollectionsResponse : BasicResponse<GetUserCollectionsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetUserCollectionsResponse() : base() { }
+    }
+    [DataContract]
+    public class GetUserCollectionsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetUserCollectionsResponseBody() { }
+
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<Collection> collections { get; set; } 
+    }
+    [DataContract]
+    public class GetUserCollectionIdsResponse : BasicResponse<GetUserCollectionIdsResponseBody> {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetUserCollectionIdsResponse() : base() { }
+    }
+    [DataContract]
+    public class GetUserCollectionIdsResponseBody { 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public GetUserCollectionIdsResponseBody() { }
+
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public List<string> collections { get; set; } 
     }
     [DataContract]
     public class GetOTPResponse : BasicResponse<GetOTPResponseBody> {
@@ -217,28 +287,40 @@ namespace AssetLayer.SDK.Users
     }
 
     public class UsersRawDelegates {
-        public delegate Task<GetUserResponse> GetUser(Dictionary<string, string> queryParams = null);
-        public delegate Task<(GetOTPResponse, RegisterUserResponse)> Register(RegisterUserProps body, Dictionary<string, string> queryParams = null);
-        public delegate Task<GetOTPResponse> GetOTP(Dictionary<string, string> queryParams = null);
-        public delegate Task<RegisterUserResponse> RegisterDid(RegisterDidProps body, Dictionary<string, string> queryParams = null);
+        public delegate Task<GetUserResponse> GetUser(Dictionary<string, string> headers = null);
+        public delegate Task<(GetUserCollectionsResponse, GetUserCollectionIdsResponse)> Collections(UserCollectionsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetUserCollectionsResponse> GetUserCollections(GetUserCollectionsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetUserCollectionIdsResponse> GetUserCollectionIds(GetUserCollectionsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<(GetOTPResponse, RegisterUserResponse)> Register(RegisterUserProps props, Dictionary<string, string> headers = null);
+        public delegate Task<GetOTPResponse> GetOTP(Dictionary<string, string> headers = null);
+        public delegate Task<RegisterUserResponse> RegisterDid(RegisterDidProps props, Dictionary<string, string> headers = null);
     }
 
     public class UsersRawHandlers {
         public UsersRawDelegates.GetUser GetUser;
+        public UsersRawDelegates.Collections Collections;
+        public UsersRawDelegates.GetUserCollections GetUserCollections;
+        public UsersRawDelegates.GetUserCollectionIds GetUserCollectionIds;
         public UsersRawDelegates.Register Register;
         public UsersRawDelegates.GetOTP GetOTP;
         public UsersRawDelegates.RegisterDid RegisterDid;
     }
 
     public class UsersSafeDelegates {
-        public delegate Task<BasicResult<User>> GetUser(Dictionary<string, string> queryParams = null);
-        public delegate Task<BasicResult<(string, RegisterUserResponseBody)>> Register(RegisterUserProps body, Dictionary<string, string> queryParams = null);
-        public delegate Task<BasicResult<string>> GetOTP(Dictionary<string, string> queryParams = null);
-        public delegate Task<BasicResult<RegisterUserResponseBody>> RegisterDid(RegisterDidProps body, Dictionary<string, string> queryParams = null);
+        public delegate Task<BasicResult<User>> GetUser(Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(List<Collection>, List<string>)>> Collections(UserCollectionsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<Collection>>> GetUserCollections(GetUserCollectionsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<List<string>>> GetUserCollectionIds(GetUserCollectionsProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<(string, RegisterUserResponseBody)>> Register(RegisterUserProps props, Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<string>> GetOTP(Dictionary<string, string> headers = null);
+        public delegate Task<BasicResult<RegisterUserResponseBody>> RegisterDid(RegisterDidProps props, Dictionary<string, string> headers = null);
     }
 
     public class UsersSafeHandlers {
         public UsersSafeDelegates.GetUser GetUser;
+        public UsersSafeDelegates.Collections Collections;
+        public UsersSafeDelegates.GetUserCollections GetUserCollections;
+        public UsersSafeDelegates.GetUserCollectionIds GetUserCollectionIds;
         public UsersSafeDelegates.Register Register;
         public UsersSafeDelegates.GetOTP GetOTP;
         public UsersSafeDelegates.RegisterDid RegisterDid;

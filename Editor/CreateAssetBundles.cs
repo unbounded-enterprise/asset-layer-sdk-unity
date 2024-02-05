@@ -3,28 +3,49 @@ using UnityEngine;
 using System.IO;
 using System;
 using System.Threading.Tasks;
+using UnityEngine.UIElements;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEditor.UIElements;
 
 namespace AssetLayer.Unity
 {
 
-    public class CreateAssetBundlesFromSelection
+    public class CreateAssetBundlesFromSelection : EditorWindow
     {
+        
         [MenuItem("Assets/Asset Layer/Create New Collection")]
 
         static void ShowWindow()
         {
             // Show existing window instance. If one doesn't exist, make one.
-            EditorWindow.GetWindow(typeof(AssetBundleCreatorWindow));
+            EditorWindow editorWin = EditorWindow.GetWindow(typeof(CreateAssetBundlesFromSelection));
+            editorWin.titleContent = new GUIContent("Create New Collection");
+            editorWin.minSize = new Vector2(978, 744);
+            editorWin.maxSize = editorWin.minSize;
         }
-    }
+    
+        [SerializeField]
+        private VisualTreeAsset visualTreeAsset = default;
 
-    public class AssetBundleCreatorWindow : EditorWindow
-    {
+        [SerializeField]
+        private VisualTreeAsset successTree = default;
+
+        [SerializeField]
+        private VisualTreeAsset warningTree = default;
+
+        [SerializeField]
+        private VisualTreeAsset loginPromptTree = default;
+
+        [SerializeField]
+        private VisualTreeAsset creatorTree = default;
+
         string slotId = "";
         string collectionName = "MyPrefabCollection";
         string[] slotNames;
-        int? maximum = 100;
+        int? maximum = 0;
         int mintImmediately = 0;
+        bool noMax = true;
         Texture2D image;
         string successMessage = "";
         const string BUNDLEPATH = "AssetlayerUnitySDK/AssetBundles";
@@ -34,16 +55,23 @@ namespace AssetLayer.Unity
         float fieldOfViewPrefab = 30f;
         string[] slotIds;
         int slotIndex = 0;
+        string expressionId;
+        private int savedMax = 0;
 
         private bool isCreatingCollection = false;
 
-        async void OnEnable()
+        void OnEnable()
+        {
+            FetchSlotNames();
+        }
+
+        async void FetchSlotNames()
         {
             ApiManager sdkInstance = new ApiManager();
             slotIds = await sdkInstance.GetAppSlots();
+            Debug.Log("slotids: " + slotIds);
             if (slotIds != null)
             {
-                // Fetch slot names for each slotId
                 slotNames = new string[slotIds.Length];
                 for (int i = 0; i < slotIds.Length; i++)
                 {
@@ -53,9 +81,29 @@ namespace AssetLayer.Unity
                         slotNames[i] = slotInfo.slotName;
                     }
                 }
+                Debug.Log("slotnames: " + slotNames[0]);
+                // Update the dropdown after the async operation
+                EditorApplication.QueuePlayerLoopUpdate();
+                EditorApplication.delayCall += UpdateDropdownWithSlotNames;
+            }
+        }
+
+        void UpdateDropdownWithSlotNames()
+        {
+            // Assuming dropdownField is the DropdownField in your UI
+            var dropdownField = rootVisualElement.Q<DropdownField>("SlotIdDropdown");
+            if (dropdownField != null)
+            {
+                dropdownField.choices = new List<string>(slotNames);
+                if (slotNames.Length > 0)
+                {
+                    dropdownField.value = slotNames[0];
+                }
             }
             
         }
+
+
 
         private void EnsureAssetBundleDatabaseExists()
         {
@@ -67,8 +115,198 @@ namespace AssetLayer.Unity
             }
         }
 
+        void CreateGUI()
+        {
+            ApiManager manager = new ApiManager();
+            if (string.IsNullOrEmpty(manager.DID_TOKEN))
+            {
+                ShowLoginPromptUI();
+                return;
+            }
+            if (string.IsNullOrEmpty(manager.APP_SECRET))
+            {
+                ShowCreatorUI();
+                return;
+            }
+            // Clear existing content
+            rootVisualElement.Clear();
+            // Load and clone the main UI template
+            var root = visualTreeAsset.CloneTree();
+            rootVisualElement.Add(root);
 
-        void OnGUI()
+            // Setup collection name input
+            var collectionNameInput = root.Q<TextField>("CollectionNameInput");
+            collectionNameInput.value = collectionName;
+            collectionNameInput.RegisterValueChangedCallback(evt => collectionName = evt.newValue);
+            var expressionDropdown = root.Q<DropdownField>("ExpressionDropdown");
+            // Initial setup might be needed here, e.g., UpdateExpressionDropdown(expressionDropdown, initialSlotId);
+            expressionDropdown.RegisterValueChangedCallback(evt => {
+                expressionId = evt.newValue; // Assuming expressionId is a string. Adjust if it's an index or another type.
+            });
+            // Setup slot ID dropdown
+            var slotIdDropdown = root.Q<DropdownField>("SlotIdDropdown");
+
+            // Add 'Create New Expression' as an initial option
+            expressionDropdown.choices = new List<string> { "Create New Expression" };
+            expressionDropdown.value = "Create New Expression";
+            slotIdDropdown.RegisterValueChangedCallback(evt => {
+                    slotIndex = slotIdDropdown.index;
+                    if (slotIds != null && slotIds.Length > 0)
+                    {
+                        slotId = slotIds[slotIndex];
+                        UpdateExpressionDropdown(expressionDropdown, slotId);
+                    }
+                });
+
+            // Set up the ObjectField for Texture2D
+            var textureField = root.Q<ObjectField>("TextureSelector");
+            textureField.objectType = typeof(Texture2D);
+            textureField.RegisterValueChangedCallback(evt =>
+            {
+                image = evt.newValue as Texture2D;
+            });
+
+
+            // Setup max supply input
+            var maxSupplyInput = root.Q<IntegerField>("MaxSupplyInput");
+            maxSupplyInput.value = maximum.HasValue ? maximum.Value : 0;
+            maxSupplyInput.RegisterValueChangedCallback(evt => maximum = evt.newValue);
+
+            if (noMax)
+            {
+                maxSupplyInput.SetEnabled(false);
+            }
+
+            var mintImmediatelyInput = rootVisualElement.Q<IntegerField>("MintNow");
+            mintImmediatelyInput.value = mintImmediately;
+            mintImmediatelyInput.RegisterValueChangedCallback(evt => mintImmediately = evt.newValue);
+
+
+            // Setup no max supply toggle
+            var noMaxSupplyToggle = root.Q<Toggle>("NoMaxSupplyToggle");
+            noMaxSupplyToggle.RegisterValueChangedCallback(evt => {
+                if (evt.newValue)
+                {
+                    maxSupplyInput.SetEnabled(false);
+                    savedMax = (int) maximum;
+                    maximum = null;
+                    maxSupplyInput.value = 0;
+                    maxSupplyInput.SetEnabled(false);
+                    noMax = true;
+                }
+                else
+                {
+                    maxSupplyInput.SetEnabled(true);
+                    maximum = savedMax;
+                    maxSupplyInput.value = savedMax;
+                    maxSupplyInput.SetEnabled(true);
+                    noMax = false;
+                }
+            });
+
+            
+
+            // Setup submit button
+            var submitButton = root.Q<Button>("SubmitButton");
+            submitButton.clickable.clicked += () => {
+                submitButton.SetEnabled(false);
+                // Your submit logic here
+                CreateBundleFromSelection(slotId, maximum.HasValue ? maximum.Value : 0, collectionName, expressionId != "Create New Expression" ? expressionId : "");
+            };
+        }
+
+        async void UpdateExpressionDropdown(DropdownField expressionDropdown, string selectedSlotId)
+        {
+            List<string> expressions;
+            try
+            {
+                ApiManager manager = new ApiManager();
+                expressions = await manager.GetAssetExpressions(selectedSlotId);
+                expressions.Add("Create New Expression");
+                expressionDropdown.choices = expressions;
+                expressionDropdown.value = expressions.FirstOrDefault(); // Set the first item as selected by default
+            } catch(Exception ex)
+            {
+                Debug.Log("failure reading expression Ids of slot: " + ex.Message);
+            }
+
+            expressionId = expressionDropdown.value; // Update class variable
+        }
+
+        void ShowSuccessUI()
+        {
+            // Clear the current UI
+            rootVisualElement.Clear();
+
+            // Clone and add the success UI to the root
+            VisualElement successRoot = successTree.CloneTree();
+            rootVisualElement.Add(successRoot);
+
+
+            // Optionally, you can set up a close button in your success UXML
+            var closeButton = successRoot.Q<Button>("CloseButton"); // Adjust the name as necessary
+            if (closeButton != null)
+            {
+                closeButton.clickable.clicked += () => this.Close(); // Close the window when the close button is clicked
+            }
+
+            var linkButton2 = successRoot.Q<Button>("AssetLayerApp");
+            linkButton2.clickable.clicked += () => Application.OpenURL("https://www.assetlayer.com");
+
+            var linkButton3 = successRoot.Q<Button>("UnityCollectionCreationGuide");
+            linkButton3.clickable.clicked += () => Application.OpenURL("https://docs.assetlayer.com/create-assets/create-assets-without-code/submit-a-collection-for-a-3rd-party-app-coming-soon");
+        }
+
+        void ShowLoginPromptUI()
+        {
+            // Clear the current UI
+            rootVisualElement.Clear();
+
+            // Clone and add the success UI to the root
+            VisualElement loginRoot = loginPromptTree.CloneTree();
+            rootVisualElement.Add(loginRoot);
+
+
+            // Optionally, you can set up a close button in your success UXML
+            var closeButton = loginRoot.Q<Button>("CloseButton"); // Adjust the name as necessary
+            if (closeButton != null)
+            {
+                closeButton.clickable.clicked += () => this.Close(); // Close the window when the close button is clicked
+            }
+
+            var linkButton2 = loginRoot.Q<Button>("AssetLayerApp");
+            linkButton2.clickable.clicked += () => Application.OpenURL("https://www.assetlayer.com");
+
+            var linkButton3 = loginRoot.Q<Button>("UnityCollectionCreationGuide");
+            linkButton3.clickable.clicked += () => Application.OpenURL("https://docs.assetlayer.com/create-assets/create-assets-without-code/submit-a-collection-for-a-3rd-party-app-coming-soon");
+        }
+
+        void ShowCreatorUI()
+        {
+            // Clear the current UI
+            rootVisualElement.Clear();
+
+            // Clone and add the success UI to the root
+            VisualElement creatorRoot = creatorTree.CloneTree();
+            rootVisualElement.Add(creatorRoot);
+
+
+            // Optionally, you can set up a close button in your success UXML
+            var closeButton = creatorRoot.Q<Button>("CloseButton"); // Adjust the name as necessary
+            if (closeButton != null)
+            {
+                closeButton.clickable.clicked += () => this.Close(); // Close the window when the close button is clicked
+            }
+
+            var linkButton2 = creatorRoot.Q<Button>("AssetLayerApp");
+            linkButton2.clickable.clicked += () => Application.OpenURL("https://www.assetlayer.com");
+
+            var linkButton3 = creatorRoot.Q<Button>("UnityCollectionCreationGuide");
+            linkButton3.clickable.clicked += () => Application.OpenURL("https://docs.assetlayer.com/create-assets/create-assets-without-code/submit-a-collection-for-a-3rd-party-app-coming-soon");
+        }
+
+
+        /* void OnGUI()
         {
             if (isCreatingCollection || !string.IsNullOrEmpty(successMessage))
             {
@@ -92,7 +330,7 @@ namespace AssetLayer.Unity
                 }
 
                 collectionName = EditorGUILayout.TextField("Collection Name", collectionName);
-                maximum = EditorGUILayout.IntField("Maxímum", maximum.Value);
+                maximum = EditorGUILayout.IntField("Maxï¿½mum", maximum.Value);
                 mintImmediately = EditorGUILayout.IntField("Mint Immediately", mintImmediately);
 
                 image = (Texture2D)EditorGUILayout.ObjectField("Image", image, typeof(Texture2D), false);
@@ -104,7 +342,7 @@ namespace AssetLayer.Unity
                     CreateBundleFromSelection(slotId, maximum.Value, collectionName);
                 }
             }
-        }
+        } */
 
         BuildTarget GetBuildTarget(BuildPlatform platform)
         {
@@ -193,6 +431,8 @@ namespace AssetLayer.Unity
         }
 
 
+
+
         private void EnsureDirectoryExists(string path)
         {
             if (!Directory.Exists(path))
@@ -201,7 +441,7 @@ namespace AssetLayer.Unity
             }
         }
 
-        async Task CreateBundleFromSelection(string slotId, int maxSupply, string collectionName)
+        async Task CreateBundleFromSelection(string slotId, int maxSupply, string collectionName, string expressionId)
         {
             bool wasScene = Selection.activeObject is SceneAsset;
             bool wasPrefab = Selection.activeObject is GameObject;
@@ -292,8 +532,7 @@ namespace AssetLayer.Unity
                 Debug.Log("Image Data URL: " + imageUrl);
             }
 
-
-            string collectionId = await sdkInstance.CreateCollection(slotId, collectionName, maxSupply, imageUrl);
+            string collectionId = await sdkInstance.CreateCollection(slotId, collectionName, noMax ? null : maxSupply, imageUrl);
             if (collectionId != null)
             {
                 if (selectedGameObject != null)
@@ -309,8 +548,7 @@ namespace AssetLayer.Unity
                     }
                 }
                 Debug.Log("Collection created successfully!");
-                // First, try to get existing AssetBundle expression
-                string expressionId = await sdkInstance.GetAssetExpression(slotId);
+                
                 if (string.IsNullOrEmpty(expressionId))
                 {
                     // If no existing expression found, create a new one
@@ -335,7 +573,7 @@ namespace AssetLayer.Unity
                     // Move and get the dataUrl for the bundle
                     string bundlePath = MoveAssetBundles(bundleName);
                     string dataUrl = BundleToDataUrl(bundlePath);
-                    await sdkInstance.UploadBundleExpression(collectionId, dataUrl, "AssetBundle" + platformName, "AssetBundle");
+                    await sdkInstance.UploadBundleExpression(collectionId, dataUrl, "AssetBundle" + platformName, "AssetBundle", expressionId);
 
                 }
                 if (selectedGameObject != null)
@@ -345,7 +583,7 @@ namespace AssetLayer.Unity
                         string location = PrefabPacker.PackagePrefab(selectedGameObject, slotId);
                         string unityPackageDataUrl = BundleToDataUrl(location);
 
-                        await sdkInstance.UploadBundleExpression(collectionId, unityPackageDataUrl, "UnityPackage", "AssetBundle");
+                        await sdkInstance.UploadBundleExpression(collectionId, unityPackageDataUrl, "UnityPackage", "AssetBundle", expressionId);
                     } catch(Exception e)
                     {
                         Debug.Log("unity package saving failed: " + e.Message);
@@ -369,6 +607,7 @@ namespace AssetLayer.Unity
                 if (mintSuccess)
                 {
                     successMessage = "Collection and AssetBundle created and uploaded successfully!";
+                    ShowSuccessUI();
                     Repaint();
                 }
                 else

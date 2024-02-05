@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Packages/com.assetlayer/Editor/UI/LoginPromptStyles.uss?fileID=7433441132597879392&amp;guid=f03a05e52ff9822428b5b3eb0b60c223&amp;type=3#LoginPromptStyles" />
+    <ui:VisualElement class="main-container">
+        <ui:VisualElement class="content-container">
+            <ui:Label text="Create New Collection:" class="heading header" />
+            <ui:VisualElement class="field-label-container">
+                <ui:Label text="In order to create a collection with this Asset, you first need to make a new collection draft in the" class="description-label" />
+                <ui:Button name="AssetLayerApp" text="Asset Layer App" class="link-button" />
+            </ui:VisualElement>
+            <ui:Label text="After creating the draft, you&apos;ll be able to upload your Asset as a expression for the new collection." class="description-label" />
+            <ui:VisualElement class="form-field field-label-container">
+                <ui:Label text="Need help? Check out our " class="description-label" />
+                <ui:Button name="UnityCollectionCreationGuide" text="Unity Collection Creation Guide." class="link-button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Button text="Close" name="CloseButton" class="submit-button" />
+    </ui:VisualElement>
+</ui:UXML>

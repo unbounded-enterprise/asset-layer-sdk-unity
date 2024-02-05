@@ -1,0 +1,20 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="UploadExpressionValuesStyles.uss" />
+    <ui:VisualElement class="main-container">
+        <ui:VisualElement class="content-container">
+            <ui:Label text="Warning: Replacing Existing Expression" class="heading" />
+            <ui:VisualElement class="form-field">
+                <ui:VisualElement class="field-label-container">
+                    <ui:Label text="Uploading this Asset will replace the existing Asset for this Expression." class="description-label" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement class="form-field">
+                <ui:Label text="This change will need to be approved by the app owner before being implemented to the collection." class="description-label" />
+            </ui:VisualElement>
+            <ui:VisualElement class="form-field">
+                <ui:VisualElement class="field-label-container" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Button text="Submit" name="FinalSubmitButton" class="submit-button" />
+    </ui:VisualElement>
+</ui:UXML>
