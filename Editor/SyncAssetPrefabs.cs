@@ -98,15 +98,18 @@ namespace AssetLayer.Unity
                     }
                 }
 
-                int totalCollections = allCollections.Count;
-                int processedCollections = 0;
-
                 foreach (Collection collection in allCollections)
                 {
+                    string unityPackagePath = $"Assets/AssetLayerUnitySDK/UnityPackages/{collection.slotId}/{collection.collectionName}.unityPackage";
+                    if (skipExistingFolders && File.Exists(unityPackagePath))
+                    {
+                        // Debug.Log($"Skipping download for {collection.collectionName} as it already exists at {unityPackagePath}.");
+                        continue; // Correctly skips to the next iteration
+                    }
+
                     string packageUrl = UtilityFunctions.GetExpressionValueByAttributeId(collection.exampleExpressionValues, "65aec64e8cbc424457ff1c0e");
                     if (packageUrl == null)
                     {
-                        processedCollections++;
                         continue;
                     }
                     try
@@ -123,9 +126,7 @@ namespace AssetLayer.Unity
                     }
                     finally
                     {
-                        processedCollections++;
                         await Task.Yield(); // Yield control to allow GUI update
-
                     }
                 }
             }
@@ -137,7 +138,6 @@ namespace AssetLayer.Unity
             isFinished = true;
             AssetDatabase.Refresh();
         }
-
 
 
     }
