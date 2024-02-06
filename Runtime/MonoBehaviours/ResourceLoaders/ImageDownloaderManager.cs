@@ -24,6 +24,7 @@ namespace AssetLayer.Unity
         {
             if (string.IsNullOrEmpty(url) )
             {
+                callback?.Invoke(null, false);
                 yield break;
             }
             using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(url))

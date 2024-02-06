@@ -129,6 +129,11 @@ namespace AssetLayer.Unity
 
         IEnumerator DownloadAndLoadBundleCoroutine(string bundleUrl)
         {
+                if (string.IsNullOrEmpty(bundleUrl))
+                {
+                    HandleLoadedBundle(null);
+                    yield break;
+                }
             using (UnityWebRequest request = UnityWebRequestAssetBundle.GetAssetBundle(bundleUrl))
             {
                 // Send request

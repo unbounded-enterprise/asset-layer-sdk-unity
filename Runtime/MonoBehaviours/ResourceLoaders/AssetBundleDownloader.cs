@@ -30,6 +30,14 @@ namespace AssetLayer.Unity
         private IEnumerator DownloadAndLoadBundleCoroutine(string bundleUrl, AssetBundleDownloadedCallback callback)
         {
 
+
+            if (string.IsNullOrEmpty(bundleUrl))
+            {
+                Debug.LogError("Bundle URL is null or empty.");
+                callback?.Invoke(null); // Invoke callback with null to indicate failure
+                yield break;
+            }
+            
             using (UnityWebRequest request = UnityWebRequestAssetBundle.GetAssetBundle(bundleUrl))
             {
                 // Send request
