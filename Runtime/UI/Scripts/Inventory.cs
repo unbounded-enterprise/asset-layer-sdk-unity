@@ -86,6 +86,10 @@ namespace AssetLayer.Unity
 
         private IEnumerator Loading()
         {
+            if (string.IsNullOrEmpty(slotId) && displayAll)
+            {
+                displayAll = false;
+            }
             if (string.IsNullOrEmpty(slotId) || displayAll)
             {
                 StartCoroutine(DisplaySlots());
@@ -179,7 +183,6 @@ namespace AssetLayer.Unity
             {
                 yield break; // Exit the coroutine early
             }
-
             List<UIAsset> convertedUISlots = new List<UIAsset>();
 
             // Only consider slots with slotId present in the slotIds list.
@@ -199,9 +202,7 @@ namespace AssetLayer.Unity
             {
                 convertedUISlots.Add(UIAsset.ConvertToUIAsset(slot));
             }
-
             IEnumerable<UIAsset> filteredSlots = FilterBySearch(convertedUISlots, currentSearchString);
-
             uiManager.DisplayUIAssets(filteredSlots);
         }
 
@@ -515,18 +516,14 @@ namespace AssetLayer.Unity
         public async Task<IEnumerable<Slot>> FetchSlots()
         {
             ApiManager manager = new ApiManager();
-            if (!slotIds.Any())
-            {
-                // Use the GetAppSlots method to retrieve all slot IDs
-                slotIds = new List<string>(await manager.GetAppSlots());
-            }
+            string[] slotIdArr = await manager.GetAppSlots();
+            slotIds = new List<string>(slotIdArr);
 
             if (slotIds == null || !slotIds.Any())
             {
                 return Enumerable.Empty<Slot>();
             }
 
-            // Fetch details for each slot using GetSlotInfo
             List<Slot> slots = new List<Slot>();
 
             foreach (var slotId in slotIds)
@@ -537,8 +534,6 @@ namespace AssetLayer.Unity
                 }
                 SlotInfo slotInfo = await manager.GetSlotInfo(slotId);
                 var slotBalance = await manager.GetAssetBalance(slotId, true, true);
-
-
                 if (slotInfo != null)
                 {
                     slots.Add(new Slot
@@ -597,7 +592,14 @@ namespace AssetLayer.Unity
 
         public static UIAsset ConvertToUIAsset(Slot slot)
         {
-            return new UIAsset(slot.slotId, slot.slotName, slot.slotImage, "", (int)slot.balanceCounts.Values.Sum(), UIAssetType.Slot);
+            if (slot == null)
+            {
+                return null;
+            }
+            // Sum as long, then safely cast to int, providing a default value of 0 if null
+            long balanceCountSumLong = slot.balanceCounts?.Values?.Sum() ?? 0L;
+            int balanceCountSum = (int)Math.Min(balanceCountSumLong, int.MaxValue);
+            return new UIAsset(slot.slotId, slot.slotName, slot.slotImage, "", balanceCountSum, UIAssetType.Slot);
         }
 
         public static UIAsset ConvertToUIAsset(Collection collection, string assetExpressionId, int count)

@@ -224,17 +224,19 @@ namespace AssetLayer.Unity
             }
             bool loadImageSuccess = false;
             Texture2D textureOnMainThread = null;
-            yield return StartCoroutine(LoadImageCoroutine(uiAsset.ImageURL, (texture, success) =>
+            if (!string.IsNullOrEmpty(uiAsset.ImageURL))
             {
-                textureOnMainThread = texture;
-                loadImageSuccess = success;
-            }));
+                yield return StartCoroutine(LoadImageCoroutine(uiAsset.ImageURL, (texture, success) =>
+                {
+                    textureOnMainThread = texture;
+                    loadImageSuccess = success;
+                }));
+            }
 
             if (!loadImageSuccess)
             {
                 // If the image fails to load, remove the asset from cache
                 AssetCacheManager.Instance.RemoveFromCache(uiAsset.UIAssetId);
-                yield break;
             }
 
             GameObject clonedCard = Instantiate(assetCardTemplate, inventoryContainer.transform);
@@ -246,7 +248,11 @@ namespace AssetLayer.Unity
             {
                 assetCardElements.AssetNameLabel.text = uiAsset.Name;
                 assetCardElements.AssetCountLabel.text = (uiAsset.AssetType == UIAssetType.Asset ? "#" : "") + uiAsset.CountOrSerial.ToString();
-                assetCardElements.AssetImage.sprite = Sprite.Create(textureOnMainThread, new Rect(0.0f, 0.0f, textureOnMainThread.width, textureOnMainThread.height), new Vector2(0.5f, 0.5f), 100.0f);
+                if (loadImageSuccess)
+                {
+                    assetCardElements.AssetImage.sprite = Sprite.Create(textureOnMainThread, new Rect(0.0f, 0.0f, textureOnMainThread.width, textureOnMainThread.height), new Vector2(0.5f, 0.5f), 100.0f);
+                }
+                
             }
 
             assetCardElements.selectButton.onClick.AddListener(() => UIAssetSelected.Invoke(uiAsset));

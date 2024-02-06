@@ -22,6 +22,10 @@ namespace AssetLayer.Unity
 
         private IEnumerator DownloadImage(string url, ImageDownloadedCallback callback)
         {
+            if (string.IsNullOrEmpty(url) )
+            {
+                yield break;
+            }
             using (UnityWebRequest www = UnityWebRequestTexture.GetTexture(url))
             {
                 yield return www.SendWebRequest();

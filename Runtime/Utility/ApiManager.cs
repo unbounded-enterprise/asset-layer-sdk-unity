@@ -842,7 +842,7 @@ namespace AssetLayer.Unity
             {
                 Debug.Log("balance request error: " + e.Message);
             }
-            Debug.LogError("No Asset details found");
+            Debug.Log("No Asset details found");
             return null;
         }
 
@@ -1081,7 +1081,6 @@ namespace AssetLayer.Unity
 
         public async Task<string[]> GetAppSlots()
         {
-            Debug.Log("GetAppSlots");
             InitSDKCheck();
             if (string.IsNullOrEmpty(APP_ID) || string.IsNullOrEmpty(DID_TOKEN) || string.IsNullOrEmpty(APP_SECRET))
             {
@@ -1092,7 +1091,6 @@ namespace AssetLayer.Unity
             {
                 appId = APP_ID
             };
-            var dummy = props.appId;
 
             try
             {
@@ -1103,7 +1101,8 @@ namespace AssetLayer.Unity
                     return null;
                 }
 
-                return app.slots.ToArray();
+                string[] slotArray = app.slots.ToArray();
+                return slotArray;
             }
             catch (Exception ex)
             {
