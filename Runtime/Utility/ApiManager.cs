@@ -181,6 +181,46 @@ namespace AssetLayer.Unity
         }
 
 
+        public IEnumerator GetAssetExpressionValue(string assetId, System.Action<string> callback)
+        {
+            Debug.Log("GetAssetExpressionValue");
+            InitSDKCheck();
+
+            GetAssetProps props = new GetAssetProps
+            {
+                assetId = assetId
+            };
+
+            Task<SDK.Assets.Asset> getAssetTask = AssetLayerSDK.Assets.GetAsset(props);
+
+            yield return new WaitUntil(() => getAssetTask.IsCompleted);
+
+            SDK.Assets.Asset assetInfo = getAssetTask.Result;
+
+            if (assetInfo == null || assetInfo.expressionValues == null || assetInfo.expressionValues.Count == 0)
+            {
+                Debug.LogError("Failed to load expression - response structure does not match expected format");
+                callback?.Invoke(null);
+                yield break;
+            }
+
+            // Find the appropriate expression value
+            string currentPlatformAttributeName = UtilityFunctions.GetCurrentPlatformExpressionAttribute();
+
+            var expression = assetInfo.expressionValues.FirstOrDefault(
+                e => e.expressionAttribute.expressionAttributeName == currentPlatformAttributeName);
+
+            if (expression != null)
+            {
+                callback?.Invoke(expression.value);
+            }
+            else
+            {
+                callback?.Invoke(assetInfo.expressionValues[0].value);
+            }
+        }
+
+
         public Mesh LoadOBJMesh(string objText)
         {
             var lines = objText.Split('\n');

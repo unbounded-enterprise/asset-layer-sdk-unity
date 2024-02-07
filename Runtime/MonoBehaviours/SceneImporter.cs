@@ -107,14 +107,14 @@ namespace AssetLayer.Unity
             {
                 Asset cachedAsset = AssetCacheManager.Instance.GetFromCache(AssetId);
                 string bundleUrl = string.IsNullOrEmpty(bundleExpressionId) ?
-                    UtilityFunctions.GetExpressionValueAssetBundle(cachedAsset.expressionValues, "AssetBundle")
+                    UtilityFunctions.GetExpressionValueAssetBundle(cachedAsset.expressionValues)
                     :
                     UtilityFunctions.GetExpressionValueByExpressionIdAssetBundle(cachedAsset.expressionValues, bundleExpressionId);
                 ApplyScene(bundleUrl);
             }
             else
             {
-                StartCoroutine(manager.GetExpression(AssetId, "AssetBundle", ApplyScene)); // replace this later with sdk method to get an Asset, cache that, then load 
+                StartCoroutine(manager.GetAssetExpressionValue(AssetId, ApplyScene)); // replace this later with sdk method to get an Asset, cache that, then load 
             }
 
         }
