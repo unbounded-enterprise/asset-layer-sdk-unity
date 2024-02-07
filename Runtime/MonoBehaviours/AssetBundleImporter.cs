@@ -79,7 +79,7 @@ namespace AssetLayer.Unity
             }
             else
             {
-                StartCoroutine(manager.GetExpression(AssetId, "AssetBundle", ApplyObj)); // replace this later with sdk method to get an Asset, cache that, then load 
+                StartCoroutine(manager.GetAssetExpressionValue(AssetId, ApplyObj)); // replace this later with sdk method to get an Asset, cache that, then load 
             }
 
         }
