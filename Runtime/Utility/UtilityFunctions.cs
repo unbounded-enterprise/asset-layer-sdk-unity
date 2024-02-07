@@ -142,11 +142,11 @@ namespace AssetLayer.Unity
             return sb.ToString();
         }
 
-        public static string GetExpressionValueAssetBundle(List<ExpressionValue> expressionValues, string expressionName)
+        public static string GetExpressionValueAssetBundle(List<ExpressionValue> expressionValues, string expressionName = null)
         {
             string currentPlatformAttributeName = GetCurrentPlatformExpressionAttribute();
             var expressionValue = expressionValues
-                                 .FirstOrDefault(ev => ev.expression.expressionName == expressionName && ev.expressionAttribute.expressionAttributeName == currentPlatformAttributeName);
+                                 .FirstOrDefault(ev => (string.IsNullOrEmpty(expressionName) || ev.expression.expressionName == expressionName) && ev.expressionAttribute.expressionAttributeName == currentPlatformAttributeName);
             return expressionValue?.value;
         }
 

@@ -381,7 +381,7 @@ namespace AssetLayer.Unity
                         if (asset.LoadedAssetBundle == null)
                         {
                             string bundleUrl = string.IsNullOrEmpty(assetExpressionId)
-                                ? GetExpressionValueAssetBundle(selectedAsset.expressionValues, "AssetBundle")
+                                ? GetExpressionValueAssetBundle(selectedAsset.expressionValues)
                                 : GetExpressionValueByExpressionIdAssetBundle(selectedAsset.expressionValues, assetExpressionId);
 
                             bundleDownloader.DownloadAndLoadBundle(bundleUrl, loadedBundle =>
@@ -610,7 +610,7 @@ namespace AssetLayer.Unity
                 collection.collectionImage,
                 string.IsNullOrEmpty(assetExpressionId)
                 ?
-                    GetExpressionValueAssetBundle(collection.exampleExpressionValues, "AssetBundle")
+                    GetExpressionValueAssetBundle(collection.exampleExpressionValues)
                 :
                     GetExpressionValueByExpressionIdAssetBundle(collection.exampleExpressionValues, assetExpressionId),
                 count,
@@ -648,7 +648,7 @@ namespace AssetLayer.Unity
                 GetExpressionValue(asset.expressionValues, "Menu View"),
                 string.IsNullOrEmpty(assetExpressionId)
                 ?
-                    GetExpressionValueAssetBundle(asset.expressionValues, "AssetBundle")
+                    GetExpressionValueAssetBundle(asset.expressionValues)
                 :
                     GetExpressionValueByExpressionIdAssetBundle(asset.expressionValues, assetExpressionId)
                 ,

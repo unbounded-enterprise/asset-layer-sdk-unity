@@ -72,7 +72,7 @@ namespace AssetLayer.Unity
             {
                 Asset cachedAsset = AssetCacheManager.Instance.GetFromCache(AssetId);
                 string bundleUrl = string.IsNullOrEmpty(bundleExpressionId) ?
-                    UtilityFunctions.GetExpressionValueAssetBundle(cachedAsset.expressionValues, "AssetBundle")
+                    UtilityFunctions.GetExpressionValueAssetBundle(cachedAsset.expressionValues)
                     :
                     UtilityFunctions.GetExpressionValueByExpressionIdAssetBundle(cachedAsset.expressionValues, bundleExpressionId);
                 ApplyObj(bundleUrl);
