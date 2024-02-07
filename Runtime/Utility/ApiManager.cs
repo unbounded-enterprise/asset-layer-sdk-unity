@@ -208,7 +208,7 @@ namespace AssetLayer.Unity
             string currentPlatformAttributeName = UtilityFunctions.GetCurrentPlatformExpressionAttribute();
 
             var expression = assetInfo.expressionValues.FirstOrDefault(
-                e.expressionAttribute.expressionAttributeName == currentPlatformAttributeName);
+                e => e.expressionAttribute.expressionAttributeName == currentPlatformAttributeName);
 
             if (expression != null)
             {
