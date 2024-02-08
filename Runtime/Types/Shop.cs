@@ -26,7 +26,7 @@ namespace AssetLayer.SDK.Shop
             [Preserve]
         #endif
         [DataMember]
-        public long price { get; set; }
+        public long amount { get; set; }
     }
     [DataContract]
     public class ShopItemSummary {
