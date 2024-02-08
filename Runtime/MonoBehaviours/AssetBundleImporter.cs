@@ -1,12 +1,25 @@
+using System;
+using System.Collections;
 using System.IO;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
-using System.Collections;
-using System;
-using UnityEditor;
 
 namespace AssetLayer.Unity
 {
+    public static class AssetBundleRequestExtensions
+    {
+        public static TaskAwaiter<UnityEngine.Object[]> GetAwaiter(this AssetBundleRequest request)
+        {
+            var tcs = new TaskCompletionSource<UnityEngine.Object[]>();
+
+            request.completed += _ => tcs.TrySetResult(request.allAssets);
+
+            return ((Task<UnityEngine.Object[]>)tcs.Task).GetAwaiter();
+        }
+    }
 
     public class AssetBundleImporter : MonoBehaviour
     {
