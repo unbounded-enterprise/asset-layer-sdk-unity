@@ -1,6 +1,6 @@
 {
     "name": "AssetLayer.SDK.Editor",
-    "rootNamespace": "AssetLayer.Unity",
+    "rootNamespace": "",
     "references": [
         "GUID:23dbc3b7d6cd8f74e994ccf5f2684777",
         "GUID:478a2357cc57436488a56e564b08d223"
