@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -20,7 +21,37 @@ using UnityEditor;
 
 namespace AssetLayer.Unity
 {
+    public static class UnityWebRequestExtensions
+    {
+        public static TaskAwaiter<UnityWebRequest.Result> GetAwaiter(this UnityWebRequestAsyncOperation asyncOp)
+        {
+            var tcs = new TaskCompletionSource<UnityWebRequest.Result>();
 
+            asyncOp.completed += _ => 
+            {
+                switch (asyncOp.webRequest.result)
+                {
+                    case UnityWebRequest.Result.Success:
+                        tcs.TrySetResult(UnityWebRequest.Result.Success);
+                        break;
+                    case UnityWebRequest.Result.ConnectionError:
+                        tcs.TrySetResult(UnityWebRequest.Result.ConnectionError);
+                        break;
+                    case UnityWebRequest.Result.DataProcessingError:
+                        tcs.TrySetResult(UnityWebRequest.Result.DataProcessingError);
+                        break;
+                    case UnityWebRequest.Result.ProtocolError:
+                        tcs.TrySetResult(UnityWebRequest.Result.ProtocolError);
+                        break;
+                    default:
+                        tcs.TrySetException(new Exception("Unhandled UnityWebRequest result"));
+                        break;
+                }
+            };
+
+            return tcs.Task.GetAwaiter();
+        }
+    }
 
     public class ApiManager
     {
