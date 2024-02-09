@@ -80,7 +80,10 @@ namespace AssetLayer.Unity
             }
             isFinished = false;
             manager = new ApiManager(); // Assuming this is your class for managing API calls
-
+            if (string.IsNullOrEmpty(manager.APP_SECRET))
+            {
+                return;
+            }
             if (slotIds == null)
             {
                 slotIds = await manager.GetAppSlots();
@@ -132,7 +135,7 @@ namespace AssetLayer.Unity
             }
             else
             {
-                Debug.LogError("Failed to load slot IDs from AssetLayer");
+                Debug.Log("Failed to load slot IDs from AssetLayer");
             }
 
             isFinished = true;

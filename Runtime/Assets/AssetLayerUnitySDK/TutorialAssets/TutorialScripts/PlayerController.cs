@@ -306,9 +306,9 @@ namespace AssetLayer.Unity
 
             float colliderRadius = playerCollider.radius;
             Vector3 position = transform.position;
-            float extraHeight = 0.000001f; // Add extra height to the check
+            float extraHeight = 0.01f; // Add extra height to the check
 
-            bool isGrounded = Physics.CheckSphere(position, colliderRadius, groundLayer);
+            bool isGrounded = Physics.CheckSphere(position, colliderRadius+extraHeight, groundLayer);
             return isGrounded;
         }
 

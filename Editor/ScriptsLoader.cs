@@ -62,6 +62,10 @@ namespace AssetLayer.Unity
         private static async Task<List<ScriptObject>> FetchScriptPaths()
         {
             ApiManager api = new ApiManager();
+            if (string.IsNullOrEmpty(api.APP_SECRET))
+            {
+                return null;
+            }
             string[] appslots = await api.GetAppSlots();
             if (appslots == null)
             {
