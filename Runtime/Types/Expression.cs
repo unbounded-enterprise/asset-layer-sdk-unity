@@ -69,6 +69,11 @@ namespace AssetLayer.SDK.Expressions
         #endif
         [DataMember]
         public ExpressionInfo expression { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public EVExpressionType expressionType { get; set; }
     }
 
     [DataContract]
@@ -87,6 +92,24 @@ namespace AssetLayer.SDK.Expressions
         #endif
         [DataMember]
         public string expressionName { get; set; }
+    }
+
+    [DataContract]
+    public class EVExpressionType {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public EVExpressionType() { }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string expressionTypeId { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string expressionTypeName { get; set; }
     }
 
     [DataContract]

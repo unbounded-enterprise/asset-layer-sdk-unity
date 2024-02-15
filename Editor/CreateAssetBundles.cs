@@ -7,13 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
+using PimDeWitte.UnityMainThreadDispatcher;
 
 namespace AssetLayer.Unity
 {
 
     public class CreateAssetBundlesFromSelection : EditorWindow
     {
-        
         [MenuItem("Assets/Asset Layer/Create New Collection")]
 
         static void ShowWindow()
@@ -24,7 +24,6 @@ namespace AssetLayer.Unity
             editorWin.minSize = new Vector2(978, 744);
             editorWin.maxSize = editorWin.minSize;
         }
-    
         [SerializeField]
         private VisualTreeAsset visualTreeAsset = default;
 
@@ -60,6 +59,24 @@ namespace AssetLayer.Unity
 
         private bool isCreatingCollection = false;
 
+        private int selectedSlotIndex = 0;
+        private int selectedExpressionIndex = 0;
+        private string[] expressionOptions = new string[] { };
+
+        private List<string> expressionIds;        // Stores loaded expression IDs
+        private List<string> expressionNames;      // Stores display names for expression popup
+        private int expressionIndex = 0;           // Currently selected index in the expression popup
+        private bool isLoadingExpressions = false;
+
+
+#if UNITY_2021
+
+
+        private Task<List<string>> loadExpressionsTask;
+
+        string previousSlotId;
+        bool expressionInititialized = false;
+#endif
         void OnEnable()
         {
             FetchSlotNames();
@@ -85,6 +102,20 @@ namespace AssetLayer.Unity
                 // Update the dropdown after the async operation
                 EditorApplication.QueuePlayerLoopUpdate();
                 EditorApplication.delayCall += UpdateDropdownWithSlotNames;
+#if UNITY_2021
+                try
+                {
+                    if (!string.IsNullOrEmpty(slotIds[0])) {
+                        isLoadingExpressions = true;
+                        await LoadExpressionsForSlotAsync(slotIds[0]);
+                        isLoadingExpressions = false;
+                    }
+                    
+                } catch(Exception ex)
+                {
+                    Debug.Log("error laoding expression for slot:  " + ex.Message);
+                }
+#endif
             }
         }
 
@@ -113,7 +144,6 @@ namespace AssetLayer.Unity
                     dropdownField.value = slotNames[0];
                 }
             }
-            
         }
 
 
@@ -128,8 +158,58 @@ namespace AssetLayer.Unity
             }
         }
 
+        private async Task<List<string>> LoadExpressionsForSlotAsync(string slotId)
+        {
+            if (string.IsNullOrEmpty(slotId))
+            {
+                return expressionIds;
+            }
+            expressionIds = new List<string>();
+            expressionNames = new List<string>();
+            try
+            {
+                isLoadingExpressions = true;
+                ApiManager manager = new ApiManager();
+                List<SDK.Expressions.Expression> expressions = await manager.GetAssetExpressions(slotId); // Assuming slotId is passed as a string
+
+                // Add an option for creating a new expression
+                expressions.Add(new SDK.Expressions.Expression { expressionName = "Create New Expression", expressionId = null });
+
+                foreach (var expression in expressions)
+                {
+                    expressionIds.Add(expression.expressionId);
+                    expressionNames.Add(expression.expressionName);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.Log($"Failure reading expression Ids of slot: {ex.Message}");
+                isLoadingExpressions = false;
+            }
+            isLoadingExpressions = false;
+            return expressionIds;
+        }
+
         void CreateGUI()
         {
+#if UNITY_2021
+            return;
+#endif
+            // Check if visualTreeAsset is null and load it manually if necessary
+            if (visualTreeAsset == null)
+            {
+                visualTreeAsset = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/com.assetlayer.sdk.unity/Editor/UI/CreateCollection/CreateCollection.uxml");
+            }
+            // Repeat for other VisualTreeAssets as necessary
+            if (successTree == null)
+            {
+                successTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Packages/com.assetlayer.sdk.unity/Editor/UI/CreateCollection/CreateCollectionSuccess.uxml");
+            }
+            if (visualTreeAsset == null)
+            {
+                Debug.Log("ui not found, please use unity 2022 or newer");
+                return;
+            }
             ApiManager manager = new ApiManager();
             if (string.IsNullOrEmpty(manager.DID_TOKEN))
             {
@@ -163,13 +243,13 @@ namespace AssetLayer.Unity
             expressionDropdown.choices = new List<string> { "Create New Expression" };
             expressionDropdown.value = "Create New Expression";
             slotIdDropdown.RegisterValueChangedCallback(evt => {
-                    slotIndex = slotIdDropdown.index;
-                    if (slotIds != null && slotIds.Length > 0)
-                    {
-                        slotId = slotIds[slotIndex];
-                        UpdateExpressionDropdown(expressionDropdown, slotId);
-                    }
-                });
+                slotIndex = slotIdDropdown.index;
+                if (slotIds != null && slotIds.Length > 0)
+                {
+                    slotId = slotIds[slotIndex];
+                    UpdateExpressionDropdown(expressionDropdown, slotId);
+                }
+            });
 
             // Set up the ObjectField for Texture2D
             var textureField = root.Q<ObjectField>("TextureSelector");
@@ -216,8 +296,6 @@ namespace AssetLayer.Unity
                     noMax = false;
                 }
             });
-
-            
 
             // Setup submit button
             var submitButton = root.Q<Button>("SubmitButton");
@@ -348,8 +426,7 @@ namespace AssetLayer.Unity
             var linkButton3 = creatorRoot.Q<Button>("UnityCollectionCreationGuide");
             linkButton3.clickable.clicked += () => Application.OpenURL("https://docs.assetlayer.com/create-assets/create-assets-without-code/submit-a-collection-for-a-3rd-party-app-coming-soon");
         }
-
-
+#if UNITY_2021
         /* void OnGUI()
         {
             if (isCreatingCollection || !string.IsNullOrEmpty(successMessage))
@@ -367,26 +444,137 @@ namespace AssetLayer.Unity
             {
                 GUILayout.Label("Create Asset Bundle", EditorStyles.boldLabel);
 
-                if (slotNames != null) // Change from slotIds to slotNames
+                if (slotNames != null)
                 {
-                    slotIndex = EditorGUILayout.Popup("Slot Name", slotIndex, slotNames);
-                    slotId = slotIds[slotIndex];
+                    int newSlotIndex = EditorGUILayout.Popup("Slot Name", slotIndex, slotNames);
+                    if (newSlotIndex != slotIndex || !expressionInititialized)
+                    {
+
+                        slotIndex = newSlotIndex;
+                        slotId = slotIds[slotIndex];
+
+                        if (slotId != previousSlotId)
+                        {
+                            StartLoadExpressionsForSlot(slotId);
+                            previousSlotId = slotId;
+                        }
+                    }
+
+                    if (isLoadingExpressions && loadExpressionsTask != null && loadExpressionsTask.IsCompleted)
+                    {
+                        expressionNames = expressionNames ?? new List<string>();
+                        expressionIds = expressionIds ?? new List<string>();
+                        expressionNames.Add("Create New Expression");
+                        expressionIds.Add("Create New Expression");
+                        isLoadingExpressions = false;
+                    }
+                }
+                string[] expressionArray = expressionNames != null ? expressionNames.ToArray() : new string[] { "Create New Expression" } ;
+                // Expression Popup:
+                expressionIndex = EditorGUILayout.Popup("Expression", expressionIndex, expressionArray); // No options needed here
+
+                if (expressionIndex == 0)
+                {
+                    expressionId = null;
+                }
+                else
+                {
+                    expressionId = expressionIds[expressionIndex - 1]; // Adjust for the inserted option
                 }
 
                 collectionName = EditorGUILayout.TextField("Collection Name", collectionName);
-                maximum = EditorGUILayout.IntField("Max�mum", maximum.Value);
-                mintImmediately = EditorGUILayout.IntField("Mint Immediately", mintImmediately);
-
+                maximum = EditorGUILayout.IntField("Max Supply", maximum.Value);
                 image = (Texture2D)EditorGUILayout.ObjectField("Image", image, typeof(Texture2D), false);
 
                 if (GUILayout.Button("Create Bundle"))
                 {
                     isCreatingCollection = true;
-                    EnsureAssetBundleDatabaseExists();
-                    CreateBundleFromSelection(slotId, maximum.Value, collectionName);
+                    CreateBundleFromSelection(slotId, maximum.Value, collectionName, expressionId);
                 }
             }
         } */
+
+        void OnGUI()
+        {
+            if (isCreatingCollection || !string.IsNullOrEmpty(successMessage))
+            {
+                if (!string.IsNullOrEmpty(successMessage))
+                {
+                    GUILayout.Label(successMessage, EditorStyles.boldLabel);
+                    if (GUILayout.Button("Close"))
+                    {
+                        this.Close();
+                    }
+                }
+            }
+            else
+            {
+                GUILayout.Label("Create Asset Bundle", EditorStyles.boldLabel);
+
+                if (slotNames != null)
+                {
+                    int newSlotIndex = EditorGUILayout.Popup("Slot Name", slotIndex, slotNames);
+                    if (newSlotIndex != slotIndex || !expressionInititialized)
+                    {
+                        slotIndex = newSlotIndex;
+                        slotId = slotIds[slotIndex];
+
+                        if (slotId != previousSlotId)
+                        {
+                            StartLoadExpressionsForSlot(slotId);
+                            previousSlotId = slotId;
+                        }
+                    }
+
+                    // This section might update automatically if isLoadingExpressions flag is handled correctly
+                    if (!isLoadingExpressions && expressionNames != null && expressionIds != null)
+                    {
+                        string[] expressionArray = expressionNames.ToArray();
+                        expressionIndex = EditorGUILayout.Popup("Expression Id", expressionIndex, expressionArray);
+
+                        if (expressionIndex == expressionIds.Count -1)
+                        {
+                            expressionId = null;
+                        }
+                        else
+                        {
+                            expressionId = expressionIds[expressionIndex]; // Adjust for the inserted option
+                        }
+                    }
+                }
+
+                collectionName = EditorGUILayout.TextField("Collection Name", collectionName);
+                maximum = EditorGUILayout.IntField("Max Supply", maximum.Value);
+                noMax = EditorGUILayout.Toggle("No Max", noMax);
+                mintImmediately = EditorGUILayout.IntField("Mint Immediately", mintImmediately);
+                image = (Texture2D)EditorGUILayout.ObjectField("Image", image, typeof(Texture2D), false);
+                
+
+                if (GUILayout.Button("Create Bundle"))
+                {
+                    isCreatingCollection = true;
+                    CreateBundleFromSelection(slotId, maximum.Value, collectionName, expressionId);
+                }
+            }
+        }
+
+        /* private void StartLoadExpressionsForSlot(string slotId)
+        {
+            isLoadingExpressions = true;
+            expressionInititialized = true;
+            loadExpressionsTask = Task.Run(() => LoadExpressionsForSlotAsync(slotId));
+        } */
+
+        private void StartLoadExpressionsForSlot(string slotId)
+        {
+            isLoadingExpressions = true;
+            expressionInititialized = true;
+            expressionNames = expressionNames ?? new List<string>();
+            expressionIds = expressionIds ?? new List<string>();
+            LoadExpressionsForSlotAsync(slotId);
+        }
+#endif
+
 
         BuildTarget GetBuildTarget(BuildPlatform platform)
         {
@@ -592,7 +780,6 @@ namespace AssetLayer.Unity
                     }
                 }
                 Debug.Log("Collection created successfully!");
-                
                 if (string.IsNullOrEmpty(expressionId))
                 {
                     // If no existing expression found, create a new one
@@ -633,7 +820,6 @@ namespace AssetLayer.Unity
                         Debug.Log("unity package saving failed: " + e.Message);
                     }
                 }
-                
 
 
                 string menuViewExpressionId = await sdkInstance.GetMenuViewExpression(slotId);
@@ -647,7 +833,6 @@ namespace AssetLayer.Unity
                 {
                     mintSuccess = await sdkInstance.Mint(collectionId, mintImmediately);
                 }
-              
                 if (mintSuccess)
                 {
                     successMessage = "Collection and AssetBundle created and uploaded successfully!";
@@ -670,9 +855,6 @@ namespace AssetLayer.Unity
 
             // Refresh the AssetDatabase after removing the asset bundle names.
             AssetDatabase.Refresh();
-
-            
-            
         }
 
 

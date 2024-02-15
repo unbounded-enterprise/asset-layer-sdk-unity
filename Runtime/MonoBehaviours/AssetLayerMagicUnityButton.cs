@@ -73,7 +73,7 @@ namespace AssetLayer.Unity
         {
             Debug.Log("Should open browser");
 #if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_EDITOR
-            Application.OpenURL("https://rolltopia.games/logindesktop");
+            Application.OpenURL(AppConfig.Instance.AssetLayerLoginUrl);
 #endif
         }
 

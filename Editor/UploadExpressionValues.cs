@@ -45,8 +45,38 @@ namespace AssetLayer.Unity
             editorWin.minSize = new Vector2(778, 444);
             editorWin.maxSize = editorWin.minSize;
 
-            
+
         }
+#if UNITY_2021
+        /* 
+        void OnGUI()
+        {
+            if (isUploadingExpression || !string.IsNullOrEmpty(successMessage))
+            {
+                if (!string.IsNullOrEmpty(successMessage))
+                {
+                    GUILayout.Label(successMessage, EditorStyles.boldLabel);
+                    if (GUILayout.Button("Close"))
+                    {
+                        this.Close();
+                    }
+                }
+            }
+            else
+            {
+                GUILayout.Label("Upload Expression Values", EditorStyles.boldLabel);
+                collectionId = EditorGUILayout.TextField("Collection ID", collectionId);
+                expressionId = EditorGUILayout.TextField("Expression ID", expressionId);
+                image = (Texture2D)EditorGUILayout.ObjectField("Image", image, typeof(Texture2D), false);
+
+                if (GUILayout.Button("Submit"))
+                {
+                    isUploadingExpression = true;
+                    CreateBundleAndUploadExpression(collectionId, expressionId);
+                }
+            }
+        } */
+#endif
 
         void ShowLoginPromptUI()
         {
@@ -117,7 +147,9 @@ namespace AssetLayer.Unity
 
         public void CreateGUI()
         {
-
+#if UNITY_2021
+            return;
+#endif
             ApiManager manager = new ApiManager();
             if (string.IsNullOrEmpty(manager.DID_TOKEN))
             {
@@ -167,7 +199,6 @@ namespace AssetLayer.Unity
             await CreateBundleAndUploadExpression(collectionId.Trim(), expressionId.Trim());
 
             isUploadingExpression = false;
-          
 
             if (true)
             {
@@ -182,10 +213,10 @@ namespace AssetLayer.Unity
 
         }
 
-
+#if UNITY_2021
         void OnGUI()
         {
-            /* GUI.skin = this.AssetLayerGUISkin;
+            // GUI.skin = this.AssetLayerGUISkin;
             if (isUploadingExpression || !string.IsNullOrEmpty(successMessage))
             {
                 if (!string.IsNullOrEmpty(successMessage))
@@ -237,23 +268,17 @@ namespace AssetLayer.Unity
                 {
                     expressionId = "Enter Expression ID";
                 }
-                GUILayout.BeginHorizontal();
-                Rect windowRect = new Rect(0, 0, 1000, 1000);
 
-                GUILayout.BeginArea(windowRect);
-                
-                GUILayout.FlexibleSpace();
-                if (GUILayout.Button("Submit", GUILayout.Width(150), GUILayout.Height(34)))
+
+                if (GUILayout.Button("Submit"))
                 {
                     isUploadingExpression = true;
+                    CreateBundleAndUploadExpression(collectionId, expressionId);
                 }
-                GUILayout.FlexibleSpace();
-                // Your GUI code here
-                GUILayout.EndArea();
-                GUILayout.EndHorizontal();
-               
-            } */ 
+
+            }
         }
+#endif
 
 
         async Task CreateBundleAndUploadExpression(string collectionId, string expressionId = "")
