@@ -21,12 +21,8 @@ namespace AssetLayer.Unity
     public class Inventory : MonoBehaviour
     {
         public string menuName;
-        public bool selectFunctionality;
-        public bool giftFunctionality;
-        public bool list;
         public bool closeOnSelection = true;
 
-        public string detailExpressionId;
         public bool displayAll = false;
 
         public bool autoSelect = true;
