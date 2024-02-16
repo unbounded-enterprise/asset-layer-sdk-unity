@@ -19,7 +19,6 @@ namespace AssetLayer.Unity
         public bool loginReady = false;
 #if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_EDITOR
         private HttpServer httpServer;
-        public string encryptionKey = "1234567812345678"; // should match the encryption key of your web login implmentation
 
 
         void Start()
@@ -110,55 +109,31 @@ namespace AssetLayer.Unity
         }
         public void HandleLoginReceived(HttpListenerContext context)
         {
-            string encryptedToken = "";
+            string didToken = "";
             // Read query parameters
             try
             {
-                encryptedToken = context.Request.QueryString["token"];
+                didToken = context.Request.QueryString["token"];
             }
             catch (Exception ex)
             {
                 Debug.Log(ex.ToString());
                 return;
             }
+            string responseText = "Message received";
 
-
-            // Initialize decryption key and IV - make sure this matches what you used in JS
-            string key = encryptionKey;
-            string iv = encryptionKey;
-            string decryptedToken;
-            using (Aes aesAlg = Aes.Create())
-            {
-                aesAlg.Key = Encoding.UTF8.GetBytes(key);
-                aesAlg.IV = Encoding.UTF8.GetBytes(iv);
-
-                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
-
-                using (MemoryStream msDecrypt = new MemoryStream(Convert.FromBase64String(encryptedToken)))
-                {
-                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
-                    {
-                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
-                        {
-                            decryptedToken = srDecrypt.ReadToEnd();
-                        }
-                    }
-                }
-            }
-
-            // Create the response string based on the decrypted token
-            string responseText = "Hello from MonoBehaviour. Your decrypted token is: " + decryptedToken;
             try
             {
+                
                 var buffer = System.Text.Encoding.UTF8.GetBytes(responseText);
 
                 var response = context.Response;
                 response.ContentType = "text/plain";
                 response.ContentLength64 = buffer.Length;
 
-                if (decryptedToken != null)
+                if (didToken != null)
                 {
-                    UnityMainThreadDispatcher.Instance().Enqueue(() => SetDIDToken(decryptedToken));
+                    UnityMainThreadDispatcher.Instance().Enqueue(() => SetDIDToken(didToken));
                 }
                 else
                 {
