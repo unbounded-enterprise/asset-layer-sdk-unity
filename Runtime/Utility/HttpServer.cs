@@ -81,9 +81,23 @@ namespace AssetLayer.Unity {
 
         private void ProcessRequest(HttpListenerContext context)
         {
-            Debug.Log("Request received ");
+            Debug.Log("Request received");
+            // Add CORS headers
+            context.Response.Headers.Add("Access-Control-Allow-Origin", "*"); // Allow all origins
+            context.Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+            context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type, Authorization");
+            
+            // Check for preflight request
+            if (context.Request.HttpMethod == "OPTIONS")
+            {
+                context.Response.StatusCode = 204; // No Content
+                context.Response.Close();
+                return;
+            }
+
             onRequestReceived?.Invoke(context);
         }
+
         public void Stop()
         {
             Debug.Log("stopping login server");
