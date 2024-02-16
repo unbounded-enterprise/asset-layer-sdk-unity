@@ -19,6 +19,7 @@ namespace AssetLayer.Unity
         public bool loginReady = false;
 #if UNITY_STANDALONE_WIN || UNITY_STANDALONE_OSX || UNITY_EDITOR
         private HttpServer httpServer;
+        public string encryptionKey = "1234567812345678"; // should match the encryption key of your web login implmentation
 
 
         void Start()
@@ -123,8 +124,8 @@ namespace AssetLayer.Unity
 
 
             // Initialize decryption key and IV - make sure this matches what you used in JS
-            string key = "1234567812345678";
-            string iv = "1234567812345678";
+            string key = encryptionKey;
+            string iv = encryptionKey;
             string decryptedToken;
             using (Aes aesAlg = Aes.Create())
             {
