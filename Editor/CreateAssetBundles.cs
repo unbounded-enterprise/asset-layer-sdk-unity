@@ -138,6 +138,7 @@ namespace AssetLayer.Unity
             var dropdownField = rootVisualElement.Q<DropdownField>("SlotIdDropdown");
             if (dropdownField != null)
             {
+                dropdownField.choices.Clear();
                 dropdownField.choices = new List<string>(slotNames);
                 if (slotNames.Length > 0)
                 {
@@ -317,12 +318,22 @@ namespace AssetLayer.Unity
 
         async void UpdateExpressionDropdown(DropdownField expressionDropdown, string selectedSlotId)
         {
+
+            if (expressionDropdown == null)
+            {
+                return;
+            }
             List<SDK.Expressions.Expression> expressions;
             Dictionary<string, string> expressionNameToIdMap = new Dictionary<string, string>();
             try
             {
                 ApiManager manager = new ApiManager();
                 expressions = await manager.GetAssetExpressions(selectedSlotId);
+
+                if (expressions == null)
+                {
+                    expressions = new List<SDK.Expressions.Expression>(); // Initialize it to prevent null reference
+                }
 
                 // Add an option for creating a new expression
                 expressions.Add(new SDK.Expressions.Expression { expressionName = "Create New Expression", expressionId = null });
@@ -331,8 +342,11 @@ namespace AssetLayer.Unity
                 List<string> expressionNames = new List<string>();
                 foreach (var expression in expressions)
                 {
-                    expressionNames.Add(expression.expressionName);
-                    expressionNameToIdMap[expression.expressionName] = expression.expressionId;
+                    if (expression != null)
+                    {
+                        expressionNames.Add(expression.expressionName);
+                        expressionNameToIdMap[expression.expressionName] = expression.expressionId;
+                    }
                 }
 
                 // Update the dropdown with expression names
@@ -340,7 +354,7 @@ namespace AssetLayer.Unity
                 expressionDropdown.value = expressionNames.FirstOrDefault(); // Set the first item as selected by default
 
                 // Set the initial expressionId
-                if (expressionNameToIdMap.ContainsKey(expressionDropdown.value))
+                if (expressionDropdown.value != null && expressionNameToIdMap.ContainsKey(expressionDropdown.value))
                 {
                     expressionId = expressionNameToIdMap[expressionDropdown.value];
                 }
@@ -353,7 +367,7 @@ namespace AssetLayer.Unity
             // Update the expressionId when a new expression is selected from the dropdown
             expressionDropdown.RegisterValueChangedCallback(evt =>
             {
-                if (expressionNameToIdMap.TryGetValue(evt.newValue, out var id))
+                if (evt.newValue != null && expressionNameToIdMap.TryGetValue(evt.newValue, out var id))
                 {
                     expressionId = id; // Update the expressionId with the ID corresponding to the selected name
                 }
