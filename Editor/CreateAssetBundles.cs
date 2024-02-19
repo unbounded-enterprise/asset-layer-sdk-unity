@@ -166,25 +166,34 @@ namespace AssetLayer.Unity
             }
             expressionIds = new List<string>();
             expressionNames = new List<string>();
+            List<SDK.Expressions.Expression> expressions = new List<SDK.Expressions.Expression>();
             try
             {
                 isLoadingExpressions = true;
                 ApiManager manager = new ApiManager();
-                List<SDK.Expressions.Expression> expressions = await manager.GetAssetExpressions(slotId); // Assuming slotId is passed as a string
-
-                // Add an option for creating a new expression
-                expressions.Add(new SDK.Expressions.Expression { expressionName = "Create New Expression", expressionId = null });
-
-                foreach (var expression in expressions)
+                expressions = await manager.GetAssetExpressions(slotId); // Assuming slotId is passed as a string
+                if (expressions == null)
                 {
-                    expressionIds.Add(expression.expressionId);
-                    expressionNames.Add(expression.expressionName);
+                    expressions = new List<SDK.Expressions.Expression>();
                 }
+                
             }
             catch (Exception ex)
             {
                 Debug.Log($"Failure reading expression Ids of slot: {ex.Message}");
-                isLoadingExpressions = false;
+                if (expressions == null)
+                {
+                    expressions = new List<SDK.Expressions.Expression>();
+                }
+            }
+
+            // Add an option for creating a new expression
+            expressions.Add(new SDK.Expressions.Expression { expressionName = "Create New Expression", expressionId = null });
+
+            foreach (var expression in expressions)
+            {
+                expressionIds.Add(expression.expressionId);
+                expressionNames.Add(expression.expressionName);
             }
             isLoadingExpressions = false;
             return expressionIds;
@@ -427,72 +436,6 @@ namespace AssetLayer.Unity
             linkButton3.clickable.clicked += () => Application.OpenURL("https://docs.assetlayer.com/create-assets/create-assets-without-code/submit-a-collection-for-a-3rd-party-app-coming-soon");
         }
 #if UNITY_2021
-        /* void OnGUI()
-        {
-            if (isCreatingCollection || !string.IsNullOrEmpty(successMessage))
-            {
-                if (!string.IsNullOrEmpty(successMessage))
-                {
-                    GUILayout.Label(successMessage, EditorStyles.boldLabel);
-                    if (GUILayout.Button("Close"))
-                    {
-                        this.Close();
-                    }
-                }
-            }
-            else
-            {
-                GUILayout.Label("Create Asset Bundle", EditorStyles.boldLabel);
-
-                if (slotNames != null)
-                {
-                    int newSlotIndex = EditorGUILayout.Popup("Slot Name", slotIndex, slotNames);
-                    if (newSlotIndex != slotIndex || !expressionInititialized)
-                    {
-
-                        slotIndex = newSlotIndex;
-                        slotId = slotIds[slotIndex];
-
-                        if (slotId != previousSlotId)
-                        {
-                            StartLoadExpressionsForSlot(slotId);
-                            previousSlotId = slotId;
-                        }
-                    }
-
-                    if (isLoadingExpressions && loadExpressionsTask != null && loadExpressionsTask.IsCompleted)
-                    {
-                        expressionNames = expressionNames ?? new List<string>();
-                        expressionIds = expressionIds ?? new List<string>();
-                        expressionNames.Add("Create New Expression");
-                        expressionIds.Add("Create New Expression");
-                        isLoadingExpressions = false;
-                    }
-                }
-                string[] expressionArray = expressionNames != null ? expressionNames.ToArray() : new string[] { "Create New Expression" } ;
-                // Expression Popup:
-                expressionIndex = EditorGUILayout.Popup("Expression", expressionIndex, expressionArray); // No options needed here
-
-                if (expressionIndex == 0)
-                {
-                    expressionId = null;
-                }
-                else
-                {
-                    expressionId = expressionIds[expressionIndex - 1]; // Adjust for the inserted option
-                }
-
-                collectionName = EditorGUILayout.TextField("Collection Name", collectionName);
-                maximum = EditorGUILayout.IntField("Max Supply", maximum.Value);
-                image = (Texture2D)EditorGUILayout.ObjectField("Image", image, typeof(Texture2D), false);
-
-                if (GUILayout.Button("Create Bundle"))
-                {
-                    isCreatingCollection = true;
-                    CreateBundleFromSelection(slotId, maximum.Value, collectionName, expressionId);
-                }
-            }
-        } */
 
         void OnGUI()
         {
@@ -527,7 +470,7 @@ namespace AssetLayer.Unity
                     }
 
                     // This section might update automatically if isLoadingExpressions flag is handled correctly
-                    if (!isLoadingExpressions && expressionNames != null && expressionIds != null)
+                    if (!isLoadingExpressions && expressionNames != null && expressionIds != null && expressionIds.Count > 0)
                     {
                         string[] expressionArray = expressionNames.ToArray();
                         expressionIndex = EditorGUILayout.Popup("Expression Id", expressionIndex, expressionArray);

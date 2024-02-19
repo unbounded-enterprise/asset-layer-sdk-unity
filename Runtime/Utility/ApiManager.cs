@@ -744,7 +744,7 @@ namespace AssetLayer.Unity
                 }
             }
 
-            Debug.LogError("No AssetBundle expression found");
+            Debug.Log("No AssetBundle expression found");
             return null;
         }
 
