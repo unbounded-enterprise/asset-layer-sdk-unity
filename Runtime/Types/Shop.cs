@@ -11,6 +11,24 @@ using AssetLayer.SDK.Basic;
 namespace AssetLayer.SDK.Shop 
 {
     [DataContract]
+    public class ShopPrice {
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        public ShopPrice() { }
+
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string currencyId { get; set; }
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public long amount { get; set; }
+    }
+    [DataContract]
     public class ShopItemSummary {
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]

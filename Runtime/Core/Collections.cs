@@ -43,6 +43,12 @@ namespace AssetLayer.SDK.Core.Collections
             return (await this.Raw.ActivateCollection(props, headers)).updated; }
         public async Task<bool> DeactivateCollection(ActivateCollectionProps props, Dictionary<string, string> headers = null) {
             return (await this.Raw.DeactivateCollection(props, headers)).updated; }
+        public async Task<CreateCollectionSubmissionResponseBody> CreateCollectionSubmission(CreateCollectionSubmissionProps props, Dictionary<string, string> headers = null) {
+            return (await this.Raw.CreateCollectionSubmission(props, headers)).body; }
+        public async Task<bool> UpdateCollectionSubmission(UpdateCollectionSubmissionProps props, Dictionary<string, string> headers = null) {
+            return (await this.Raw.UpdateCollectionSubmission(props, headers)).success; }
+        public async Task<bool> CollectionSubmissionRequest(CollectionSubmissionRequestProps props, Dictionary<string, string> headers = null) {
+            return (await this.Raw.CollectionSubmissionRequest(props, headers)).success; }
 
         public CollectionsRawHandlers Raw = new CollectionsRawHandlers {
             Info = async (props, headers) => await _this.Request<GetCollectionsResponse>("/collection/info" + AssetLayerUtils.PropsToQueryString(props), "GET", null, headers),
@@ -60,6 +66,9 @@ namespace AssetLayer.SDK.Core.Collections
             UpdateDefaultProperties = async (props, headers) => await _this.Request<BasicSuccessResponse>("/collection/defaultProperties", "PUT", props, headers),
             ActivateCollection = async (props, headers) => await _this.Request<BasicUpdatedResponse>("/collection/activate", "PUT", props, headers),
             DeactivateCollection = async (props, headers) => await _this.Request<BasicUpdatedResponse>("/collection/deactivate", "PUT", props, headers),
+            CreateCollectionSubmission = async (props, headers) => await _this.Request<CreateCollectionSubmissionResponse>("/collection/submission/new", "POST", props, headers),
+            UpdateCollectionSubmission = async (props, headers) => await _this.Request<BasicSuccessResponse>("/collection/submission/update", "PUT", props, headers),
+            CollectionSubmissionRequest = async (props, headers) => await _this.Request<BasicSuccessResponse>("/collection/submission/request", "POST", props, headers),
         };
 
         public CollectionsSafeHandlers Safe = new CollectionsSafeHandlers {
@@ -98,7 +107,16 @@ namespace AssetLayer.SDK.Core.Collections
                 catch (BasicError e) { return new BasicResult<bool> { Error = e }; } },
             DeactivateCollection = async (props, headers) => {
                 try { return new BasicResult<bool> { Result = await _this.DeactivateCollection(props, headers) }; }
-                catch (BasicError e) { return new BasicResult<bool> { Error = e }; } }
+                catch (BasicError e) { return new BasicResult<bool> { Error = e }; } },
+            CreateCollectionSubmission = async (props, headers) => {
+                try { return new BasicResult<CreateCollectionSubmissionResponseBody> { Result = await _this.CreateCollectionSubmission(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<CreateCollectionSubmissionResponseBody> { Error = e }; } },
+            UpdateCollectionSubmission = async (props, headers) => {
+                try { return new BasicResult<bool> { Result = await _this.UpdateCollectionSubmission(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<bool> { Error = e }; } },
+            CollectionSubmissionRequest = async (props, headers) => {
+                try { return new BasicResult<bool> { Result = await _this.CollectionSubmissionRequest(props, headers) }; }
+                catch (BasicError e) { return new BasicResult<bool> { Error = e }; } },
         };
     }
 }

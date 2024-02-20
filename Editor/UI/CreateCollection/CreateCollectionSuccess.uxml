@@ -1,0 +1,18 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Packages/Editor/UI/CreateCollection/CreateCollectionStyles.uss?fileID=7433441132597879392&amp;guid=4491718154f3f35419bcb5b4325079e0&amp;type=3#CreateCollectionStyles" />
+    <ui:VisualElement class="main-container">
+        <ui:VisualElement class="content-container">
+            <ui:Label text="Collection Creation Successfull!" class="heading header" />
+            <ui:Label text="A new collection has been created with your Asset uploaded to the appropriate Expression." class="description-label" />
+            <ui:VisualElement class="section">
+                <ui:Label text="You will be able to find it within the " class="description-label" />
+                <ui:Button name="AssetLayerApp" text="Asset Layer App" class="link-button" />
+            </ui:VisualElement>
+            <ui:VisualElement class="form-field section">
+                <ui:Label text="Need help? Check out our " class="description-label" />
+                <ui:Button name="UnityCollectionCreationGuide" text="Unity Collection Creation Guide." class="link-button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Button text="Close" name="CloseButton" class="submit-button" />
+    </ui:VisualElement>
+</ui:UXML>

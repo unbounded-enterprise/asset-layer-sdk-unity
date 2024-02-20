@@ -1,0 +1,47 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Packages/Editor/UI/CreateCollection/CreateCollectionStyles.uss?fileID=7433441132597879392&amp;guid=4491718154f3f35419bcb5b4325079e0&amp;type=3#CreateCollectionStyles" />
+    <ui:VisualElement class="main-container">
+        <ui:Label text="Upload Expression Assets" class="header" />
+        <ui:VisualElement class="section" style="flex-grow: 1;">
+            <ui:Label text="Collection Name:" name="Label" class="sub-header" />
+        </ui:VisualElement>
+        <ui:TextField name="CollectionNameInput" placeholder-text="Your Collection Name" class="input-field" />
+        <ui:VisualElement class="section">
+            <ui:Label text="Select Slot:" class="sub-header" />
+            <ui:Label text="Used to identify the slot for your collection, can be found via " class="normalText" />
+            <ui:Button name="AppSettingsButton" text="App Settings" class="text-button" />
+        </ui:VisualElement>
+        <ui:DropdownField name="SlotIdDropdown" class="dropdown" />
+        <ui:VisualElement class="section">
+            <ui:Label text="Select Expression:" class="sub-header" />
+            <ui:Label text="Used to identify the expression you are uploading assets for." class="normalText" />
+        </ui:VisualElement>
+        <ui:DropdownField name="ExpressionDropdown" class="dropdown" />
+        <ui:VisualElement name="VisualElement" class="section">
+            <ui:Label text="Max Supply:" class="sub-header" />
+            <ui:Label text="What is the maximum number of assets in your collection:" class="normalText" />
+        </ui:VisualElement>
+        <ui:IntegerField value="0" name="MaxSupplyInput" class="input-field" />
+        <ui:VisualElement class="section">
+            <ui:Toggle name="NoMaxSupplyToggle" text="No Max Supply: " value="true" class="toggle" />
+            <ui:Label text="No limit on the amount of Assets that can be created for this collection." class="normalText" />
+        </ui:VisualElement>
+        <ui:VisualElement name="VisualElement" class="section">
+            <ui:Label text="Mint Immediately" class="sub-header" />
+            <ui:Label text="The amount of Assets to mint upon creation." class="normalText" />
+        </ui:VisualElement>
+        <ui:IntegerField value="0" name="MintNow" class="input-field" />
+        <ui:VisualElement name="VisualElement" class="section">
+            <ui:Label text="Upload Menu View Expression" class="sub-header" />
+            <ui:Label text="Used to represent you collection in Asset layer interfaces (including the marketplace)." class="normalText" />
+        </ui:VisualElement>
+        <ui:Label text="If an Asset is not provided, we will generate one for you automatically." class="normalText" />
+        <ui:VisualElement class="section">
+            <uie:ObjectField name="TextureSelector" class="object-field texture-selector" />
+            <ui:Label name="SelectedTexture" class="sub-header" />
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 1;">
+            <ui:Button name="SubmitButton" text="Submit" class="submit-button" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

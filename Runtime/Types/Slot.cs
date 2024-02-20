@@ -154,6 +154,7 @@ namespace AssetLayer.SDK.Slots
     }
 
 
+
     [DataContract]
     public class GetSlotProps { 
         public GetSlotProps() { }
@@ -164,7 +165,6 @@ namespace AssetLayer.SDK.Slots
         [DataMember]
         public string slotId { get; set; } 
     }
-
 
     [DataContract]
     public class GetSlotCollectionsProps { 
@@ -180,6 +180,11 @@ namespace AssetLayer.SDK.Slots
         #endif
         [DataMember]
         public bool? includeDeactivated { get; set; } 
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public bool? includeDrafts { get; set; }
     }
 
     [DataContract]
