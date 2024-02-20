@@ -163,7 +163,14 @@ namespace AssetLayer.Unity
             {
                 Debug.Log("Initializing or reinitializing SDK due to credentials change or SDK not being initialized.");
                 // Initialize or Reinitialize the SDK with new settings
-                AssetLayerSDK.Initialize(new AssetLayerConfig { baseUrl = apiBase, appSecret = APP_SECRET, didToken = DID_TOKEN });
+                if (string.IsNullOrEmpty(APP_SECRET))
+                {
+                    AssetLayerSDK.Initialize(new AssetLayerConfig { baseUrl = apiBase, didToken = DID_TOKEN });
+                } else
+                {
+                    AssetLayerSDK.Initialize(new AssetLayerConfig { baseUrl = apiBase, appSecret = APP_SECRET, didToken = DID_TOKEN });
+                }
+                
             }
             else
             {
