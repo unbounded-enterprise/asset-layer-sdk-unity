@@ -4,6 +4,7 @@
 ### Fixed
 - Fixed CORS issue with game server.
 - Fixed Null Exceptions of Inventory
+- Fixed Issues with Slots not showing up in Inventory in non editor builds
 
 ## [1.4.24] - 2024-02-18
 ### Fixed

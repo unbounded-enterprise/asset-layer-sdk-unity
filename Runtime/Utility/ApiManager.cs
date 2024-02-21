@@ -1160,7 +1160,15 @@ namespace AssetLayer.Unity
         public async Task<string[]> GetAppSlots()
         {
             InitSDKCheck();
-            if (string.IsNullOrEmpty(APP_ID) || string.IsNullOrEmpty(DID_TOKEN) || string.IsNullOrEmpty(APP_SECRET))
+            // Only check APP_SECRET emptiness in the Unity Editor environment
+            #if UNITY_EDITOR
+            if (string.IsNullOrEmpty(APP_SECRET))
+            {
+                return null;
+            }
+            #endif
+
+            if (string.IsNullOrEmpty(APP_ID) || string.IsNullOrEmpty(DID_TOKEN))
             {
                 return null;
             }
