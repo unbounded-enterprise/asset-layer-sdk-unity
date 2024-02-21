@@ -81,7 +81,7 @@ namespace AssetLayer.Unity
 #if UNITY_EDITOR
                 return string.IsNullOrEmpty(APP_SECRET) ? "https://proxy.assetlayer.com/api" : AssetLayerSDK.APIURL;
 #else
-            Debug.Log("APIURL read: " + appConfig != null ? appConfig.AssetLayerProxyServerUrl : "http://localhost:3000");
+            // Debug.Log("APIURL read: " + appConfig != null ? appConfig.AssetLayerProxyServerUrl : "http://localhost:3000");
             return appConfig != null ? appConfig.AssetLayerProxyServerUrl : "http://localhost:3000"; // "https://proxy.assetlayer.com"
 #endif
             }
@@ -154,14 +154,14 @@ namespace AssetLayer.Unity
             // First, check if the DID_TOKEN is null or empty
             if (string.IsNullOrEmpty(DID_TOKEN))
             {
-                Debug.Log("DID_TOKEN is empty, not initializing SDK.");
+                // Debug.Log("DID_TOKEN is empty, not initializing SDK.");
                 return; // Exit the method if no DID_TOKEN is set
             }
 
             // Next, check if credentials have changed or the SDK is not initialized
             if (CredentialsChanged() || !AssetLayerSDK.Initialized)
             {
-                Debug.Log("Initializing or reinitializing SDK due to credentials change or SDK not being initialized.");
+                // Debug.Log("Initializing or reinitializing SDK due to credentials change or SDK not being initialized.");
                 // Initialize or Reinitialize the SDK with new settings
                 if (string.IsNullOrEmpty(APP_SECRET))
                 {
@@ -174,7 +174,7 @@ namespace AssetLayer.Unity
             }
             else
             {
-                Debug.Log("SDK already initialized and credentials have not changed.");
+                // Debug.Log("SDK already initialized and credentials have not changed.");
             }
         }
 
