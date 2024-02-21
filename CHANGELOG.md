@@ -3,6 +3,7 @@
 ## [1.4.25] - 2024-02-20
 ### Fixed
 - Fixed CORS issue with game server.
+- Fixed Null Exceptions of Inventory
 
 ## [1.4.24] - 2024-02-18
 ### Fixed
