@@ -513,12 +513,13 @@ namespace AssetLayer.Unity
         {
             ApiManager manager = new ApiManager();
             string[] slotIdArr = await manager.GetAppSlots();
-            slotIds = new List<string>(slotIdArr);
-
-            if (slotIds == null || !slotIds.Any())
+            if (slotIdArr == null || slotIdArr.Length == 0)
             {
                 return Enumerable.Empty<Slot>();
             }
+            slotIds = new List<string>(slotIdArr);
+
+            
 
             List<Slot> slots = new List<Slot>();
 

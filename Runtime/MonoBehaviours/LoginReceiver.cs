@@ -48,7 +48,6 @@ namespace AssetLayer.Unity
             }
             else
             {
-                Debug.Log("did token is already there" + savedDidToken);
                 loginReady = true;
                 SetDIDToken(savedDidToken);
             }
