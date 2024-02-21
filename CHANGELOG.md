@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.4.26] - 2024-02-21
+### Changed
+- Removed `[InitializeOnLoad]` from `ScriptLoader` to stop automatic required slot script loading on Unity editor start.
+
 ## [1.4.25] - 2024-02-20
 ### Fixed
 - Fixed CORS issue with game server.
