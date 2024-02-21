@@ -10,8 +10,6 @@ using System.Linq;
 
 namespace AssetLayer.Unity
 {
-
-    [InitializeOnLoad]
     public class ScriptLoader
     {
         public class ScriptObject
