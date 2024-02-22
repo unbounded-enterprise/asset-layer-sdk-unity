@@ -379,15 +379,15 @@ namespace AssetLayer.Unity
                             string bundleUrl = string.IsNullOrEmpty(assetExpressionId)
                                 ? GetExpressionValueAssetBundle(selectedAsset.expressionValues)
                                 : GetExpressionValueByExpressionIdAssetBundle(selectedAsset.expressionValues, assetExpressionId);
-
-                            bundleDownloader.DownloadAndLoadBundle(bundleUrl, loadedBundle =>
+                            onAssetSelection.Invoke(selectedAsset);
+                            /* bundleDownloader.DownloadAndLoadBundle(bundleUrl, loadedBundle =>
                             {
                                 selectedAsset.loadedAssetBundle = loadedBundle;
-                                if (loadedBundle != null)
+                                if (loadedBundle != null || bundleUrl.EndsWith(".glb", StringComparison.OrdinalIgnoreCase))
                                 {
                                     onAssetSelection.Invoke(selectedAsset);
                                 }
-                            });
+                            }); */ 
                         }
                         else
                         {

@@ -12,8 +12,13 @@ namespace AssetLayer.Unity
 
         public void DownloadAndLoadBundle(string bundleUrl, AssetBundleDownloadedCallback callback)
         {
-            try
+            if (string.IsNullOrEmpty(bundleUrl) || bundleUrl.EndsWith(".glb", StringComparison.OrdinalIgnoreCase))
             {
+                callback?.Invoke(null);
+                return; // Exit early as we don't handle .glb files here
+            }
+            try
+            { 
                 StartCoroutine(DownloadAndLoadBundleCoroutine(bundleUrl, callback));
             }
             catch (NullReferenceException e)

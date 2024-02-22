@@ -219,21 +219,21 @@ namespace AssetLayer.Unity
         }
 
 
-        public IEnumerator GetAssetExpressionValue(string assetId, System.Action<string> callback)
+        public IEnumerator GetAssetExpressionValue(string assetId, System.Action<string> callback, string expressionId = null)
         {
             Debug.Log("GetAssetExpressionValue");
-            InitSDKCheck();
+            InitSDKCheck(); // Assuming this initializes the SDK
 
             GetAssetProps props = new GetAssetProps
             {
                 assetId = assetId
             };
 
-            Task<SDK.Assets.Asset> getAssetTask = AssetLayerSDK.Assets.GetAsset(props);
+            Task<AssetLayer.SDK.Assets.Asset> getAssetTask = AssetLayerSDK.Assets.GetAsset(props);
 
             yield return new WaitUntil(() => getAssetTask.IsCompleted);
 
-            SDK.Assets.Asset assetInfo = getAssetTask.Result;
+            AssetLayer.SDK.Assets.Asset assetInfo = getAssetTask.Result;
 
             if (assetInfo == null || assetInfo.expressionValues == null || assetInfo.expressionValues.Count == 0)
             {
@@ -242,11 +242,27 @@ namespace AssetLayer.Unity
                 yield break;
             }
 
-            // Find the appropriate expression value
             string currentPlatformAttributeName = UtilityFunctions.GetCurrentPlatformExpressionAttribute();
+            ExpressionValue expression = null;
 
-            var expression = assetInfo.expressionValues.FirstOrDefault(
-                e => e.expressionAttribute.expressionAttributeName == currentPlatformAttributeName);
+            if (!string.IsNullOrEmpty(expressionId))
+            {
+                // Search for expression by expressionId
+                expression = assetInfo.expressionValues.FirstOrDefault(e => e.expression.expressionId == expressionId);
+
+                // If expression type matches, perform additional checks
+                if (expression != null && expression.expressionType.expressionTypeId == "64b1ce76716b83c3de7df84e")
+                {
+                    expression = assetInfo.expressionValues.FirstOrDefault(e => e.expression.expressionId == expressionId && e.expressionAttribute.expressionAttributeName == currentPlatformAttributeName);
+                }
+            }
+
+            if (expression == null)
+            {
+                // Fallback: search for an expression with a specific expressionTypeId or the first available expression
+                expression = assetInfo.expressionValues.FirstOrDefault(e => e.expressionType.expressionTypeId == "65d6ade9b04907f41c26a002")
+                              ?? assetInfo.expressionValues.FirstOrDefault();
+            }
 
             if (expression != null)
             {
@@ -254,7 +270,7 @@ namespace AssetLayer.Unity
             }
             else
             {
-                callback?.Invoke(assetInfo.expressionValues[0].value);
+                callback?.Invoke(null);
             }
         }
 

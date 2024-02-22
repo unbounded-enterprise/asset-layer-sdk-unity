@@ -145,8 +145,20 @@ namespace AssetLayer.Unity
         public static string GetExpressionValueAssetBundle(List<ExpressionValue> expressionValues, string expressionName = null)
         {
             string currentPlatformAttributeName = GetCurrentPlatformExpressionAttribute();
+
+            // Attempt to find an expression that matches the specified expressionName (if provided)
+            // and whose attribute name matches the current platform.
             var expressionValue = expressionValues
-                                 .FirstOrDefault(ev => (string.IsNullOrEmpty(expressionName) || ev.expression.expressionName == expressionName) && ev.expressionAttribute.expressionAttributeName == currentPlatformAttributeName);
+                .FirstOrDefault(ev => (string.IsNullOrEmpty(expressionName) || ev.expression.expressionName == expressionName) &&
+                                      ev.expressionAttribute.expressionAttributeName == currentPlatformAttributeName);
+
+            // If the first attempt fails, it is no asset bundle, search for the 3d Model type id 
+            if (expressionValue == null)
+            {
+                expressionValue = expressionValues
+                    .FirstOrDefault(ev => ev.expressionType.expressionTypeId == "65d6ade9b04907f41c26a002");
+            }
+
             return expressionValue?.value;
         }
 
@@ -156,20 +168,37 @@ namespace AssetLayer.Unity
                                  .FirstOrDefault(ev => ev.expressionAttribute.expressionAttributeId == attributeId);
             return expressionValue?.value;
         }
-        public static string GetExpressionValueByExpressionId(List<ExpressionValue> expressionValues, string expressionId)
+        public static string GetExpressionValueByExpressionId(List<ExpressionValue> expressionValues, string expressionId, string expressionTypeId = null)
         {
             var expressionValue = expressionValues
-                                 .FirstOrDefault(ev => ev.expression.expressionId == expressionId);
+                                 .FirstOrDefault(ev => ev.expression.expressionId == expressionId && (string.IsNullOrEmpty(expressionTypeId) || ev.expressionType.expressionTypeId == expressionTypeId));
             return expressionValue?.value;
         }
 
         public static string GetExpressionValueByExpressionIdAssetBundle(List<ExpressionValue> expressionValues, string expressionId)
         {
             string currentPlatformAttributeName = GetCurrentPlatformExpressionAttribute();
-            var expressionValue = expressionValues
-                                 .FirstOrDefault(ev => ev.expression.expressionId == expressionId && ev.expressionAttribute.expressionAttributeName == currentPlatformAttributeName);
-            return expressionValue?.value;
+
+            // First, find the expression by expressionId.
+            var expressionValue = expressionValues.FirstOrDefault(ev => ev.expression.expressionId == expressionId);
+
+            // Check if the expressionTypeId matches "64b1ce76716b83c3de7df84e". (It is an asset bundle expression
+            if (expressionValue != null && expressionValue.expressionType.expressionTypeId == "64b1ce76716b83c3de7df84e")
+            {
+                // If it matches, further refine the search to match the current platform's attribute name.
+                var refinedExpressionValue = expressionValues.FirstOrDefault(ev =>
+                    ev.expression.expressionId == expressionId && ev.expressionAttribute.expressionAttributeName == currentPlatformAttributeName);
+
+                // If a more specific match is found based on attribute name, use it. Otherwise, use the initially found expressionValue.
+                return refinedExpressionValue?.value ?? expressionValue?.value;
+            }
+            else
+            {
+                // If the expressionTypeId does not match or no expression is found, return the value of the initially found expression.
+                return expressionValue?.value;
+            }
         }
+
 
         public static bool IsSceneBundle(AssetBundle bundle)
         {

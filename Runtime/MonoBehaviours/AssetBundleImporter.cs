@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
+using Siccity.GLTFUtility;
 
 namespace AssetLayer.Unity
 {
+
     public static class AssetBundleRequestExtensions
     {
         public static TaskAwaiter<UnityEngine.Object[]> GetAwaiter(this AssetBundleRequest request)
@@ -96,7 +98,6 @@ namespace AssetLayer.Unity
             }
 
         }
-
         private async void ApplyObj(string bundleUrl)
         {
             try
@@ -107,15 +108,22 @@ namespace AssetLayer.Unity
                     return;
                 }
 
-                // Check if the bundle is already cached
-                if (AssetBundleCacheManager.Instance.CachedBundles.ContainsKey(bundleUrl) && AssetBundleCacheManager.Instance.CachedBundles[bundleUrl] != null)
+                // Determine if the URL ends with .glb and handle accordingly
+                if (bundleUrl.EndsWith(".glb", StringComparison.OrdinalIgnoreCase))
                 {
-                    HandleLoadedBundle(AssetBundleCacheManager.Instance.CachedBundles[bundleUrl]);
+                    LoadGLBAsset(bundleUrl); // Handle GLB loading
                 }
                 else
                 {
-                    bundleDownloader.DownloadAndLoadBundle(bundleUrl, HandleLoadedBundle);
-                    // StartCoroutine(DownloadAndLoadBundleCoroutine(bundleUrl));
+                    // Existing asset bundle handling logic...
+                    if (AssetBundleCacheManager.Instance.CachedBundles.ContainsKey(bundleUrl) && AssetBundleCacheManager.Instance.CachedBundles[bundleUrl] != null)
+                    {
+                        HandleLoadedBundle(AssetBundleCacheManager.Instance.CachedBundles[bundleUrl]);
+                    }
+                    else
+                    {
+                        bundleDownloader.DownloadAndLoadBundle(bundleUrl, HandleLoadedBundle);
+                    }
                 }
             }
             catch (Exception ex)
@@ -123,8 +131,45 @@ namespace AssetLayer.Unity
                 Debug.LogError($"Error encountered: {ex.Message}");
                 ClearCacheAndRestartProcess();
             }
+        }
 
+        // Method to load a GLB file and instantiate it
+        private void LoadGLBAsset(string glbUrl)
+        {
+            StartCoroutine(DownloadAndInstantiateGLB(glbUrl));
+        }
 
+        // Coroutine to download and instantiate GLB
+        private IEnumerator DownloadAndInstantiateGLB(string glbUrl)
+        {
+            using (UnityWebRequest www = UnityWebRequest.Get(glbUrl))
+            {
+                yield return www.SendWebRequest();
+
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.LogError("Failed to download GLB: " + www.error);
+                }
+                else
+                {
+                    // Destroy existing children before loading the new GLB object
+                    while (transform.childCount > 0)
+                    {
+                        DestroyImmediate(transform.GetChild(0).gameObject);
+                    }
+                    // Load the GLB data and instantiate the object
+                    var glbObject = Importer.LoadFromBytes(www.downloadHandler.data);
+                    if (glbObject != null)
+                    {
+                        glbObject.transform.SetParent(this.transform, false);
+                        Debug.Log("GLB downloaded and loaded successfully");
+                    }
+                    else
+                    {
+                        Debug.LogError("Failed to load GLB as GameObject");
+                    }
+                }
+            }
         }
 
         private void ClearCacheAndRestartProcess()
