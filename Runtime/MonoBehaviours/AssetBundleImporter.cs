@@ -29,6 +29,7 @@ namespace AssetLayer.Unity
         public string AssetId { get; private set; }
         public string defaultAssetId;
         public string bundleExpressionId;
+        public string onlyLoadCollectionId;
 
         private AssetBundleDownloader bundleDownloader;
 
@@ -63,6 +64,13 @@ namespace AssetLayer.Unity
         public void SetNewAsset(Asset asset)
         {
             this.AssetId = asset.assetId;
+            if (!string.IsNullOrEmpty(onlyLoadCollectionId))
+            {
+                if (asset.collectionId != onlyLoadCollectionId)
+                {
+                    return;
+                }
+            }
             if (!string.IsNullOrEmpty(this.AssetId))
             {
                 string selectionKey = "AssetLayerSelectedAssetId";
