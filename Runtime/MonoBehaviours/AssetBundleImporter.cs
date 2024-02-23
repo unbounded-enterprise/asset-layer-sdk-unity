@@ -162,6 +162,7 @@ namespace AssetLayer.Unity
                     if (glbObject != null)
                     {
                         glbObject.transform.SetParent(this.transform, false);
+                        glbObject.transform.rotation = Quaternion.Euler(0, 180, 0);  // for demo purposes
                         Debug.Log("GLB downloaded and loaded successfully");
                     }
                     else
