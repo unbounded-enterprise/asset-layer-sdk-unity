@@ -7,6 +7,7 @@
     "documentationUrl": "https://github.com/unbounded-enterprise/asset-layer-sdk-unity/blob/main/README.md",
     "dependencies": {
         "com.unity.nuget.newtonsoft-json": "3.2.1",
-        "com.unity.editorcoroutines": "1.0.0"
+        "com.unity.editorcoroutines": "1.0.0",
+        "com.siccity.gltfutility": "0.7.2"
     }
 }
