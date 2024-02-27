@@ -119,7 +119,14 @@ namespace AssetLayer.Unity
                 // Determine if the URL ends with .glb and handle accordingly
                 if (bundleUrl.EndsWith(".glb", StringComparison.OrdinalIgnoreCase))
                 {
-                    LoadGLBAsset(bundleUrl); // Handle GLB loading
+                    if (AssetBundleCacheManager.Instance.IsGLBCached(bundleUrl))
+                    {
+                        InstantiateGLBFromCache(bundleUrl);
+                    }
+                    else
+                    {
+                        LoadGLBAsset(bundleUrl); // Handle GLB loading
+                    }
                 }
                 else
                 {
