@@ -140,7 +140,25 @@ namespace AssetLayer.Unity
             }
         }
 
-        private void HandleLoadedBundle(AssetBundle bundle)
+        private void HandleLoadedBundle(object loadedData)
+        {
+            if (loadedData is AssetBundle loadedBundle)
+            {
+                Debug.Log("AssetBundle loaded successfully.");
+                // Process the loaded AssetBundle
+                ProcessAssetBundle(loadedBundle);
+            }
+            else if (loadedData is byte[] glbData)
+            {
+                Debug.Log("GLB data cannot be scenes");
+            }
+            else
+            {
+                Debug.LogError("Failed to load data as AssetBundle or GLB.");
+            }
+        }
+
+        private void ProcessAssetBundle(AssetBundle bundle)
         {
             var scenePath = bundle.GetAllScenePaths()[0];  // get the path of the first scene in the bundle
             StartCoroutine(LoadSceneFromBundle(scenePath));

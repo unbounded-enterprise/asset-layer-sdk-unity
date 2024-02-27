@@ -32,8 +32,20 @@ namespace AssetLayer.Unity
         CachedGLBs[url] = glbData;
     }
 
-    // Method to check if a GLB is cached
-    public bool IsGLBCached(string url)
+        public bool IsAssetCached(string url)
+        {
+            if (url.EndsWith(".glb"))
+            {
+                return IsGLBCached(url);
+            }
+            else
+            {
+                return CachedBundles.ContainsKey(url);
+            }
+        }
+
+        // Method to check if a GLB is cached
+        public bool IsGLBCached(string url)
     {
         return CachedGLBs.ContainsKey(url);
     }

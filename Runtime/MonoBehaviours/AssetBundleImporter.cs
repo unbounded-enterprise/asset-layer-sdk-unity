@@ -7,6 +7,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using Siccity.GLTFUtility;
+using System.Collections.Generic;
 
 namespace AssetLayer.Unity
 {
@@ -25,11 +26,19 @@ namespace AssetLayer.Unity
 
     public class AssetBundleImporter : MonoBehaviour
     {
+
+        private static Dictionary<string, TaskCompletionSource<bool>> loadingOperations = new Dictionary<string, TaskCompletionSource<bool>>();
+
+
+
         private ApiManager manager;
         public string AssetId { get; private set; }
         public string defaultAssetId;
         public string bundleExpressionId;
         public string onlyLoadCollectionId;
+        private string currentBundleUrl;
+
+        TaskCompletionSource<bool> loadOperation;
 
         private AssetBundleDownloader bundleDownloader;
 
@@ -116,28 +125,30 @@ namespace AssetLayer.Unity
                     return;
                 }
 
-                // Determine if the URL ends with .glb and handle accordingly
-                if (bundleUrl.EndsWith(".glb", StringComparison.OrdinalIgnoreCase))
+                currentBundleUrl = bundleUrl;
+
+                if (!loadingOperations.TryGetValue(bundleUrl, out var loadOperation))
                 {
-                    if (AssetBundleCacheManager.Instance.IsGLBCached(bundleUrl))
-                    {
-                        InstantiateGLBFromCache(bundleUrl);
-                    }
-                    else
-                    {
-                        LoadGLBAsset(bundleUrl); // Handle GLB loading
-                    }
+                    loadOperation = new TaskCompletionSource<bool>();
+                    loadingOperations[bundleUrl] = loadOperation;
+
+                    // Directly proceed to load
+                    PerformLoadingOperation(bundleUrl);
                 }
                 else
                 {
-                    // Existing asset bundle handling logic...
-                    if (AssetBundleCacheManager.Instance.CachedBundles.ContainsKey(bundleUrl) && AssetBundleCacheManager.Instance.CachedBundles[bundleUrl] != null)
+                    // Wait for the existing operation to complete
+                    await loadOperation.Task;
+                    // Re-check if it's now cached after waiting, to decide if loading needs to be initiated again
+                    if (!AssetBundleCacheManager.Instance.IsAssetCached(bundleUrl))
                     {
-                        HandleLoadedBundle(AssetBundleCacheManager.Instance.CachedBundles[bundleUrl]);
+                        // If not cached, it means this GameObject needs to initiate loading
+                        PerformLoadingOperation(bundleUrl);
                     }
                     else
                     {
-                        bundleDownloader.DownloadAndLoadBundle(bundleUrl, HandleLoadedBundle);
+                        // Handle the cached asset without initiating a new load
+                        HandleCachedAsset(bundleUrl);
                     }
                 }
             }
@@ -147,6 +158,26 @@ namespace AssetLayer.Unity
                 ClearCacheAndRestartProcess();
             }
         }
+
+        private void HandleCachedAsset(string bundleUrl)
+        {
+            if (bundleUrl.EndsWith(".glb", StringComparison.OrdinalIgnoreCase))
+            {
+                    byte[] glbData = AssetBundleCacheManager.Instance.GetCachedGLB(bundleUrl);
+                    HandleLoadedBundle(glbData);
+            }
+            else
+            {
+                    HandleLoadedBundle(AssetBundleCacheManager.Instance.CachedBundles[bundleUrl]);
+            }
+        }
+
+
+        private void PerformLoadingOperation(string bundleUrl)
+        {
+            bundleDownloader.DownloadAndLoadBundle(bundleUrl, HandleLoadedBundle);
+        }
+
 
         // Method to load a GLB file and instantiate it
         private void LoadGLBAsset(string glbUrl)
@@ -167,25 +198,34 @@ namespace AssetLayer.Unity
                 }
                 else
                 {
-                    // Destroy existing children before loading the new GLB object
-                    while (transform.childCount > 0)
-                    {
-                        DestroyImmediate(transform.GetChild(0).gameObject);
-                    }
-                    // Load the GLB data and instantiate the object
-                    var glbObject = Importer.LoadFromBytes(www.downloadHandler.data);
-                    if (glbObject != null)
-                    {
-                        glbObject.transform.SetParent(this.transform, false);
-                        Debug.Log("GLB downloaded and loaded successfully");
-                    }
-                    else
-                    {
-                        Debug.LogError("Failed to load GLB as GameObject");
-                    }
+                    InstantiateGLB(www.downloadHandler.data);
                 }
             }
         }
+
+        private void InstantiateGLB(byte[] glbData)
+        {
+            
+            if (glbData != null)
+            {
+                // Destroy existing children before loading the new GLB object
+                while (transform.childCount > 0)
+                {
+                    DestroyImmediate(transform.GetChild(0).gameObject);
+                }
+                // Load the GLB data and instantiate the object
+                var glbObject = Importer.LoadFromBytes(glbData);
+                if (glbObject != null)
+                {
+                    glbObject.transform.SetParent(this.transform, false);
+                }
+                else
+                {
+                    Debug.LogError("Failed to load GLB from cache as GameObject");
+                }
+            }
+        }
+
 
         private void ClearCacheAndRestartProcess()
         {
@@ -231,11 +271,51 @@ namespace AssetLayer.Unity
                 // Cache bundle
                 AssetBundleCacheManager.Instance.CachedBundles[bundleUrl] = bundle;
 
-                HandleLoadedBundle(bundle);
+                ProcessAssetBundle(bundle);
                 yield break;
             }
         }
-        private async void HandleLoadedBundle(AssetBundle bundle)
+
+        private void HandleLoadedBundle(object loadedData)
+        {
+            
+            if (loadedData is AssetBundle loadedBundle)
+            {
+                // Process the loaded AssetBundle
+                ProcessAssetBundle(loadedBundle);
+            }
+            else if (loadedData is byte[] glbData)
+            {
+                // Process the GLB data
+                InstantiateGLB(glbData);
+            }
+            else
+            {
+                Debug.LogError("Failed to load data as AssetBundle or GLB.");
+            }
+
+            if (loadingOperations.TryGetValue(currentBundleUrl, out var loadOperation))
+            {
+                if (loadOperation != null)
+                {
+                    try
+                    {
+                        // Correctly signals the operation as completed.
+                        if (!loadOperation.Task.IsCompleted)
+                        {
+                            loadOperation.SetResult(true);
+                        }
+                    } catch(Exception ex)
+                    {
+                        Debug.Log("cant set result: " + ex.Message);
+                    }
+                    loadingOperations.Remove(currentBundleUrl);
+                }
+            }
+        }
+
+
+        private async void ProcessAssetBundle(AssetBundle bundle)
         {
             if (bundle == null)
             {
@@ -270,7 +350,14 @@ namespace AssetLayer.Unity
                         Debug.LogWarning($"Asset {asset.name} is not a GameObject");
                     }
                 }
-                bundle.Unload(false);
+                try
+                {
+                    bundle.Unload(false);
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log("Bundle already unloaded");
+                }
             }
             else
             {

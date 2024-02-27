@@ -385,13 +385,13 @@ namespace AssetLayer.Unity
                                 // Check if loadedData is an AssetBundle
                                 if (loadedData is AssetBundle loadedBundle)
                                 {
-                                    selectedAsset.loadedAssetBundle = loadedBundle;
+                                    asset.LoadedAssetBundle = loadedBundle;
                                     onAssetSelection.Invoke(selectedAsset);
                                 }
                                 // Check if loadedData is a byte array, indicating a GLB file
                                 else if (loadedData is byte[] glbData)
                                 {
-                                    selectedAsset.LoadedGLBData = loadedData;
+                                    asset.LoadedGLBData = glbData;
                                     onAssetSelection.Invoke(selectedAsset);
                                 }
                             }); 
