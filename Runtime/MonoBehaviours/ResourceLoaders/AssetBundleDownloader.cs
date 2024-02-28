@@ -8,17 +8,26 @@ namespace AssetLayer.Unity
 
     public class AssetBundleDownloader : MonoBehaviour
     {
-        public delegate void AssetBundleDownloadedCallback(AssetBundle bundle);
+        public delegate void AssetBundleDownloadedCallback(object data);
 
         public void DownloadAndLoadBundle(string bundleUrl, AssetBundleDownloadedCallback callback)
         {
             try
-            {
-                StartCoroutine(DownloadAndLoadBundleCoroutine(bundleUrl, callback));
-            }
-            catch (NullReferenceException e)
-            {
-                Debug.LogError("Caught NullReferenceException: " + e.Message + "\nStackTrace: " + e.StackTrace);
+            { 
+                if (string.IsNullOrEmpty(bundleUrl))
+                {
+                    callback?.Invoke(null);
+                    return; // Exit early as we don't handle .glb files here
+                }
+
+                if (bundleUrl.EndsWith(".glb", StringComparison.OrdinalIgnoreCase))
+                {
+                    StartCoroutine(DownloadAndCacheGLB(bundleUrl, callback));
+                }
+                else
+                {
+                    StartCoroutine(DownloadAndLoadBundleCoroutine(bundleUrl, callback));
+                }
             }
             catch (Exception e) // This will catch any other exceptions
             {
@@ -37,7 +46,14 @@ namespace AssetLayer.Unity
                 callback?.Invoke(null); // Invoke callback with null to indicate failure
                 yield break;
             }
-            
+
+            if (AssetBundleCacheManager.Instance.CachedBundles.TryGetValue(bundleUrl, out AssetBundle cachedBundle))
+            {
+                Debug.Log("Bundle is already loaded. Using the cached bundle.");
+                callback?.Invoke(cachedBundle); // Invoke callback with the cached bundle
+                yield break;
+            }
+
             using (UnityWebRequest request = UnityWebRequestAssetBundle.GetAssetBundle(bundleUrl))
             {
                 // Send request
@@ -65,6 +81,32 @@ namespace AssetLayer.Unity
                 AssetBundleCacheManager.Instance.CachedBundles[bundleUrl] = bundle;
 
                 callback?.Invoke(bundle);  // Invoke callback with the loaded bundle
+            }
+        }
+        private IEnumerator DownloadAndCacheGLB(string glbUrl, AssetBundleDownloadedCallback callback)
+        {
+            if (AssetBundleCacheManager.Instance.IsGLBCached(glbUrl))
+            {
+                byte[] cachedGLB = AssetBundleCacheManager.Instance.GetCachedGLB(glbUrl);
+                callback?.Invoke(cachedGLB); // Invoke callback with the cached GLB data
+                yield break;
+            }
+            using (UnityWebRequest www = UnityWebRequest.Get(glbUrl))
+            {
+                yield return www.SendWebRequest();
+
+                if (www.result == UnityWebRequest.Result.Success)
+                {
+                    // Cache the downloaded GLB file
+                    AssetBundleCacheManager.Instance.CacheGLB(glbUrl, www.downloadHandler.data);
+
+                    callback?.Invoke(www.downloadHandler.data);
+                }
+                else
+                {
+                    Debug.LogError("Failed to download GLB: " + www.error);
+                    callback?.Invoke(null);
+                }
             }
         }
     }

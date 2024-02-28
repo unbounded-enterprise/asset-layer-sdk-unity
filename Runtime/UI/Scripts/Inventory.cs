@@ -374,20 +374,27 @@ namespace AssetLayer.Unity
                         }
 
                         SelectAsset(asset.UIAssetId);
-                        if (asset.LoadedAssetBundle == null)
+                        if (asset.LoadedAssetBundle == null && asset.LoadedGLBData == null)
                         {
                             string bundleUrl = string.IsNullOrEmpty(assetExpressionId)
                                 ? GetExpressionValueAssetBundle(selectedAsset.expressionValues)
                                 : GetExpressionValueByExpressionIdAssetBundle(selectedAsset.expressionValues, assetExpressionId);
 
-                            bundleDownloader.DownloadAndLoadBundle(bundleUrl, loadedBundle =>
+                            bundleDownloader.DownloadAndLoadBundle(bundleUrl, loadedData =>
                             {
-                                selectedAsset.loadedAssetBundle = loadedBundle;
-                                if (loadedBundle != null)
+                                // Check if loadedData is an AssetBundle
+                                if (loadedData is AssetBundle loadedBundle)
                                 {
+                                    asset.LoadedAssetBundle = loadedBundle;
                                     onAssetSelection.Invoke(selectedAsset);
                                 }
-                            });
+                                // Check if loadedData is a byte array, indicating a GLB file
+                                else if (loadedData is byte[] glbData)
+                                {
+                                    asset.LoadedGLBData = glbData;
+                                    onAssetSelection.Invoke(selectedAsset);
+                                }
+                            }); 
                         }
                         else
                         {
@@ -565,6 +572,12 @@ namespace AssetLayer.Unity
         Asset
     }
 
+    public enum LoadedAssetType
+    {
+        None,
+        AssetBundle,
+        GLB
+    }
     public class UIAsset
     {
         public string UIAssetId { get; set; }
@@ -575,7 +588,10 @@ namespace AssetLayer.Unity
         public int CountOrSerial { get; set; }
         public Texture2D LoadedTexture { get; set; }
         public AssetBundle LoadedAssetBundle { get; set; }
+        public byte[] LoadedGLBData { get; set; } 
         public UIAssetType AssetType { get; set; }
+
+        public LoadedAssetType LoadedAssetType { get; set; }
 
         public UIAsset(string id, string name, string url, string assetBundleUrl, int countOrSerial, UIAssetType type)
         {
@@ -585,6 +601,7 @@ namespace AssetLayer.Unity
             CountOrSerial = countOrSerial;
             AssetType = type;
             AssetBundleURL = assetBundleUrl;
+            LoadedAssetType = LoadedAssetType.None;
         }
 
         public static UIAsset ConvertToUIAsset(Slot slot)
@@ -651,6 +668,19 @@ namespace AssetLayer.Unity
                 ,
                 (int)asset.serial,
                 UIAssetType.Asset);
+        }
+
+        public void SetLoadedAssetBundle(AssetBundle assetBundle)
+        {
+            LoadedAssetBundle = assetBundle;
+            LoadedAssetType = LoadedAssetType.AssetBundle;
+        }
+
+        // Method to set the loaded GLB data
+        public void SetLoadedGLBData(byte[] glbData)
+        {
+            LoadedGLBData = glbData;
+            LoadedAssetType = LoadedAssetType.GLB;
         }
     }
 }

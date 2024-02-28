@@ -27,7 +27,7 @@ namespace AssetLayer.Unity
         {
             var tcs = new TaskCompletionSource<UnityWebRequest.Result>();
 
-            asyncOp.completed += _ => 
+            asyncOp.completed += _ =>
             {
                 switch (asyncOp.webRequest.result)
                 {
@@ -63,7 +63,7 @@ namespace AssetLayer.Unity
             get
             {
                 if (_appConfig == null)
-                { 
+                {
                     _appConfig = AppConfig.Instance;
                     if (_appConfig == null)
                     {
@@ -81,8 +81,8 @@ namespace AssetLayer.Unity
 #if UNITY_EDITOR
                 return string.IsNullOrEmpty(APP_SECRET) ? "https://proxy.assetlayer.com/api" : AssetLayerSDK.APIURL;
 #else
-            // Debug.Log("APIURL read: " + appConfig != null ? appConfig.AssetLayerProxyServerUrl : "http://localhost:3000");
-            return appConfig != null ? appConfig.AssetLayerProxyServerUrl : "http://localhost:3000"; // "https://proxy.assetlayer.com"
+                // Debug.Log("APIURL read: " + appConfig != null ? appConfig.AssetLayerProxyServerUrl : "http://localhost:3000");
+                return appConfig != null ? appConfig.AssetLayerProxyServerUrl : "http://localhost:3000"; // "https://proxy.assetlayer.com"
 #endif
             }
         }
@@ -95,7 +95,7 @@ namespace AssetLayer.Unity
                 // Decrypt the APP_SECRET
                 return appConfig != null ? EncryptionUtils.Decrypt(appConfig.encryptedAssetLayerAppSecret) : "";
 #else
-            return ""; 
+                return "";
 #endif
             }
         }
@@ -108,7 +108,7 @@ namespace AssetLayer.Unity
                 // Decrypt the DID_TOKEN
                 return appConfig != null ? EncryptionUtils.Decrypt(appConfig.encryptedAssetLayerDidToken) : "";
 #else
-            return SecurePlayerPrefs.GetSecureString("didtoken");
+                return SecurePlayerPrefs.GetSecureString("didtoken");
 #endif
             }
         }
@@ -120,7 +120,7 @@ namespace AssetLayer.Unity
 #if UNITY_EDITOR
                 return appConfig != null ? appConfig.AssetLayerAppId : "your app id";
 #else
-            return appConfig != null ? appConfig.AssetLayerAppId : "your app id"; 
+                return appConfig != null ? appConfig.AssetLayerAppId : "your app id";
 #endif
             }
         }
@@ -170,7 +170,6 @@ namespace AssetLayer.Unity
                 {
                     AssetLayerSDK.Initialize(new AssetLayerConfig { baseUrl = apiBase, appSecret = APP_SECRET, didToken = DID_TOKEN });
                 }
-                
             }
             else
             {
@@ -219,21 +218,21 @@ namespace AssetLayer.Unity
         }
 
 
-        public IEnumerator GetAssetExpressionValue(string assetId, System.Action<string> callback)
+        public IEnumerator GetAssetExpressionValue(string assetId, System.Action<string> callback, string expressionId = null)
         {
             Debug.Log("GetAssetExpressionValue");
-            InitSDKCheck();
+            InitSDKCheck(); // Assuming this initializes the SDK
 
             GetAssetProps props = new GetAssetProps
             {
                 assetId = assetId
             };
 
-            Task<SDK.Assets.Asset> getAssetTask = AssetLayerSDK.Assets.GetAsset(props);
+            Task<AssetLayer.SDK.Assets.Asset> getAssetTask = AssetLayerSDK.Assets.GetAsset(props);
 
             yield return new WaitUntil(() => getAssetTask.IsCompleted);
 
-            SDK.Assets.Asset assetInfo = getAssetTask.Result;
+            AssetLayer.SDK.Assets.Asset assetInfo = getAssetTask.Result;
 
             if (assetInfo == null || assetInfo.expressionValues == null || assetInfo.expressionValues.Count == 0)
             {
@@ -242,19 +241,39 @@ namespace AssetLayer.Unity
                 yield break;
             }
 
-            // Find the appropriate expression value
             string currentPlatformAttributeName = UtilityFunctions.GetCurrentPlatformExpressionAttribute();
+            ExpressionValue expression = null;
 
-            var expression = assetInfo.expressionValues.FirstOrDefault(
-                e => e.expressionAttribute.expressionAttributeName == currentPlatformAttributeName);
+            if (!string.IsNullOrEmpty(expressionId))
+            {
+                // Search for expression by expressionId
+                expression = assetInfo.expressionValues.FirstOrDefault(e => e.expression.expressionId == expressionId);
 
+                // If expression type matches, perform additional checks
+                if (expression != null && expression.expressionType.expressionTypeId == "64b1ce76716b83c3de7df84e")
+                {
+                    expression = assetInfo.expressionValues.FirstOrDefault(e => e.expression.expressionId == expressionId && e.expressionAttribute.expressionAttributeName == currentPlatformAttributeName);
+                }
+            }
+            if (expression == null)
+            {
+                expression = assetInfo.expressionValues.FirstOrDefault(ev => ev.expressionAttribute.expressionAttributeName == currentPlatformAttributeName);
+            }
+            
+
+
+            if (expression == null)
+            {
+                // Fallback: search for an expression with a 3D model
+                expression = assetInfo.expressionValues.FirstOrDefault(e => e.expressionType.expressionTypeId == "65d6ade9b04907f41c26a002");
+            }
             if (expression != null)
             {
                 callback?.Invoke(expression.value);
             }
             else
             {
-                callback?.Invoke(assetInfo.expressionValues[0].value);
+                callback?.Invoke(null);
             }
         }
 
@@ -456,13 +475,17 @@ namespace AssetLayer.Unity
         {
             InitSDKCheck();
             UpdateCollectionAssetsExpressionValueProps props = new UpdateCollectionAssetsExpressionValueProps()
-            {   collectionId = collectionId,
+            {
+                collectionId = collectionId,
                 expressionAttributeName = expressionAttributeName,
                 value = dataUrl
             };
-            if (string.IsNullOrEmpty(expressionId)) {
+            if (string.IsNullOrEmpty(expressionId))
+            {
                 props.expressionName = expressionName;
-            } else {
+            }
+            else
+            {
                 props.expressionId = expressionId;
             }
             bool result = await AssetLayerSDK.Assets.UpdateCollectionAssetsExpressionValue(props);
@@ -470,7 +493,7 @@ namespace AssetLayer.Unity
             return result;
         }
 
-            public async Task<bool> UploadBundleExpressionOld(string collectionId, string dataUrl, string expressionAttributeName = "AssetBundle", string expressionName = "AssetBundle", string expressionId = "")
+        public async Task<bool> UploadBundleExpressionOld(string collectionId, string dataUrl, string expressionAttributeName = "AssetBundle", string expressionName = "AssetBundle", string expressionId = "")
         {
             string url = apiBase + "/asset/expressionValues";
 
@@ -480,8 +503,9 @@ namespace AssetLayer.Unity
                 expressionName = expressionName,
                 collectionId = collectionId,
                 value = dataUrl
-            } : 
-            new ExpressionValueData {
+            } :
+            new ExpressionValueData
+            {
                 expressionAttributeName = expressionAttributeName,
                 expressionId = expressionId,
                 collectionId = collectionId,
@@ -759,7 +783,7 @@ namespace AssetLayer.Unity
         public async Task<List<SDK.Expressions.Expression>> GetAssetExpressions(string slotId)
         {
             Debug.Log("GetAssetExpressions called");
-            InitSDKCheck(); 
+            InitSDKCheck();
 
             var props = new GetSlotExpressionsProps
             {
@@ -785,13 +809,13 @@ namespace AssetLayer.Unity
                 else
                 {
                     Debug.Log("No AssetBundle expression found");
-                    return null; 
+                    return null;
                 }
             }
             catch (Exception ex)
             {
                 Debug.LogError($"Error fetching slot expressions: {ex.Message}");
-                return null; 
+                return null;
             }
         }
 
@@ -1161,12 +1185,12 @@ namespace AssetLayer.Unity
         {
             InitSDKCheck();
             // Only check APP_SECRET emptiness in the Unity Editor environment
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             if (string.IsNullOrEmpty(APP_SECRET))
             {
                 return null;
             }
-            #endif
+#endif
 
             if (string.IsNullOrEmpty(APP_ID) || string.IsNullOrEmpty(DID_TOKEN))
             {
@@ -1605,6 +1629,7 @@ namespace AssetLayer.Unity
     public class Asset : SDK.Assets.Asset
     {
         public AssetBundle loadedAssetBundle;
+        public byte[] loadedGLBData;
         public Asset(SDK.Assets.Asset assetBase)
         {
             UtilityFunctions.CopyProperties(assetBase, this);
