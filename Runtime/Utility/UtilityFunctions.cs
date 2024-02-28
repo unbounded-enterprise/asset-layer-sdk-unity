@@ -145,7 +145,6 @@ namespace AssetLayer.Unity
         public static string GetExpressionValueAssetBundle(List<ExpressionValue> expressionValues, string expressionName = null)
         {
             string currentPlatformAttributeName = GetCurrentPlatformExpressionAttribute();
-
             // Attempt to find an expression that matches the specified expressionName (if provided)
             // and whose attribute name matches the current platform.
             var expressionValue = expressionValues
@@ -158,7 +157,6 @@ namespace AssetLayer.Unity
                 expressionValue = expressionValues
                     .FirstOrDefault(ev => ev.expressionType.expressionTypeId == "65d6ade9b04907f41c26a002");
             }
-
             return expressionValue?.value;
         }
 

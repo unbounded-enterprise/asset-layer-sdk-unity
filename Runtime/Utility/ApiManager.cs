@@ -255,14 +255,18 @@ namespace AssetLayer.Unity
                     expression = assetInfo.expressionValues.FirstOrDefault(e => e.expression.expressionId == expressionId && e.expressionAttribute.expressionAttributeName == currentPlatformAttributeName);
                 }
             }
+            if (expression == null)
+            {
+                expression = assetInfo.expressionValues.FirstOrDefault(ev => ev.expressionAttribute.expressionAttributeName == currentPlatformAttributeName);
+            }
+            
+
 
             if (expression == null)
             {
-                // Fallback: search for an expression with a specific expressionTypeId or the first available expression
-                expression = assetInfo.expressionValues.FirstOrDefault(e => e.expressionType.expressionTypeId == "65d6ade9b04907f41c26a002")
-                              ?? assetInfo.expressionValues.FirstOrDefault();
+                // Fallback: search for an expression with a 3D model
+                expression = assetInfo.expressionValues.FirstOrDefault(e => e.expressionType.expressionTypeId == "65d6ade9b04907f41c26a002");
             }
-
             if (expression != null)
             {
                 callback?.Invoke(expression.value);
