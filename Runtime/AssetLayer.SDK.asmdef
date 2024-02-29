@@ -3,8 +3,7 @@
     "rootNamespace": "AssetLayer.SDK",
     "references": [
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:727b30b9b0a57e644a0151237ad46882",
-        "GUID:b841e7cbccd08c64a959f08e926275ab"
+        "GUID:727b30b9b0a57e644a0151237ad46882"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
@@ -13,6 +12,12 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.collections",
+            "expression": "1.2.4",
+            "define": "UNITY_COLLECTIONS_1_2_4"
+        }
+    ],
     "noEngineReferences": false
 }
