@@ -13,12 +13,6 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [
-        {
-            "name": "com.unity.collections",
-            "expression": "1.2.4",
-            "define": "UNITY_COLLECTIONS_1_2_4"
-        }
-    ],
+    "versionDefines": [],
     "noEngineReferences": false
 }
