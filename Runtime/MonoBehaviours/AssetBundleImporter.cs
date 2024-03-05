@@ -196,7 +196,8 @@ namespace AssetLayer.Unity
                 }
                 else
                 {
-                    InstantiateGLB(www.downloadHandler.data);
+                    byte[] glbData = www.downloadHandler.data;
+                    InstantiateGLBAsync(glbData).ConfigureAwait(false);
                 }
             }
         }
