@@ -1,12 +1,13 @@
 {
     "name": "com.assetlayer.sdk.unity",
-    "version": "0.0.1-beta.1.4.27",
+    "version": "0.0.1-beta.1.4.28",
     "displayName": "Asset Layer SDK",
     "description": "Manage your assets client-side with the Asset Layer SDK / API",
     "author": "Asset Layer",
     "documentationUrl": "https://github.com/unbounded-enterprise/asset-layer-sdk-unity/blob/main/README.md",
     "dependencies": {
         "com.unity.nuget.newtonsoft-json": "3.2.1",
-        "com.unity.editorcoroutines": "1.0.0"
+        "com.unity.editorcoroutines": "1.0.0",
+        "com.unity.cloud.gltfast": "6.0.1"
     }
 }
