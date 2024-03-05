@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.4.28] - 2024-03-05
+### Changed
+- Switched to glTFast package for `.glb` file import to enhance performance and compatibility.
+### Fixed
+- Resolved issues with WebGL builds that affected game performance and stability.
+
 ## [1.4.27] - 2024-02-28
 ### Added
 - Support for importing `.glb` files.
