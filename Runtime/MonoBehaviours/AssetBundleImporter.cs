@@ -1,13 +1,11 @@
 using System;
 using System.Collections;
-using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
-using Siccity.GLTFUtility;
 using System.Collections.Generic;
+using GLTFast;
 
 namespace AssetLayer.Unity
 {
@@ -203,9 +201,8 @@ namespace AssetLayer.Unity
             }
         }
 
-        private void InstantiateGLB(byte[] glbData)
+        private async Task InstantiateGLBAsync(byte[] glbData)
         {
-            
             if (glbData != null)
             {
                 // Destroy existing children before loading the new GLB object
@@ -213,15 +210,20 @@ namespace AssetLayer.Unity
                 {
                     DestroyImmediate(transform.GetChild(0).gameObject);
                 }
-                // Load the GLB data and instantiate the object
-                var glbObject = Importer.LoadFromBytes(glbData);
-                if (glbObject != null)
+
+                var gltf = new GltfImport();
+                bool success = await gltf.LoadGltfBinary(glbData);
+                if (success)
                 {
-                    glbObject.transform.SetParent(this.transform, false);
+                    success = await gltf.InstantiateMainSceneAsync(transform);
+                    if (!success)
+                    {
+                        Debug.LogError("Failed to instantiate GLB main scene");
+                    }
                 }
                 else
                 {
-                    Debug.LogError("Failed to load GLB from cache as GameObject");
+                    Debug.LogError("Failed to load GLB from bytes");
                 }
             }
         }
@@ -276,7 +278,7 @@ namespace AssetLayer.Unity
             }
         }
 
-        private void HandleLoadedBundle(object loadedData)
+        private async void HandleLoadedBundle(object loadedData)
         {
             
             if (loadedData is AssetBundle loadedBundle)
@@ -287,7 +289,7 @@ namespace AssetLayer.Unity
             else if (loadedData is byte[] glbData)
             {
                 // Process the GLB data
-                InstantiateGLB(glbData);
+                await InstantiateGLBAsync(glbData);
             }
             else
             {
