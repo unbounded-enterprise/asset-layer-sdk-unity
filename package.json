@@ -8,6 +8,6 @@
     "dependencies": {
         "com.unity.nuget.newtonsoft-json": "3.2.1",
         "com.unity.editorcoroutines": "1.0.0",
-        "com.atteneder.gltfast": "5.2.0"
+        "com.atteneder.gltfast": "6.2.0"
     }
 }
