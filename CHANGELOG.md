@@ -1,5 +1,10 @@
 # Change Log
 
+## [1.4.29] - 2024-03-12
+### Changed
+- Inventory now preloads user ID to ensure last selected assets are unique to each account, preventing cross-account asset display.
+- Fires an event upon account loading, sending the user ID to listeners.
+
 ## [1.4.28] - 2024-03-05
 ### Changed
 - Switched to glTFast package for `.glb` file import to enhance performance and compatibility.
