@@ -55,7 +55,13 @@ namespace AssetLayer.Unity
         {
         }
 
+        [System.Serializable]
+        public class AssetLayerUserIdFetchedUnityEvent : UnityEvent<string>
+        {
+        }
+
         public AssetSelectedUnityEvent onAssetSelection;
+        public AssetLayerUserIdFetchedUnityEvent onUserIdFetched;
 
         public string slotId;
         public List<string> slotIds;
@@ -69,7 +75,7 @@ namespace AssetLayer.Unity
 
         }
 
-        private IEnumerator Start()
+        private void Start()
         {
             uiManager = GetComponent<InventoryUIManagerUnityUI>();
             uiManager.UISearchInitiated += OnSearchValueChanged;
@@ -77,7 +83,7 @@ namespace AssetLayer.Unity
             InventoryUIManagerUnityUI.OnInventoryToggled += ToggleInventoryUI;
             uiManager.UIBackInitiated += BackClickedHandler;
             uiManager.UIAssetSelected += UIAssetSelectedHandler;
-            yield return StartCoroutine(Loading());
+            StartCoroutine(GetUserCoroutine());
         }
 
         private IEnumerator Loading()
@@ -106,6 +112,46 @@ namespace AssetLayer.Unity
             uiManager.UpdateInventoryTitle(menuName);
 
         }
+
+        IEnumerator GetUserCoroutine()
+        {
+            Task<AssetLayer.SDK.Users.User> task = null;
+            // Start the asynchronous operation without waiting here.
+            try
+            {
+                ApiManager manager = new ApiManager(); // initializing sdk
+                task = AssetLayer.SDK.AssetLayerSDK.Users.GetUser();
+            }
+            catch (Exception e)
+            {
+                Debug.Log("Starting GetUser task failed: " + e.Message);
+                // Proceed to loading even if starting the task fails.
+            }
+
+            // If the task was successfully started, wait for it to complete.
+            if (task != null)
+            {
+                yield return new WaitUntil(() => task.IsCompleted);
+
+                if (task.IsFaulted)
+                {
+                    Debug.LogError("An error occurred: " + task.Exception.ToString());
+                }
+                else
+                {
+                    var user = task.Result;
+                    if (user != null && !string.IsNullOrEmpty(user.userId))
+                    {
+                        PlayerPrefs.SetString("AssetLayerUserId", user.userId); // Use the property to get the value
+                        onUserIdFetched.Invoke(user.userId);
+                    }
+                }
+            }
+
+            // Always proceed to Loading, regardless of the outcome above.
+            StartCoroutine(Loading());
+        }
+
 
 
         private void Update()

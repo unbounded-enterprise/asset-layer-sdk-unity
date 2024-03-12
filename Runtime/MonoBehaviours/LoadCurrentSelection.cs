@@ -15,16 +15,36 @@ namespace AssetLayer.Unity
          * (like the AssetLayerGameObejct prefab) and loads it with the assetId 
          * that was saved in the PlayerPrefs.
          * The AssetBundleImporter sets the needed PlayerPref Attribute on each change of the Asset it imports.
+         * it also calls the Loading Method on the LoadCurrentSelection Script after having fetched the users account data.
          */
-        void Start()
+        private void Start()
         {
-            if (PlayerPrefs.HasKey("AssetLayerUserId"))
+            Inventory inventoryComponent = FindObjectOfType<Inventory>();
+            if (inventoryComponent != null)
             {
-                string userId = PlayerPrefs.GetString("AssetLayerUserId");
-                if (!string.IsNullOrEmpty(userId))
-                {
-                    SelectionSaveKey = "AssetLayerSelectedAssetId" + userId;
-                }
+                inventoryComponent.onUserIdFetched.AddListener(OnUserIdFetched);
+            }
+            else
+            {
+                Debug.LogWarning("LoadCurrentSelection: Inventory component not found in the scene.");
+            }
+        }
+
+        private void OnUserIdFetched(string userId)
+        {
+            // Optionally, you can check the userId here before calling Loading.
+            Loading(userId);
+        }
+
+        public void Loading(string userId)
+        {
+
+            if (!string.IsNullOrEmpty(userId))
+            {
+                SelectionSaveKey = "AssetLayerSelectedAssetId" + userId;
+            } else
+            {
+                return;
             }
 
             AssetBundleImporter importer = GetComponent<AssetBundleImporter>();
