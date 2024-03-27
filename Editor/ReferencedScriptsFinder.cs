@@ -84,8 +84,6 @@ namespace AssetLayer.Unity
             // For demonstration, print to the console.
             Debug.Log("Scripts in the selected scene: " + string.Join(", ", scriptNames));
         }
-
-        [MenuItem("Tools/Log Scripts from Selected GameObject")]
         private static void LogScriptsFromSelectedGameObject()
         {
             GameObject selectedGameObject = Selection.activeGameObject;
