@@ -8,7 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using AssetLayer.SDK;
 using AssetLayer.SDK.Core.Networking;
-using UnityEngine;
+
+#if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+    using UnityEngine;
+#endif
 
 
 namespace AssetLayer.SDK.Core.Base
@@ -31,7 +34,9 @@ namespace AssetLayer.SDK.Core.Base
         protected async Task<T> Request<T>(string endpoint, string method = "GET", object body = null, Dictionary<string, string> headers = null)
         {
             string url = $"{this.baseUrl}{endpoint}";
-            Debug.Log("GetRequest: " + url);
+            #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+                Debug.Log("GetRequest: " + url);
+            #endif
             Dictionary<string, string> head = new Dictionary<string, string>();
             if (headers != null) foreach (var header in headers) head.Add(header.Key, header.Value);
             if (this.appSecret != null && !head.ContainsKey("appsecret")) head.Add("appsecret", this.appSecret);

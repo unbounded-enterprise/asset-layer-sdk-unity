@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine;
 using AssetLayer.SDK.Core.Apps;
 using AssetLayer.SDK.Core.Assets;
 using AssetLayer.SDK.Core.Collections;

@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 using System.Text;
-using UnityEngine;
 using AssetLayer.SDK.Basic;
 using AssetLayer.SDK.Core.Networking;
+
+#if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+    using UnityEngine;
+#endif
 
 namespace AssetLayer.SDK.Utils
 {
@@ -17,7 +20,9 @@ namespace AssetLayer.SDK.Utils
             string message = response.error ?? response.message ?? response.Error ?? response.Message ?? response.ErrorMessage ?? response.errorMessage ?? response.ReasonPhrase ?? "Unknown Error Message";
             int status = response.statusCode ?? response.status ?? response.StatusCode ?? response.Status ?? (response.StatusCode != null ? (int)response.StatusCode : fallbackCode);
 
-            Debug.Log("Error: " + message + " (" + status + ")");
+            #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+                Debug.Log("Error: " + message + " (" + status + ")");
+            #endif
 
             return new BasicError(message, status);
         }

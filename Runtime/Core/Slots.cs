@@ -9,7 +9,6 @@ using AssetLayer.SDK.Core.Base;
 using AssetLayer.SDK.Expressions;
 using AssetLayer.SDK.Slots;
 using AssetLayer.SDK.Utils;
-using UnityEngine;
 
 namespace AssetLayer.SDK.Core.Slots
 {

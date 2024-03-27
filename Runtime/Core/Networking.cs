@@ -4,14 +4,14 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 using AssetLayer.SDK;
 using AssetLayer.SDK.Basic;
 using AssetLayer.SDK.Utils;
-using UnityEngine;
 
 #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+    using UnityEngine;
     using UnityEngine.Networking;
+    using Newtonsoft.Json;
 #else
     using System.Net.Http;
 #endif
@@ -28,9 +28,7 @@ namespace AssetLayer.SDK.Core.Networking
                 return obj;
             }
         }
-        public static T GetContentAsObject2<T>(string jsonContent) {
-            return JsonConvert.DeserializeObject<T>(jsonContent);
-        }
+
         public static string GetObjectAsJSON(object obj) {
             using (MemoryStream memoryStream = new MemoryStream()) {
                 DataContractJsonSerializer serializer = new DataContractJsonSerializer(obj.GetType());
@@ -39,9 +37,16 @@ namespace AssetLayer.SDK.Core.Networking
                 return Encoding.UTF8.GetString(jsonBytes, 0, jsonBytes.Length);
             }
         }
-        public static string GetObjectAsJSON2(object obj) {
-            return JsonConvert.SerializeObject(obj);
-        }
+
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            public static T GetContentAsObject2<T>(string jsonContent) {
+                return JsonConvert.DeserializeObject<T>(jsonContent);
+            }
+
+            public static string GetObjectAsJSON2(object obj) {
+                return JsonConvert.SerializeObject(obj);
+            }
+        #endif
     }
     #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
         public static class UnityNetworking {
@@ -89,7 +94,7 @@ namespace AssetLayer.SDK.Core.Networking
         public static class BasicNetworking {
             public static async Task<T> GetContentAsObjectAsync<T>(HttpResponseMessage response) {
                 var contentString = await response.Content.ReadAsStringAsync();
-                return NetworkingUtils.GetContentAsObject2<T>(contentString);
+                return NetworkingUtils.GetContentAsObject<T>(contentString);
             }
 
             public static async Task<T> Request<T>(string url, string method = "GET", object body = null, Dictionary<string, string> headers = null) {
@@ -99,12 +104,15 @@ namespace AssetLayer.SDK.Core.Networking
                     HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, url);
                     if (method != "GET" && BasicNetworkingUtils.HttpMethodMap.TryGetValue(method, out HttpMethod httpMethod)) { request.Method = httpMethod; }
                     if (body != null) {
-                        request.Content = new StringContent(NetworkingUtils.GetObjectAsJSON2(body), Encoding.UTF8, "application/json");
+                        request.Content = new StringContent(NetworkingUtils.GetObjectAsJSON(body), Encoding.UTF8, "application/json");
                     }
 
                     HttpResponseMessage response = await client.SendAsync(request);
                     var str = await response.Content.ReadAsStringAsync();
-                    Debug.Log("GetResponse: " + str);
+                    
+                    #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+                        Debug.Log("GetResponse: " + str);
+                    #endif
 
                     if (response.IsSuccessStatusCode) {
                         return await GetContentAsObjectAsync<T>(response);
