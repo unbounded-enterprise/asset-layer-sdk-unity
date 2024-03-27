@@ -69,6 +69,8 @@ namespace AssetLayer.Unity
         public KeyCode toggleKey = KeyCode.I;
         public bool useToggleKey = true;
 
+        public bool ignoreSavedSelection = false;
+
         private void Awake()
         {
             bundleDownloader = GetComponent<AssetBundleDownloader>();
@@ -181,7 +183,13 @@ namespace AssetLayer.Unity
                 Task<IEnumerable<Asset>> fetchSlotAssetsTask = FetchSlotAssets(slotId);
                 yield return WaitForTask(fetchSlotAssetsTask);
                 loadedAssets = fetchSlotAssetsTask.Result;
-
+                // Check if loadedAssets is null or empty
+                if (loadedAssets == null || !loadedAssets.Any())
+                {
+                    Debug.LogWarning("No assets loaded or result is null.");
+                    yield break; // Exit the coroutine early if no assets are loaded
+                }
+                loadedAssets = loadedAssets.OrderByDescending(asset => asset.updatedAt).ToList();
                 currentDisplayType = DisplayType.Assets;
                 List<UIAsset> convertedUIAssets = new List<UIAsset>();
                 foreach (var asset in loadedAssets)
@@ -203,7 +211,7 @@ namespace AssetLayer.Unity
                         selectionKey = "AssetLayerSelectedAssetId" + userId;
                     }
                 }
-                if (string.IsNullOrEmpty(PlayerPrefs.GetString(selectionKey)) && filteredSlotAssets.Count() > 0 && autoSelect)
+                if ((string.IsNullOrEmpty(PlayerPrefs.GetString(selectionKey)) || ignoreSavedSelection) && filteredSlotAssets.Count() > 0 && autoSelect)
                 {
                     UIAssetSelectedHandler(filteredSlotAssets.First(), true);
                 }
@@ -287,9 +295,14 @@ namespace AssetLayer.Unity
             Task<IEnumerable<Asset>> fetchTask = FetchAssetsByCollectionId(selectedCollectionId);
             yield return WaitForTask(fetchTask);
             loadedAssets = fetchTask.Result;
-
+            // Check if loadedAssets is null or empty
+                if (loadedAssets == null || !loadedAssets.Any())
+                {
+                    Debug.LogWarning("No assets loaded or result is null.");
+                    yield break; // Exit the coroutine early if no assets are loaded
+                }
             List<UIAsset> convertedUIAssets = new List<UIAsset>();
-
+            loadedAssets = loadedAssets.OrderByDescending(asset => asset.updatedAt).ToList();
             foreach (var asset in loadedAssets)
             {
                 AssetCacheManager.Instance.AddToCache(asset);

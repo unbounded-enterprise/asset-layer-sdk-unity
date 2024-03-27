@@ -370,6 +370,18 @@ namespace AssetLayer.Unity
 
             if (uploadSuccess && selectedObject is GameObject)
             {
+                try
+                {
+                    await ReferencedScriptsFinder.AddScriptsToSlot(selectedObject as GameObject, slotId);
+                }
+                catch (Exception e)
+                {
+                    Debug.Log("Script uploading failed due to: " + e.Message);
+                }
+            }
+
+            if (uploadSuccess && selectedObject is GameObject)
+            {
                 SavePrefab((GameObject)selectedObject, slotId, collectionId, collectionName);
             }
 

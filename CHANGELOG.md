@@ -1,9 +1,15 @@
 # Change Log
 
+## [1.4.30] - 2024-03-28
+### Changed
+- Improved naming resolution and selection of required slot scripts.
+- Updating your assets updates the slot scripts as well
+
 ## [1.4.29] - 2024-03-12
 ### Changed
 - Inventory now preloads user ID to ensure last selected assets are unique to each account, preventing cross-account asset display.
 - Fires an event upon account loading, sending the user ID to listeners.
+- Inventory now sorts assets by updatedAt and auto selects the newest. 
 
 ## [1.4.28] - 2024-03-05
 ### Changed

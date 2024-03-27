@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using Unity.EditorCoroutines.Editor;
 using AssetLayer.SDK;
 using System.Threading.Tasks;
+using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace AssetLayer.Unity
 {
@@ -21,6 +23,8 @@ namespace AssetLayer.Unity
         }
 
         private const string warningShownKey = "ScriptLoaderWarningShown";
+        private static int scriptsToDownloadCount;
+        private static int scriptsDownloadedCount;
 
 
         static ScriptLoader()
@@ -34,8 +38,9 @@ namespace AssetLayer.Unity
             List<ScriptObject> scriptObjects = await FetchScriptPaths();
             if (scriptObjects == null) return;
 
-            List<string> conflictFiles = DetectNamingConflicts(scriptObjects);
+            List<string> conflictFiles = await DetectNamingConflicts(scriptObjects);
 
+            // Debug.Log("Conflicts: " + conflictFiles + conflictFiles.Count);
             if (conflictFiles.Count > 0 && !EditorPrefs.GetBool(warningShownKey, false))
             {
                 string message = "Following scripts have naming conflicts elsewhere in the project or already exist in the target directory:\n\n" + string.Join("\n", conflictFiles);
@@ -47,13 +52,23 @@ namespace AssetLayer.Unity
                 // Optionally, return here to prevent further processing. Comment this if you want to continue downloading non-conflicting files.
                 return;
             }
-
+            scriptsToDownloadCount = scriptObjects.Count - conflictFiles.Count;
+            scriptsDownloadedCount = 0;
             foreach (var script in scriptObjects)
             {
-                if (!conflictFiles.Contains(script.scriptFilename)) // Only download non-conflicting files
+                if (!conflictFiles.Contains(script.scriptFilename + (await GetNamespaceFromScript(script.value))))
                 {
                     EditorCoroutineUtility.StartCoroutineOwnerless(DownloadCoroutine(script));
                 }
+            }
+        }
+
+        private static void CheckAndRefreshAssets()
+        {
+            scriptsDownloadedCount++;
+            if (scriptsDownloadedCount == scriptsToDownloadCount)
+            {
+                AssetDatabase.Refresh();
             }
         }
 
@@ -71,15 +86,18 @@ namespace AssetLayer.Unity
             }
             List<ScriptObject> scriptObjects = new List<ScriptObject>();
 
+
             foreach (string slotId in appslots)
             {
                 List<ApiManager.Script> scriptList = await api.GetSlotScripts(slotId);
+
 
                 if (scriptList == null || scriptList.Count == 0)
                 {
                     Debug.Log($"No scripts found or there was an error fetching the scripts for slotId {slotId}.");
                     continue; // Continue to next slotId if no scripts found for this one
                 }
+                scriptList = scriptList.OrderByDescending(script => script.createdAt).ToList();
 
                 foreach (var script in scriptList)
                 {
@@ -116,13 +134,13 @@ namespace AssetLayer.Unity
                 else
                 {
                     SaveScript(www.downloadHandler.text, script.scriptFilename, script.slotId);
+                    CheckAndRefreshAssets();
                 }
             }
         }
 
         private static void SaveScript(string scriptContent, string filename, string slotId)
         {
-
             // Path for the 'RequiredSlotScripts' directory
             string requiredSlotScriptsDir = Path.Combine("Assets", "AssetLayerUnitySDK", "Scripts", "RequiredSlotScripts");
 
@@ -143,37 +161,100 @@ namespace AssetLayer.Unity
 
             string filePath = Path.Combine(directoryPath, filename);
 
-            // Check if the file already exists
-            if (File.Exists(filePath))
+            // Check if the file already exists in the target directory
+            if (!File.Exists(filePath))
             {
-                Debug.LogWarning($"{filename} already exists in slot {slotId}. Skipping download.");
-                return;
+                File.WriteAllText(filePath, scriptContent);
             }
 
-            File.WriteAllText(filePath, scriptContent);
-            AssetDatabase.Refresh();
+            
+        }
+        private static string GetNamespaceFromFile(string fileContent)
+        {
+            string namespacePattern = @"^\s*namespace\s+([^{]+)";
+            Match namespaceMatch = Regex.Match(fileContent, namespacePattern, RegexOptions.Multiline);
+
+            if (namespaceMatch.Success)
+            {
+                string namespaceDeclaration = namespaceMatch.Groups[1].Value.Trim();
+                return namespaceDeclaration;
+            }
+
+            return string.Empty;
         }
 
-        private static List<string> DetectNamingConflicts(List<ScriptObject> scriptObjects)
+        private static async Task<string> GetNamespaceFromScript(string scriptContentUrl)
+        {
+            // Debug.Log("script content URL: " + scriptContentUrl);
+
+            UnityWebRequest webRequest = UnityWebRequest.Get(scriptContentUrl);
+            await webRequest.SendWebRequest();
+
+            if (webRequest.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("Error: " + webRequest.error);
+                return string.Empty;
+            }
+
+            string scriptContent = webRequest.downloadHandler.text;
+
+            string namespacePattern = @"^\s*namespace\s+([^\{]+)";
+            Match namespaceMatch = Regex.Match(scriptContent, namespacePattern, RegexOptions.Multiline);
+
+            if (namespaceMatch.Success)
+            {
+                string namespaceDeclaration = namespaceMatch.Groups[1].Value.Trim();
+                return namespaceDeclaration;
+            }
+
+            return string.Empty;
+        }
+
+        private static async Task<List<string>> DetectNamingConflicts(List<ScriptObject> scriptObjects)
         {
             string[] allScriptFiles = Directory.GetFiles(Application.dataPath, "*.cs", SearchOption.AllDirectories);
-            HashSet<string> projectScriptNames = new HashSet<string>();
+            Dictionary<string, List<string>> projectScriptNamespaces = new Dictionary<string, List<string>>();
 
             foreach (var scriptFile in allScriptFiles)
             {
                 // Exclude scripts in the RequiredSlotScripts folder
                 if (!scriptFile.Contains(Path.Combine("AssetLayerUnitySDK", "Scripts", "RequiredSlotScripts")))
                 {
-                    projectScriptNames.Add(Path.GetFileName(scriptFile));
+                    string fileName = Path.GetFileName(scriptFile);
+                    string fileContent = File.ReadAllText(scriptFile);
+                    string fileNamespace = GetNamespaceFromFile(fileContent);
+                    // Debug.Log("filenamespace:" + fileNamespace + " name: " + fileName);
+                    if (!projectScriptNamespaces.ContainsKey(fileName))
+                    {
+                        projectScriptNamespaces[fileName] = new List<string>();
+                    }
+                    projectScriptNamespaces[fileName].Add(fileNamespace);
                 }
             }
 
             List<string> conflicts = new List<string>();
+
             foreach (var scriptObj in scriptObjects)
             {
-                if (projectScriptNames.Contains(scriptObj.scriptFilename))
+                if (projectScriptNamespaces.ContainsKey(scriptObj.scriptFilename))
                 {
-                    conflicts.Add(scriptObj.scriptFilename);
+                    string incomingNamespace = await GetNamespaceFromScript(scriptObj.value);
+                    // Debug.Log("script namespace: " + incomingNamespace + " scipt name: " + scriptObj.scriptFilename);
+                    bool detected = false;
+                    foreach (string existingNamespace in projectScriptNamespaces[scriptObj.scriptFilename])
+                    {
+                        if (existingNamespace.Split('.').SequenceEqual(incomingNamespace.Split('.')))
+                        {
+                            conflicts.Add(scriptObj.scriptFilename + incomingNamespace);
+                            // Debug.Log("conflict added: " + scriptObj.scriptFilename + " with : " + existingNamespace);
+                            detected = true;
+                            break;
+                        }
+                    }
+                    if (!detected)
+                    {
+                        // Debug.Log("No Conflict with " + incomingNamespace + " from: " + scriptObj.scriptFilename);
+                    }
                 }
             }
 
