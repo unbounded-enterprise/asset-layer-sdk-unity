@@ -44,13 +44,19 @@ namespace AssetLayer.SDK.Users
             [Preserve]
         #endif
         [DataMember]
-        public string UserId { get; set; }
+        public string userId { get; set; }
         // [JsonPropertyName("handle")]
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
-        public string Handle { get; set; }
+        public string handle { get; set; }
+        // [JsonPropertyName("handcashHandle")]
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string handcashHandle { get; set; }
     }
     [DataContract]
     public class User {
