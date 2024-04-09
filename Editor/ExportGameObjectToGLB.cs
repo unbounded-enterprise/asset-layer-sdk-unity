@@ -20,7 +20,7 @@ public class ExportGameObjectToGLB : MonoBehaviour
         Debug.Log("Exported GLB to " + outputPath);
     }
 
-    [MenuItem("Asset Layer/Utilities/Export Selected GameObject to GLB")]
+    [MenuItem("Assets/Asset Layer/Utilities/Export Selected GameObject to GLB")]
     private static void ExportSelectedToGLB()
     {
         if (Selection.activeGameObject == null)
