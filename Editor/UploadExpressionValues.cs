@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using AssetLayer.SDK.Collections;
 using UnityEngine.UIElements;
 using Nethereum.Contracts.Standards.ERC20.TokenList;
+using UnityGLTF;
 
 namespace AssetLayer.Unity
 {
@@ -354,8 +355,22 @@ namespace AssetLayer.Unity
                     {
                         string location = PrefabPacker.PackagePrefab((GameObject)selectedObject, slotId);
                         string unityPackageDataUrl = BundleToDataUrl(location);
-
                         await manager.UploadBundleExpression(collectionId, unityPackageDataUrl, "UnityPackage", "AssetBundle", expressionId);
+                        try
+                        {
+                            string glb = ExportGameObjectToGLB.ExportToGLBDataURL((GameObject)selectedObject);
+
+                            if (!string.IsNullOrEmpty(glb))
+                            {
+                                await manager.UploadBundleExpression(collectionId, glb, "GLB", "AssetBundle", expressionId);
+                            }
+                        }
+                        catch (Exception glbException)
+                        {
+                            Debug.Log("skipping glb upload" + glbException.Message);
+                        }
+
+                        Debug.Log("upload package expression done");
                     }
                     catch (Exception ex)
                     {

@@ -37,21 +37,31 @@ public class ExportGameObjectToGLB : MonoBehaviour
 
     public static string ExportToGLBDataURL(GameObject objectToExport)
     {
-        string tempPath = Path.GetTempPath() + objectToExport.name + ".glb";
-        ExportToGLB(objectToExport, tempPath);
+            string projectFolderPath = Path.Combine(Application.dataPath, "AssetLayerUnitySDK/GLBs");
+            Directory.CreateDirectory(projectFolderPath); // Ensure the directory exists
 
-        try
-        {
-            byte[] bytes = File.ReadAllBytes(tempPath);
+            string fileName = objectToExport.name + ".glb";
+            string fullOutputPath = Path.Combine(projectFolderPath, fileName);
+            ExportToGLB(objectToExport, fullOutputPath);
+            // Adjusting the path to match the expected directory structure
+            string nestedFolderPath = Path.Combine(projectFolderPath, fileName); // Folder named after the GameObject
+            string finalGLBPath = Path.Combine(nestedFolderPath, fileName); // The actual GLB file inside the nested folder
+
+
+            try
+            {
+            byte[] bytes = File.ReadAllBytes(finalGLBPath); // this here should be a changed fullOutputPath that now 
             string base64 = Convert.ToBase64String(bytes);
-            return $"data:model/gltf-binary;base64,{base64}";
+                byte[] glbBytes = Convert.FromBase64String(base64);
+                // Define a new path to save the GLB file for verification
+                string verificationGLBPath = Path.Combine(nestedFolderPath, "verification_" + fileName);
+                // Save the GLB file back to disk for verification
+                File.WriteAllBytes(verificationGLBPath, glbBytes);
+                return $"data:application/octet-stream;base64,{base64}";
         }
         finally
         {
-            if (File.Exists(tempPath))
-            {
-                File.Delete(tempPath);
-            }
+                return "";
         }
     }
 
