@@ -9,6 +9,6 @@
         "com.unity.nuget.newtonsoft-json": "3.2.1",
         "com.unity.editorcoroutines": "1.0.0",
         "com.unity.cloud.gltfast": "6.0.1",
-        "org.khronos.unitygltf": "https://github.com/KhronosGroup/UnityGLTF.git#2.10.0-rc" 
+        "org.khronos.unitygltf": "file:Dependencies/unitygltf-package.json"
     }
 }
