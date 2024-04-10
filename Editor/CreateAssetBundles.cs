@@ -783,7 +783,7 @@ namespace AssetLayer.Unity
 
                         if (!string.IsNullOrEmpty(glb))
                         {
-                            await manager.UploadBundleExpression(collectionId, glb, "GLB", "AssetBundle", expressionId);
+                            await sdkInstance.UploadBundleExpression(collectionId, glb, "GLB", "AssetBundle", expressionId);
                         }
                     }
                     catch (Exception glbException)

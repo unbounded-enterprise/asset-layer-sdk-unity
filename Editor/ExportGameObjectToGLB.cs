@@ -59,11 +59,12 @@ public class ExportGameObjectToGLB : MonoBehaviour
                 File.WriteAllBytes(verificationGLBPath, glbBytes);
                 return $"data:application/octet-stream;base64,{base64}";
         }
-        finally
+        catch (Exception ex)
         {
-                return "";
+            Debug.Log($"glb could not be created: {ex.Message}");
+            return "";
         }
-    }
+        }
 
 }
 }
