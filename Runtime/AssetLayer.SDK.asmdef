@@ -3,7 +3,7 @@
     "rootNamespace": "AssetLayer.SDK",
     "references": [
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:727b30b9b0a57e644a0151237ad46882",
+        "GUID:b6f61d0c50d2e4f4299e24f0b4d72411",
         "GUID:a42927d1d4a3b4cda9b076a7adecb9cc"
     ],
     "includePlatforms": [],

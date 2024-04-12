@@ -26,7 +26,79 @@ These instructions will help getting started managing your digital assets with [
 This repo can be installed via the Unity Package Manager.
 Installing with UPM may require adding an assembly reference for this package to your project.
 
-You can also install this package by copying the repo and adding it to your Assets folder.
+You will have to install additional packages as dependencies, adjust your manifest.json (hidden inside your package folder) to look similar to this (you can use this one in a fresh project): 
+{
+  "dependencies": {
+    "com.assetlayer.sdk.unity": "https://github.com/unbounded-enterprise/asset-layer-sdk-unity.git",
+	"org.khronos.unitygltf": "https://github.com/KhronosGroup/UnityGLTF.git",
+	"com.siccity.gltfutility": "https://github.com/siccity/gltfutility.git",
+	    "link.magic.unity.sdk": "3.1.1",
+    "com.nethereum.unity": "4.19.2",
+    "net.gree.unity-webview": "https://github.com/gree/unity-webview.git?path=/dist/package",
+    "dev.voltstro.unitywebbrowser": "2.1.1",
+    "dev.voltstro.unitywebbrowser.communication.pipes": "1.0.1",
+    "dev.voltstro.unitywebbrowser.engine.cef": "2.1.0-121.3.13",
+    "dev.voltstro.unitywebbrowser.engine.cef.win.x64": "2.1.0-121.3.13",
+    "dev.voltstro.unitywebbrowser.unix-support": "1.0.1",
+    "com.unity.collab-proxy": "2.3.1",
+    "com.unity.feature.development": "1.0.2",
+    "com.cysharp.unitask": "https://github.com/Cysharp/UniTask.git?path=src/UniTask/Assets/Plugins/UniTask",
+    "com.unity.timeline": "1.8.6",
+    "com.unity.ugui": "2.0.0",
+    "com.unity.visualscripting": "1.8.0",
+    "com.unity.modules.accessibility": "1.0.0",
+    "com.unity.modules.ai": "1.0.0",
+    "com.unity.modules.androidjni": "1.0.0",
+    "com.unity.modules.animation": "1.0.0",
+    "com.unity.modules.assetbundle": "1.0.0",
+    "com.unity.modules.audio": "1.0.0",
+    "com.unity.modules.cloth": "1.0.0",
+    "com.unity.modules.director": "1.0.0",
+    "com.unity.modules.imageconversion": "1.0.0",
+    "com.unity.modules.imgui": "1.0.0",
+    "com.unity.modules.jsonserialize": "1.0.0",
+    "com.unity.modules.particlesystem": "1.0.0",
+    "com.unity.modules.physics": "1.0.0",
+    "com.unity.modules.physics2d": "1.0.0",
+    "com.unity.modules.screencapture": "1.0.0",
+    "com.unity.modules.terrain": "1.0.0",
+    "com.unity.modules.terrainphysics": "1.0.0",
+    "com.unity.modules.tilemap": "1.0.0",
+    "com.unity.modules.ui": "1.0.0",
+    "com.unity.modules.uielements": "1.0.0",
+    "com.unity.modules.umbra": "1.0.0",
+    "com.unity.modules.unityanalytics": "1.0.0",
+    "com.unity.modules.unitywebrequest": "1.0.0",
+    "com.unity.modules.unitywebrequestassetbundle": "1.0.0",
+    "com.unity.modules.unitywebrequestaudio": "1.0.0",
+    "com.unity.modules.unitywebrequesttexture": "1.0.0",
+    "com.unity.modules.unitywebrequestwww": "1.0.0",
+    "com.unity.modules.vehicles": "1.0.0",
+    "com.unity.modules.video": "1.0.0",
+    "com.unity.modules.vr": "1.0.0",
+    "com.unity.modules.wind": "1.0.0",
+    "com.unity.modules.xr": "1.0.0"
+  },
+  "scopedRegistries": [
+    {
+      "name": "Voltstro UPM",
+      "url": "https://upm-pkgs.voltstro.dev",
+      "scopes": [
+        "dev.voltstro",
+        "org.nuget"
+      ]
+    },
+    {
+      "name": "OpenUPM",
+      "url": "https://package.openupm.com",
+      "scopes": [
+        "com.nethereum.unity",
+        "link.magic.unity.sdk"
+      ]
+    }
+  ]
+}
+
 
 ## Usage
 
