@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using AssetLayer.SDK.Collections;
 using UnityEngine.UIElements;
-using Nethereum.Contracts.Standards.ERC20.TokenList;
 using UnityGLTF;
 
 namespace AssetLayer.Unity
