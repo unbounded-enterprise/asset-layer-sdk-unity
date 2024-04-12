@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using AssetLayer.SDK.Apps;
 using AssetLayer.Unity;
-#if UNITY_ANDROID || UNITY_IOS
-using link.magic.unity.sdk;
+#if UNITY_ANDROID || UNITY_IOS || UNITY_STANDALONE
+using MagicSDK;
 #endif
 using Newtonsoft.Json.Linq;
 
@@ -35,10 +35,10 @@ namespace AssetLayer.Unity
                 gameObject.SetActive(false);
 #endif
 
-#if !UNITY_ANDROID && !UNITY_IOS
+#if !UNITY_ANDROID && !UNITY_IOS && !UNITY_STANDALONE
                 // Show the button only if it's not running on Android or iOS
                 ShowButton(true);
-#elif UNITY_ANDROID || UNITY_IOS
+#elif UNITY_ANDROID || UNITY_IOS || UNITY_STANDALONE
             CheckCurrentToken();
             ShowButton(false);
 #else
@@ -96,7 +96,7 @@ namespace AssetLayer.Unity
             showLoading = true;
             buttonComponent.interactable = false;
             loadingIndicator.SetActive(true);
-#if UNITY_ANDROID || UNITY_IOS
+#if UNITY_ANDROID || UNITY_IOS || UNITY_STANDALONE
             // Android and iOS logic
             Debug.Log("Login..");
             Magic magic = Magic.Instance;
