@@ -17,6 +17,7 @@ namespace AssetLayer.SDK
         public string baseUrl { get; set; } = AssetLayerSDK.APIURL;
         public string appSecret { get; set; }
         public string didToken { get; set; }
+        public bool logs { get; set; } = true;
     }
 
     public class AssetLayerSDK

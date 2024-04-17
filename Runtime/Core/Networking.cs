@@ -14,6 +14,9 @@ using AssetLayer.SDK.Utils;
     using Newtonsoft.Json;
 #else
     using System.Net.Http;
+    #if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_LINUX
+        using UnityEngine;
+    #endif
 #endif
 
 
@@ -50,7 +53,7 @@ namespace AssetLayer.SDK.Core.Networking
     }
     #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
         public static class UnityNetworking {
-            public static async Task<T> Request<T>(string url, string method = "GET", object body = null, Dictionary<string, string> headers = null) {
+            public static async Task<T> Request<T>(string url, string method = "GET", object body = null, Dictionary<string, string> headers = null, bool logs = false) {
                 UnityWebRequest www = new UnityWebRequest(url, method);
 
                 if (headers != null) foreach (var header in headers) www.SetRequestHeader(header.Key, header.Value);
@@ -68,10 +71,10 @@ namespace AssetLayer.SDK.Core.Networking
                 await tcs.Task;
 
                 if (www.result == UnityWebRequest.Result.Success) {
-                    Debug.Log("GetResponseUnity: " + www.downloadHandler.text);
+                    if (logs == true) Debug.Log("GetResponseUnity: " + www.downloadHandler.text);
 
                     T data = NetworkingUtils.GetContentAsObject2<T>(www.downloadHandler.text);
-                    Debug.Log("parse log: " + NetworkingUtils.GetObjectAsJSON2(data));
+                    // Debug.Log("parse log: " + NetworkingUtils.GetObjectAsJSON2(data));
 
                     return data;
                 } else {
@@ -97,7 +100,7 @@ namespace AssetLayer.SDK.Core.Networking
                 return NetworkingUtils.GetContentAsObject<T>(contentString);
             }
 
-            public static async Task<T> Request<T>(string url, string method = "GET", object body = null, Dictionary<string, string> headers = null) {
+            public static async Task<T> Request<T>(string url, string method = "GET", object body = null, Dictionary<string, string> headers = null, bool logs = false) {
                 using (HttpClient client = new HttpClient()) {
                     if (headers != null) foreach (var header in headers) client.DefaultRequestHeaders.Add(header.Key, header.Value);
 
@@ -110,8 +113,8 @@ namespace AssetLayer.SDK.Core.Networking
                     HttpResponseMessage response = await client.SendAsync(request);
                     var str = await response.Content.ReadAsStringAsync();
                     
-                    #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-                        Debug.Log("GetResponse: " + str);
+                    #if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_STANDALONE_LINUX
+                        if (logs == true) Debug.Log("GetResponse: " + str);
                     #endif
 
                     if (response.IsSuccessStatusCode) {
