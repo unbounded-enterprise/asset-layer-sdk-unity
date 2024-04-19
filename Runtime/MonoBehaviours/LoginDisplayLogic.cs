@@ -24,16 +24,8 @@ namespace AssetLayer.Unity
             if (canvasScaler != null)
             {
                 // Handle UI elements based on the current platform
-                if (Application.platform != RuntimePlatform.WebGLPlayer)
-                {
-                    canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
-                    SafeSetActive(awaitingLogin, false);
-                    SafeSetActive(callToAction, false);
-                    SafeSetActive(loginButton?.gameObject, true);
-                    SafeSetActive(emailInput, false);
-                    SafeSetActive(opensInBrowser, true);
-                }
-                else if (Application.platform == RuntimePlatform.WebGLPlayer)
+                
+                if (Application.platform == RuntimePlatform.WebGLPlayer)
                 {
                     canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
                     SafeSetActive(callToAction, false);
@@ -44,12 +36,21 @@ namespace AssetLayer.Unity
                 }
                 else
                 {
+                    canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
+                    SafeSetActive(awaitingLogin, false);
+                    SafeSetActive(callToAction, false);
+                    SafeSetActive(loginButton?.gameObject, true);
+                    SafeSetActive(emailInput, false);
+                    SafeSetActive(opensInBrowser, true);
+                }
+                /* else
+                {
                     SafeSetActive(awaitingLogin, false);
                     SafeSetActive(callToAction, true);
                     SafeSetActive(loginButton?.gameObject, true);
                     SafeSetActive(emailInput, true);
                     SafeSetActive(opensInBrowser, false);
-                }
+                } */ 
             }
         }
 
