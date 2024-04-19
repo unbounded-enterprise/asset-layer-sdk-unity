@@ -34,7 +34,7 @@ namespace AssetLayer.Unity
                     SafeSetActive(emailInput, false);
                     SafeSetActive(opensInBrowser, false);
                 }
-                else
+                /* else
                 {
                     canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
                     SafeSetActive(awaitingLogin, false);
@@ -42,15 +42,15 @@ namespace AssetLayer.Unity
                     SafeSetActive(loginButton?.gameObject, true);
                     SafeSetActive(emailInput, false);
                     SafeSetActive(opensInBrowser, true);
-                }
-                /* else
+                } */ 
+                else
                 {
                     SafeSetActive(awaitingLogin, false);
                     SafeSetActive(callToAction, true);
                     SafeSetActive(loginButton?.gameObject, true);
                     SafeSetActive(emailInput, true);
                     SafeSetActive(opensInBrowser, false);
-                } */ 
+                } 
             }
         }
 
