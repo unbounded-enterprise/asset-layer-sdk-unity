@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using AssetLayer.SDK.Apps;
 using AssetLayer.Unity;
-#if UNITY_ANDROID || UNITY_IOS || UNITY_STANDALONE
+#if UNITY_ANDROID || UNITY_IOS || UNITY_STANDALONE || UNITY_EDITOR
 using MagicSDK;
 #endif
 using Newtonsoft.Json.Linq;
@@ -35,7 +35,7 @@ namespace AssetLayer.Unity
                 gameObject.SetActive(false);
 #endif
 
-#if !UNITY_ANDROID && !UNITY_IOS && !UNITY_STANDALONE
+#if !UNITY_ANDROID && !UNITY_IOS && !UNITY_STANDALONE && !UNITY_EDITOR
                 // Show the button only if it's not running on Android or iOS
                 ShowButton(true);
 #elif UNITY_ANDROID || UNITY_IOS || UNITY_STANDALONE
@@ -96,7 +96,7 @@ namespace AssetLayer.Unity
             showLoading = true;
             buttonComponent.interactable = false;
             loadingIndicator.SetActive(true);
-#if UNITY_ANDROID || UNITY_IOS || UNITY_STANDALONE
+#if UNITY_EDITOR || UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_IOS || UNITY_ANDROID
             // Android and iOS logic
             Debug.Log("Login..");
             Magic magic = Magic.Instance;
@@ -154,8 +154,8 @@ namespace AssetLayer.Unity
                 DisplayError("Failed to login: " + e.Message);
             }
 #else
-                // Windows and macOS logic
-                OpenBrowser();
+            // Windows and macOS logic
+            OpenBrowser();
 #endif
         }
 
@@ -191,7 +191,7 @@ namespace AssetLayer.Unity
                     Debug.Log("Token has expired.");
                     return false;
                 }
-
+                Debug.Log("token valid");
 
                 return true;
             }

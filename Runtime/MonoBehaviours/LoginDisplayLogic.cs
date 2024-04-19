@@ -24,9 +24,7 @@ namespace AssetLayer.Unity
             if (canvasScaler != null)
             {
                 // Handle UI elements based on the current platform
-                if (Application.platform == RuntimePlatform.WindowsEditor ||
-                    Application.platform == RuntimePlatform.WindowsPlayer ||
-                    Application.platform == RuntimePlatform.OSXPlayer)
+                if (!Application.platform == RuntimePlatform.WebGLPlayer)
                 {
                     canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ConstantPixelSize;
                     SafeSetActive(awaitingLogin, false);
@@ -44,8 +42,7 @@ namespace AssetLayer.Unity
                     SafeSetActive(emailInput, false);
                     SafeSetActive(opensInBrowser, false);
                 }
-                else if (Application.platform == RuntimePlatform.Android ||
-                         Application.platform == RuntimePlatform.IPhonePlayer)
+                else
                 {
                     SafeSetActive(awaitingLogin, false);
                     SafeSetActive(callToAction, true);
