@@ -32,17 +32,12 @@ namespace AssetLayer.Unity
             buttonComponent = GetComponent<Button>();
 #if UNITY_WEBGL
                 // Disable the GameObject if we are running in WebGL
+                ShowButton(false);
                 gameObject.SetActive(false);
-#endif
-
-#if !UNITY_ANDROID && !UNITY_IOS && !UNITY_STANDALONE && !UNITY_EDITOR
-                // Show the button only if it's not running on Android or iOS
-                ShowButton(true);
-#elif UNITY_ANDROID || UNITY_IOS || UNITY_STANDALONE
-            CheckCurrentToken();
-            ShowButton(false);
+                
 #else
-            ShowButton(false);
+            ShowButton(true);
+            CheckCurrentToken();
 #endif
         }
 
@@ -96,7 +91,7 @@ namespace AssetLayer.Unity
             showLoading = true;
             buttonComponent.interactable = false;
             loadingIndicator.SetActive(true);
-#if UNITY_EDITOR || UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN || UNITY_IOS || UNITY_ANDROID
+
             // Android and iOS logic
             Debug.Log("Login..");
             Magic magic = Magic.Instance;
@@ -153,10 +148,7 @@ namespace AssetLayer.Unity
                 SecurePlayerPrefs.RemoveSecureString("didtoken");
                 DisplayError("Failed to login: " + e.Message);
             }
-#else
-            // Windows and macOS logic
-            OpenBrowser();
-#endif
+           
         }
 
         public bool IsDIDTokenValid(string DIDToken)
