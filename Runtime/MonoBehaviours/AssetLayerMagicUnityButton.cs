@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Text;
 using AssetLayer.SDK.Apps;
 using AssetLayer.Unity;
-#if UNITY_ANDROID || UNITY_IOS || UNITY_STANDALONE || UNITY_EDITOR
+#if UNITY_WEBGL
+#else
 using MagicSDK;
 #endif
 using Newtonsoft.Json.Linq;
