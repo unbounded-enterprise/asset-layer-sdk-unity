@@ -124,4 +124,30 @@ namespace AssetLayer.Unity
         }
     }
 #endif
+
+#if UNITY_EDITOR
+// Custom editor for the AppConfig
+[CustomEditor(typeof(AppConfig))]
+public class AppConfigEditor : Editor
+{
+    public override void OnInspectorGUI()
+    {
+        AppConfig script = (AppConfig)target;
+
+        // Disable GUI if the object is in the Resources folder
+        if (AssetDatabase.GetAssetPath(script).Contains("/Resources/"))
+        {
+            EditorGUILayout.HelpBox("Editing this configuration in Resources is not allowed. Please modify it in Project Settings.", MessageType.Warning);
+            GUI.enabled = false;
+        }
+
+        // Draw the default inspector
+        DrawDefaultInspector();
+
+        // Optionally add buttons or other functionality here
+
+        GUI.enabled = true;
+    }
+}
+#endif
 }
