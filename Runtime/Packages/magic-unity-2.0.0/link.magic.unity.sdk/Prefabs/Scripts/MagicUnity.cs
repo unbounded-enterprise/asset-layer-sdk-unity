@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 #if UNITY_IOS || UNITY_ANDROID
 using link.magic.unity.sdk;
-using Nethereum.JsonRpc.Client;
 #endif
 using UnityEngine;
 
@@ -21,6 +20,6 @@ public class MagicUnity : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-         
+
     }
 }
