@@ -4,7 +4,7 @@ namespace AssetLayer.Unity
 {
     public class LoadCurrentSelection : MonoBehaviour
     {
-        public string SelectionSaveKey = "AssetLayerSelectedAssetId";
+        private string SelectionSaveKey = "AssetLayerSelectedAssetId";
         // this is the key the AssetBundleImporter saves the last loaded asset to, 
         // if you change this you need to setup the saving of the current selected assetId yourself.
 
