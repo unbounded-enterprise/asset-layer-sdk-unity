@@ -9,7 +9,7 @@
 - Restricted access to variable of LoadCurrentSelection script.
 - Added cache size setting to `AssetBundleCacheManager` to manage asset unloading and caching more effectively.
 ### Fixed
-- Package conflict with different collection package versions.
+- Package conflict with different collection package versions (umul 128 error).
 - Assets not loading upon reselection.
 
 ## [1.4.30] - 2024-03-28
