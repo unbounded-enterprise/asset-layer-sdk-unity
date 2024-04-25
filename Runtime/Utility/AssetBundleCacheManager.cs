@@ -73,10 +73,6 @@ namespace AssetLayer.Unity
 
         private AssetBundleCacheManager() { }  // Make the constructor private to prevent additional instantiations
 
-        public void CacheGLB(string url, byte[] glbData)
-    {
-        CachedGLBs[url] = glbData;
-    }
 
         public bool IsAssetCached(string url)
         {
@@ -92,9 +88,9 @@ namespace AssetLayer.Unity
 
         // Method to check if a GLB is cached
         public bool IsGLBCached(string url)
-    {
-        return CachedGLBs.ContainsKey(url);
-    }
+        {
+            return CachedGLBs.ContainsKey(url);
+        }
 
     // Method to get cached GLB data
     public byte[] GetCachedGLB(string url)
