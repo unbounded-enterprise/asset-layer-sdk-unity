@@ -162,13 +162,14 @@ namespace AssetLayer.Unity
         {
             var scenePath = bundle.GetAllScenePaths()[0];  // get the path of the first scene in the bundle
             StartCoroutine(LoadSceneFromBundle(scenePath));
-            try
+            /* try
             {
                 bundle.Unload(false);
             } catch(Exception e)
             {
                 Debug.Log("unloading bundle failed: " + e.Message);
-            }
+            } */ 
+            // unloading is now handled in the AssetBundleCacheManager
         }
 
         private IEnumerator LoadSceneFromBundle(string scenePath)
