@@ -73,11 +73,6 @@ namespace AssetLayer.Unity
 
         private AssetBundleCacheManager() { }  // Make the constructor private to prevent additional instantiations
 
-        public void CacheGLB(string url, byte[] glbData)
-        {
-            CachedGLBs[url] = glbData;
-        }
-
         public bool IsAssetCached(string url)
         {
             if (url.EndsWith(".glb"))
