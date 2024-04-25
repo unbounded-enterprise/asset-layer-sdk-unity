@@ -8,7 +8,6 @@ using AssetLayer.SDK.Core.Base;
 using AssetLayer.SDK.Collections;
 using AssetLayer.SDK.Users;
 using AssetLayer.SDK.Utils;
-using UnityEngine;
 
 namespace AssetLayer.SDK.Core.Users
 {

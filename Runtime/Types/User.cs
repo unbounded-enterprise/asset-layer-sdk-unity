@@ -44,13 +44,19 @@ namespace AssetLayer.SDK.Users
             [Preserve]
         #endif
         [DataMember]
-        public string UserId { get; set; }
+        public string userId { get; set; }
         // [JsonPropertyName("handle")]
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
         [DataMember]
-        public string Handle { get; set; }
+        public string handle { get; set; }
+        // [JsonPropertyName("handcashHandle")]
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string handcashHandle { get; set; }
     }
     [DataContract]
     public class User {
@@ -65,6 +71,12 @@ namespace AssetLayer.SDK.Users
         #endif
         [DataMember]
         public string userId { get; set; }
+        // [JsonPropertyName("name")]
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string name { get; set; }
         // [JsonPropertyName("email")]
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -77,6 +89,12 @@ namespace AssetLayer.SDK.Users
         #endif
         [DataMember]
         public string handle { get; set; }
+        // [JsonPropertyName("handcashHandle")]
+        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
+            [Preserve]
+        #endif
+        [DataMember]
+        public string handcashHandle { get; set; }
         // [JsonPropertyName("roles")]
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
@@ -95,18 +113,6 @@ namespace AssetLayer.SDK.Users
         #endif
         [DataMember]
         public long updatedAt { get; set; }
-        // [JsonPropertyName("name")]
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
-        public string name { get; set; }
-        // [JsonPropertyName("status")]
-        #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
-            [Preserve]
-        #endif
-        [DataMember]
-        public string status { get; set; }
     }
 
 

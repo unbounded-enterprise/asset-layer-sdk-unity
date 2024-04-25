@@ -414,7 +414,7 @@ namespace AssetLayer.SDK.Collections
             [Preserve]
         #endif
         [DataMember]
-        public UserAlias royaltyRecipient { get; set; }
+        public string royaltyRecipient { get; set; }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
@@ -476,7 +476,7 @@ namespace AssetLayer.SDK.Collections
             [Preserve]
         #endif
         [DataMember]
-        public UserAlias royaltyRecipient { get; set; }
+        public string royaltyRecipient { get; set; }
         #if UNITY_WEBGL || UNITY_ANDROID || UNITY_IOS
             [Preserve]
         #endif
