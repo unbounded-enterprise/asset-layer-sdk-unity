@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine;
 using AssetLayer.SDK.Core.Apps;
 using AssetLayer.SDK.Core.Assets;
 using AssetLayer.SDK.Core.Collections;
@@ -18,6 +17,7 @@ namespace AssetLayer.SDK
         public string baseUrl { get; set; } = AssetLayerSDK.APIURL;
         public string appSecret { get; set; }
         public string didToken { get; set; }
+        public bool logs { get; set; } = true;
     }
 
     public class AssetLayerSDK

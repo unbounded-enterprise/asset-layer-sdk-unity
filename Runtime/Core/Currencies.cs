@@ -7,7 +7,6 @@ using AssetLayer.SDK.Basic;
 using AssetLayer.SDK.Core.Base;
 using AssetLayer.SDK.Currencies;
 using AssetLayer.SDK.Utils;
-using UnityEngine;
 
 namespace AssetLayer.SDK.Core.Currencies
 {

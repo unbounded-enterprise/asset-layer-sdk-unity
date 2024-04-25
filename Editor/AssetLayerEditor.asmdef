@@ -5,7 +5,12 @@
         "GUID:478a2357cc57436488a56e564b08d223",
         "GUID:23dbc3b7d6cd8f74e994ccf5f2684777",
         "GUID:343deaaf83e0cee4ca978e7df0b80d21",
-        "GUID:6546d7765b4165b40850b3667f981c26"
+        "GUID:6546d7765b4165b40850b3667f981c26",
+        "GUID:1a0324566af4ed544918d6837a1f4e11",
+        "GUID:d58a4b8a1f92baa4f8100941944470f7",
+        "GUID:18d18f811ba286c49814567a3cfba688",
+        "GUID:fe848190f1a690142846fa6384b74e17",
+        "GUID:17181a83a8717a34d8ce050af64edd83"
     ],
     "includePlatforms": [
         "Editor"

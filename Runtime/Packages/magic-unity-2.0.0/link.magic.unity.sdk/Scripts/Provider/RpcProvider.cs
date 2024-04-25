@@ -2,19 +2,14 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 using link.magic.unity.sdk.Relayer;
-using Nethereum.JsonRpc.Client;
-using Nethereum.JsonRpc.Client.RpcMessages;
 using Newtonsoft.Json;
 using UnityEngine;
 
 namespace link.magic.unity.sdk.Provider
 
 {
-    public class RpcProvider : ClientBase
+    public class RpcProvider
     {
-        // Nethereum
-        private readonly JsonSerializerSettings _jsonSerializerSettings =
-            DefaultJsonSerializerSettingsFactory.BuildDefaultJsonSerializerSettings();
 
         private readonly WebviewController _relayer = new();
 
@@ -37,28 +32,6 @@ namespace link.magic.unity.sdk.Provider
             return url;
         }
 
-        // 
-        protected override async Task<RpcResponseMessage> SendAsync(RpcRequestMessage request, string route = null)
-        {
-            var msgType = $"{nameof(OutboundMessageType.MAGIC_HANDLE_REQUEST)}-{UrlBuilder.Instance.EncodedParams}";
-            var relayerRequest = new RelayerRequestNethereum(msgType, request);
-            var requestMsg = JsonConvert.SerializeObject(relayerRequest, _jsonSerializerSettings);
-            Debug.Log($" MagicUnity 1{requestMsg}");
-
-            var promise = new TaskCompletionSource<RpcResponseMessage>();
-
-            // handle Response in the callback, so that webview is type free
-            _relayer.Enqueue(requestMsg, (int)request.Id, responseMsg =>
-            {
-                var reader = new JsonTextReader(new StringReader(responseMsg));
-                var serializer = JsonSerializer.Create(_jsonSerializerSettings);
-                var relayerResponseNethereum = serializer.Deserialize<RelayerResponseNethereum>(reader);
-                var result = relayerResponseNethereum?.Response;
-                return promise.TrySetResult(result);
-            });
-
-            return await promise.Task;
-        }
 
 
         protected internal async Task<TResult> MagicSendAsync<TParams, TResult>(MagicRpcRequest<TParams> magicRequest)

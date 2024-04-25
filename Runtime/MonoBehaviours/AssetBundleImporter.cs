@@ -272,7 +272,7 @@ namespace AssetLayer.Unity
                 Debug.Log("Successfully downloaded and loaded AssetBundle");
 
                 // Cache bundle
-                AssetBundleCacheManager.Instance.CachedBundles[bundleUrl] = bundle;
+                AssetBundleCacheManager.Instance.CacheAssetBundle(bundleUrl, bundle);
 
                 ProcessAssetBundle(bundle);
                 yield break;
@@ -353,14 +353,15 @@ namespace AssetLayer.Unity
                         Debug.LogWarning($"Asset {asset.name} is not a GameObject");
                     }
                 }
-                try
+                /* try
                 {
                     bundle.Unload(false);
                 }
                 catch (Exception ex)
                 {
                     Debug.Log("Bundle already unloaded");
-                }
+                } */ 
+                // unloading now handled by AssetBUndleCacheManager
             }
             else
             {

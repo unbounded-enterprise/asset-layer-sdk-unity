@@ -776,6 +776,20 @@ namespace AssetLayer.Unity
                     {
                         Debug.Log("unity package saving failed: " + e.Message);
                     }
+
+                    try
+                    {
+                        string glb = ExportGameObjectToGLB.ExportToGLBDataURL((GameObject)selectedObject);
+
+                        if (!string.IsNullOrEmpty(glb))
+                        {
+                            await sdkInstance.UploadBundleExpression(collectionId, glb, "GLB", "AssetBundle", expressionId);
+                        }
+                    }
+                    catch (Exception glbException)
+                    {
+                        Debug.Log("skipping glb upload" + glbException.Message);
+                    }
                 }
 
 

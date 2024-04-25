@@ -1,5 +1,17 @@
 # Change Log
 
+## [1.4.31] - 2024-04-25
+### Added
+- Support for 2D Asset Layer Assets
+- GLB creation on asset creation.
+### Changed
+- Restricted access to config scriptable object (use project settings).
+- Restricted access to variable of LoadCurrentSelection script.
+- Added cache size setting to `AssetBundleCacheManager` to manage asset unloading and caching more effectively.
+### Fixed
+- Package conflict with different collection package versions.
+- Assets not loading upon reselection.
+
 ## [1.4.30] - 2024-03-28
 ### Changed
 - Improved naming resolution and selection of required slot scripts.

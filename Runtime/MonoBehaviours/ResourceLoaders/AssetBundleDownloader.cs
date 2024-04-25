@@ -78,7 +78,7 @@ namespace AssetLayer.Unity
                 Debug.Log("Successfully downloaded and loaded AssetBundle");
 
                 // Cache bundle
-                AssetBundleCacheManager.Instance.CachedBundles[bundleUrl] = bundle;
+                AssetBundleCacheManager.Instance.CacheAssetBundle(bundleUrl, bundle);
 
                 callback?.Invoke(bundle);  // Invoke callback with the loaded bundle
             }
